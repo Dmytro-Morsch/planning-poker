@@ -1,12 +1,11 @@
-import Home from "./components/Home/Home.jsx";
+import {Home} from './components';
 
 function App() {
-
-  return (
-    <>
-        <Home/>
-    </>
-  )
+    return (
+        <>
+            <Home/>
+        </>
+    )
 }
 
-export default App
+export default App;

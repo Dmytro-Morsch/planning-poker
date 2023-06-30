@@ -1,5 +1,6 @@
 import {useCallback, useState} from "react";
-import CreateRoomPopup from "../CreateRoomPopup/CreateRoomPopup.jsx";
+
+import {CreateRoomPopup} from '../';
 
 function Home() {
     const [roomId, setRoomId] = useState();
