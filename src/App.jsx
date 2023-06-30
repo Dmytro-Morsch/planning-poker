@@ -1,9 +1,15 @@
-import {Home} from './components';
+import {Route, Routes} from "react-router-dom";
+
+import {Home, Room} from './pages';
 
 function App() {
     return (
         <>
-            <Home/>
+            <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/room/:roomId" element={<Room/>}/>
+                <Route path="*" element={<h1>Not Found</h1>}/>
+            </Routes>
         </>
     )
 }

@@ -1,5 +1,6 @@
 import {useCallback, useState} from "react";
 import api from "../../api.js";
+import {useNavigate} from "react-router-dom";
 
 function CreateRoomPopup(props) {
     const {onRoomCreated} = props;
@@ -8,10 +9,15 @@ function CreateRoomPopup(props) {
 
     const changePlayerName = useCallback(event => setPlayerName(event.target.value), []);
 
-    const submitForm = useCallback((e) => {
-        e.preventDefault();
-        api.createRoom(playerName).then(result => onRoomCreated(result));
-    }, [onRoomCreated, playerName]);
+    const navigate = useNavigate();
+
+    const createRoom = useCallback(() => {
+        api.createRoom(playerName).then(result => {
+            onRoomCreated(result.roomId);
+            navigate(`room/${result.roomId}`);
+        });
+
+    }, [navigate, onRoomCreated, playerName]);
 
     return (
         <section className="limit-car-popup">
@@ -22,7 +28,7 @@ function CreateRoomPopup(props) {
                     <input type="text" value={playerName} onChange={changePlayerName}/>
                 </div>
                 <div className="buttons">
-                    <button className="button close" type="button" onClick={submitForm}>Submit</button>
+                    <button className="button" type="button" onClick={createRoom}>Submit</button>
                 </div>
             </div>
         </section>

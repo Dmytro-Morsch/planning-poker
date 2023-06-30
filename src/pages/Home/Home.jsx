@@ -1,6 +1,6 @@
 import {useCallback, useState} from "react";
 
-import {CreateRoomPopup} from '../';
+import {CreateRoomPopup} from '../../components/index.js';
 
 function Home() {
     const [roomId, setRoomId] = useState();
