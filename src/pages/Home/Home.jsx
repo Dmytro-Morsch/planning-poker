@@ -1,26 +1,34 @@
 import {useCallback, useState} from "react";
 
-import {CreateRoomPopup} from '../../components/index.js';
+import {CreateRoomPopup, EnterRoomPopup} from '../../components/index.js';
 
 function Home() {
     const [roomId, setRoomId] = useState();
-    const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [isCreateRoomPopupVisible, setIsCreateRoomPopupVisible] = useState(false);
+    const [isEnterRoomPopupVisible, setIsEnterRoomPopupVisible] = useState(false);
 
     const onRoomCreated = useCallback((roomId) => {
         setRoomId(roomId);
-        setIsPopupVisible(false);
+        setIsCreateRoomPopupVisible(false);
+    }, []);
+
+    const onRoomOpened = useCallback((roomId) => {
+        setRoomId(roomId);
+        setIsEnterRoomPopupVisible(false);
     }, []);
 
     return (
         <>
             <div>
-                <button onClick={() => setIsPopupVisible(true)}>Create new room</button>
+                <button onClick={() => setIsCreateRoomPopupVisible(true)}>Create new room</button>
             </div>
             <div>
-                <button>Enter room</button>
+                <button onClick={() => setIsEnterRoomPopupVisible(true)}>Enter room</button>
             </div>
 
-            {isPopupVisible && <CreateRoomPopup onRoomCreated={onRoomCreated}/>}
+            {isCreateRoomPopupVisible && <CreateRoomPopup onRoomCreated={onRoomCreated}/>}
+
+            {isEnterRoomPopupVisible && <EnterRoomPopup onRoomOpened={onRoomOpened}/>}
         </>
     );
 }

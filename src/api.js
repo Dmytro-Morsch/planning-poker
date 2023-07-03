@@ -11,6 +11,14 @@ const api = {
             method: 'GET',
         });
         return await response.json();
+    },
+    addPlayerToRoom: async (roomId, playerName) => {
+        const response = await fetch('/api/room/' + roomId + '/player', {
+            method: 'POST',
+            body: playerName,
+        });
+        console.log(response);
+        return await response.json();
     }
 };
 

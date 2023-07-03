@@ -13,6 +13,7 @@ function CreateRoomPopup(props) {
 
     const createRoom = useCallback(() => {
         api.createRoom(playerName).then(result => {
+            sessionStorage.setItem("playerId", result.playerId);
             onRoomCreated(result.roomId);
             navigate(`room/${result.roomId}`);
         });
@@ -20,7 +21,7 @@ function CreateRoomPopup(props) {
     }, [navigate, onRoomCreated, playerName]);
 
     return (
-        <section className="limit-car-popup">
+        <section className="create-room-popup">
             <div className="overlay"></div>
 
             <div className="popup-block">
