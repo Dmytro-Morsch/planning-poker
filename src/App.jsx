@@ -1,6 +1,6 @@
 import {Route, Routes} from "react-router-dom";
 
-import {Home, Room} from './pages';
+import {Home, Room} from './components';
 
 function App() {
     return (
@@ -11,7 +11,7 @@ function App() {
                 <Route path="*" element={<h1>Not Found</h1>}/>
             </Routes>
         </>
-    )
+    );
 }
 
 export default App;

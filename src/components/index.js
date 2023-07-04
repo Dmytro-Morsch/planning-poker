@@ -1,7 +1,9 @@
-import CreateRoomPopup from "./CreateRoomPopup/CreateRoomPopup.jsx";
-import EnterRoomPopup from "./EnterRoomPopup/EnterRoomPopup.jsx";
+import Home from "./Home/Home.jsx";
+import Room from "./Room/Room.jsx";
+import EnterOneFieldPopup from "./EnterOneFieldPopup/EnterOneFieldPopup.jsx";
 
 export {
-    CreateRoomPopup,
-    EnterRoomPopup,
+    Home,
+    Room,
+    EnterOneFieldPopup
 };
