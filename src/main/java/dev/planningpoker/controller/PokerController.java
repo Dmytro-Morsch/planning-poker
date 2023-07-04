@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -56,6 +57,15 @@ public class PokerController {
             }
         }
         return ResponseEntity.ok(bets);
+    }
+
+    @GetMapping("/api/room/{roomId}/players")
+    private ResponseEntity<?> getPlayers(@PathVariable Long roomId) {
+        if (!pokerRepository.roomExists(roomId)) {
+            return new ResponseEntity<>("Room not found!", HttpStatus.NOT_FOUND);
+        }
+        List<Long> playersId = pokerRepository.getPlayersId(roomId);
+        return ResponseEntity.ok(playersId);
     }
 
     @PostMapping("/api/room/{roomId}/clear")

@@ -81,4 +81,10 @@ public class PokerRepository {
                 """, Map.of("roomId", roomId), Boolean.class);
         return DataAccessUtils.singleResult(list);
     }
+
+    public List<Long> getPlayersId(Long roomId) {
+        return jdbcTemplate.queryForList("""
+                select id from player where room_id=:roomId
+                """, Map.of("roomId", roomId), Long.class);
+    }
 }
