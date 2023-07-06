@@ -1,0 +1,22 @@
+.card {
+    width: 90px;
+    height: 120px;
+}
+
+.card .button.vote {
+    width: 90px;
+    height: 120px;
+    background-color: white;
+    box-shadow: 0 2px 1px -1px #0003, 0 1px 1px #00000024, 0 1px 3px #0000001f;;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.card .button.vote:hover {
+    background-color: #FAFAFA;
+}
+
+.card .button.vote span {
+    font-size: 2rem;
+}

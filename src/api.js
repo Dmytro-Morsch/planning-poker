@@ -24,6 +24,13 @@ const api = {
             method: 'GET'
         });
         return await response.json();
+    },
+    placeBet: async (playerId, bet) => {
+        const response = await fetch('/api/bet/' + playerId, {
+            method: 'POST',
+            body: bet
+        });
+        return 1;
     }
 };
 

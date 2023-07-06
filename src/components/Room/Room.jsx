@@ -1,13 +1,14 @@
 import {useCallback, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
+import {useUserVote} from "../../context/UserVote.context.jsx";
 
-import {EnterOneFieldPopup} from "../";
+import {Cards, EnterOneFieldPopup} from "../";
 import api from "../../api.js";
 
 function Room() {
     const [userExist, setUserExist] = useState(false);
     const [playerName, setPlayerName] = useState();
-    const [bets, setBets] = useState({});
+    const {bets, loadBets} = useUserVote();
 
     const changePlayerName = useCallback(event => setPlayerName(event.target.value), []);
 
@@ -35,22 +36,30 @@ function Room() {
     }, [params.roomId]);
 
     useEffect(() => {
-        api.getBets(params.roomId).then(result => {
-            setBets(result);
-        })
-    }, [params.roomId, userExist]);
+        loadBets(params.roomId);
+    }, [loadBets, params.roomId]);
 
     return (
         <>
             <h1>Room {params.roomId}</h1>
 
+            <Cards/>
+
             <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Story Points</th>
+                </tr>
+                </thead>
+                <tbody>
                 {Object.entries(bets).map(([key, value]) => (
                     <tr key={`bets-${key}`}>
                         <td>{key}</td>
                         <td>{value}</td>
                     </tr>
                 ))}
+                </tbody>
             </table>
 
             {!userExist &&
