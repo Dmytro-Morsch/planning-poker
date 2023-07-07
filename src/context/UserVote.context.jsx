@@ -1,18 +1,15 @@
-import {createContext, useCallback, useContext, useEffect, useMemo, useState} from "react";
+import {createContext, useCallback, useContext, useMemo, useState} from "react";
 import api from "../api.js";
 
 export const UserVoteContext = createContext({
     bets: {},
     loadBets: () => console.log("loadBets"),
     updateBets: () => console.log("updateBets"),
+    deleteEstimate: () => console.log("deleteEstimate"),
 });
 
 export function UserVoteProvider({children}) {
     const [bets, setBets] = useState({});
-
-    useEffect(() => {
-        console.log(bets);
-    }, [bets]);
 
     const loadBets = useCallback(async (roomId) => {
         api.getBets(roomId).then(result => {
@@ -26,7 +23,18 @@ export function UserVoteProvider({children}) {
         });
     }, [loadBets]);
 
-    const value = useMemo(() => ({bets, loadBets, updateBets}), [bets, loadBets, updateBets]);
+    const deleteEstimate = useCallback((roomId) => {
+        api.clearEstimate(roomId).then(() => {
+            loadBets(roomId);
+        });
+    }, [loadBets]);
+
+    const value = useMemo(() => ({
+        bets,
+        loadBets,
+        updateBets,
+        deleteEstimate
+    }), [bets, deleteEstimate, loadBets, updateBets]);
 
     return <UserVoteContext.Provider value={value}>{children}</UserVoteContext.Provider>
 }

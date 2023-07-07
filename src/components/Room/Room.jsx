@@ -8,7 +8,7 @@ import api from "../../api.js";
 function Room() {
     const [userExist, setUserExist] = useState(false);
     const [playerName, setPlayerName] = useState();
-    const {bets, loadBets} = useUserVote();
+    const {bets, loadBets, deleteEstimate} = useUserVote();
 
     const changePlayerName = useCallback(event => setPlayerName(event.target.value), []);
 
@@ -45,22 +45,27 @@ function Room() {
 
             <Cards/>
 
-            <table>
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Story Points</th>
-                </tr>
-                </thead>
-                <tbody>
-                {Object.entries(bets).map(([key, value]) => (
-                    <tr key={`bets-${key}`}>
-                        <td>{key}</td>
-                        <td>{value}</td>
+            <div>
+                <div>
+                    <button onClick={() => deleteEstimate(params.roomId)}>Delete Estimate</button>
+                </div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Story Points</th>
                     </tr>
-                ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {Object.entries(bets).map(([key, value]) => (
+                        <tr key={`bets-${key}`}>
+                            <td>{key}</td>
+                            <td>{value}</td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
 
             {!userExist &&
                 <div>

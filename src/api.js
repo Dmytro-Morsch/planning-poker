@@ -26,11 +26,15 @@ const api = {
         return await response.json();
     },
     placeBet: async (playerId, bet) => {
-        const response = await fetch('/api/bet/' + playerId, {
+        await fetch('/api/bet/' + playerId, {
             method: 'POST',
             body: bet
         });
-        return 1;
+    },
+    clearEstimate: async (roomId) => {
+        await fetch('/api/room/' + roomId + '/clear', {
+            method: 'POST'
+        });
     }
 };
 
