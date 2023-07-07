@@ -14,7 +14,7 @@
     letter-spacing: 3px;
 }
 
-.navbar .share-link > .block .button.share {
+.navbar .share-button > .block .button.share {
     display: flex;
     align-items: center;
     border: none;
@@ -25,11 +25,11 @@
     font-size: 1rem;
 }
 
-.navbar .share-link > .block .button.share:hover {
+.navbar .share-button > .block .button.share:hover {
     background-color: #F0F0F0;
 }
 
-.navbar .share-link > .block .button.share img {
+.navbar .share-button > .block .button.share img {
     margin-left: 0.5rem;
     max-width: 24px;
     max-height: 24px;
