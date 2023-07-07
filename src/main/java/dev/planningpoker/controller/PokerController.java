@@ -76,4 +76,13 @@ public class PokerController {
         pokerRepository.clearBets(roomId);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/api/room/{roomId}/show")
+    private ResponseEntity<?> showBets(@PathVariable Long roomId) {
+        if (!pokerRepository.roomExists(roomId)) {
+            return new ResponseEntity<>("Room not found!", HttpStatus.NOT_FOUND);
+        }
+        pokerRepository.showBets(roomId);
+        return ResponseEntity.noContent().build();
+    }
 }

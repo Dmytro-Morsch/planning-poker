@@ -68,6 +68,14 @@ public class PokerRepository {
                 """, Map.of("roomId", roomId));
     }
 
+    public void showBets(Long roomId) {
+        jdbcTemplate.update("""
+                update room
+                set cards_shown=not cards_shown
+                where id=:roomId
+                """, Map.of("roomId", roomId));
+    }
+
     @SuppressWarnings("DataFlowIssue")
     public boolean roomExists(Long roomId) {
         return jdbcTemplate.queryForObject("""
