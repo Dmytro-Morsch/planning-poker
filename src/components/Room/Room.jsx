@@ -8,7 +8,7 @@ import api from "../../api.js";
 function Room() {
     const [userExist, setUserExist] = useState(false);
     const [playerName, setPlayerName] = useState();
-    const {bets, loadBets, deleteEstimate} = useUserVote();
+    const {bets, loadBets, deleteEstimate, showEstimate} = useUserVote();
 
     const changePlayerName = useCallback(event => setPlayerName(event.target.value), []);
 
@@ -48,6 +48,7 @@ function Room() {
             <div>
                 <div>
                     <button onClick={() => deleteEstimate(params.roomId)}>Delete Estimate</button>
+                    <button onClick={() => showEstimate(params.roomId)}>Show</button>
                 </div>
                 <table>
                     <thead>

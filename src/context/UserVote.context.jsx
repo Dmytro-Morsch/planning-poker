@@ -6,6 +6,7 @@ export const UserVoteContext = createContext({
     loadBets: () => console.log("loadBets"),
     updateBets: () => console.log("updateBets"),
     deleteEstimate: () => console.log("deleteEstimate"),
+    showEstimate: () => console.log("showEstimate"),
 });
 
 export function UserVoteProvider({children}) {
@@ -29,12 +30,19 @@ export function UserVoteProvider({children}) {
         });
     }, [loadBets]);
 
+    const showEstimate = useCallback((roomId) => {
+        api.showEstimate(roomId).then(() => {
+            loadBets(roomId);
+        });
+    }, [loadBets]);
+
     const value = useMemo(() => ({
         bets,
         loadBets,
         updateBets,
-        deleteEstimate
-    }), [bets, deleteEstimate, loadBets, updateBets]);
+        deleteEstimate,
+        showEstimate
+    }), [bets, deleteEstimate, loadBets, showEstimate, updateBets]);
 
     return <UserVoteContext.Provider value={value}>{children}</UserVoteContext.Provider>
 }

@@ -35,6 +35,11 @@ const api = {
         await fetch('/api/room/' + roomId + '/clear', {
             method: 'POST'
         });
+    },
+    showEstimate: async (roomId) => {
+        await fetch('/api/room/' + roomId + '/show', {
+            method: 'POST'
+        });
     }
 };
 
