@@ -1,0 +1,36 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.navbar .logo .link {
+    font-size: 1.2rem;
+    font-family: 'Caprasimo', cursive;
+    text-decoration: none;
+    color: black;
+    letter-spacing: 3px;
+}
+
+.navbar .share-link > .block .button.share {
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.navbar .share-link > .block .button.share:hover {
+    background-color: #F0F0F0;
+}
+
+.navbar .share-link > .block .button.share img {
+    margin-left: 0.5rem;
+    max-width: 24px;
+    max-height: 24px;
+}
