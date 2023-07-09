@@ -11,7 +11,7 @@ export const UserVoteContext = createContext({
 });
 
 export function UserVoteProvider({children}) {
-    const [votes, setVotes] = useState({});
+    const [votes, setVotes] = useState([]);
 
     const loadVotes = useCallback(async (roomId) => {
         api.getVotes(roomId).then(result => {

@@ -58,10 +58,10 @@ function Room() {
                     </tr>
                     </thead>
                     <tbody>
-                    {Object.entries(votes).map(([player, value]) => (
-                        <tr key={`vote-${player}`}>
-                            <td>{player}</td>
-                            <td>{value}</td>
+                    {votes.map((vote) => (
+                        <tr key={`vote-${vote.playerId}`}>
+                            <td>{vote.playerName}</td>
+                            <td>{vote.value}</td>
                         </tr>
                     ))}
                     </tbody>
