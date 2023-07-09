@@ -1,5 +1,6 @@
 package dev.planningpoker.repository;
 
+import dev.planningpoker.Vote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -7,7 +8,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -25,17 +27,10 @@ public class PokerRepository {
         return (long) keyHolder.getKeys().get("id");
     }
 
-    public Map<String, Integer> getVotes(Long roomId) {
-        Map<String, Integer> result = new HashMap<>();
-
-        jdbcTemplate.query("""
+    public List<Vote> getVotes(Long roomId) {
+        return jdbcTemplate.query("""
                 select * from player where room_id=:roomId
-                """, Map.of("roomId", roomId), rs -> {
-            String playerName = rs.getString("name");
-            Integer vote = rs.getObject("vote", Integer.class);
-            result.put(playerName, vote);
-        });
-        return result;
+                """, Map.of("roomId", roomId), this::mapVote);
     }
 
     public Long addPlayer(String playerName, Long roomId) {
@@ -110,5 +105,13 @@ public class PokerRepository {
         return jdbcTemplate.queryForList("""
                 select id from player where room_id=:roomId
                 """, Map.of("roomId", roomId), Long.class);
+    }
+
+    private Vote mapVote(ResultSet rs, int rowNum) throws SQLException {
+        Vote vote = new Vote();
+        vote.playerId = rs.getLong("id");
+        vote.playerName = rs.getString("name");
+        vote.value = rs.getObject("vote", Integer.class);
+        return vote;
     }
 }

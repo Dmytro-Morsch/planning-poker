@@ -1,5 +1,6 @@
 package dev.planningpoker.controller;
 
+import dev.planningpoker.Vote;
 import dev.planningpoker.repository.PokerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -92,12 +93,12 @@ public class PokerController {
         return ResponseEntity.ok(votes);
     }
 
-    private Map<String, Integer> getVotes(Long roomId, boolean shown) {
-        Map<String, Integer> votes = pokerRepository.getVotes(roomId);
+    private List<Vote> getVotes(Long roomId, boolean shown) {
+        var votes = pokerRepository.getVotes(roomId);
         if (!shown) {
-            for (String player : votes.keySet()) {
-                if (votes.get(player) != null) {
-                    votes.put(player, -1);
+            for (Vote vote : votes) {
+                if (vote.value != null) {
+                    vote.value = -1;
                 }
             }
         }

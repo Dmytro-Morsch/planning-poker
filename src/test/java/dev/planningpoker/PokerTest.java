@@ -91,8 +91,10 @@ public class PokerTest {
         // Get the room state
         mockMvc.perform(get("/api/room/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$['First Player']").value(nullValue()))
-                .andExpect(jsonPath("$['Second Player']").value(-1));
+                .andExpect(jsonPath("$[0].playerId").value(1))
+                .andExpect(jsonPath("$[0].value").value(nullValue()))
+                .andExpect(jsonPath("$[1].playerId").value(2))
+                .andExpect(jsonPath("$[1].value").value(-1));
     }
 
     @Test
@@ -116,7 +118,9 @@ public class PokerTest {
         // Get the room state
         mockMvc.perform(get("/api/room/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$['First Player']").value(nullValue()))
-                .andExpect(jsonPath("$['Second Player']").value(5));
+                .andExpect(jsonPath("$[0].playerId").value(1))
+                .andExpect(jsonPath("$[0].value").value(nullValue()))
+                .andExpect(jsonPath("$[1].playerId").value(2))
+                .andExpect(jsonPath("$[1].value").value(5));
     }
 }
