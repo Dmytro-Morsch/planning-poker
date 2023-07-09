@@ -3,6 +3,7 @@ import {useEffect} from "react";
 import './ShareLinkPopup.css';
 
 import copy from '../../assets/copy.svg';
+import QRCode from "react-qr-code";
 
 function ShareLinkPopup(props) {
     const {roomId, myref, closePopup} = props;
@@ -26,6 +27,8 @@ function ShareLinkPopup(props) {
                         Copy URL to clipboard
                     </button>
                 </div>
+
+                <QRCode value={window.location.href} />
 
                 <button className="button ok" type="button" onClick={closePopup}>GOT IT!</button>
             </div>
