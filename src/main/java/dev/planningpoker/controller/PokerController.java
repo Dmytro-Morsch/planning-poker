@@ -52,6 +52,17 @@ public class PokerController {
         return ResponseEntity.ok(votes);
     }
 
+    @PostMapping("/api/player/{playerId}/delete")
+    private ResponseEntity<?> deletePlayer(@PathVariable Long playerId) {
+        Long roomId = pokerRepository.getRoomIdByPlayerId(playerId);
+        if (!pokerRepository.deletePlayer(playerId)) {
+            return new ResponseEntity<>("Player not found!", HttpStatus.NOT_FOUND);
+        }
+        Boolean shown = pokerRepository.areCardsShown(roomId);
+        var votes = getVotes(roomId, shown);
+        return ResponseEntity.ok(votes);
+    }
+
     @GetMapping("/api/room/{roomId}")
     private ResponseEntity<?> getVotes(@PathVariable Long roomId) {
         Boolean shown = pokerRepository.areCardsShown(roomId);
