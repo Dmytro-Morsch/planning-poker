@@ -12,7 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -50,9 +51,9 @@ public class PokerTest {
 
         // Another player joins the room and gets incremented id
         mockMvc.perform(
-                post("/api/room/1/player").content("Second Player"))
+                        post("/api/room/1/player").content("Second Player"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("2"));
+                .andExpect(jsonPath("$.playerId").value("2"));
     }
 
     @Test
@@ -81,7 +82,7 @@ public class PokerTest {
 
         // Second player joins the room
         mockMvc.perform(post("/api/room/1/player").content("Second Player"))
-                .andExpect(content().string("2"));
+                .andExpect(jsonPath("$.playerId").value("2"));
 
         // Second player places a bet
         mockMvc.perform(post("/api/bet/2").content("5"))
@@ -102,7 +103,7 @@ public class PokerTest {
 
         // Second player joins the room
         mockMvc.perform(post("/api/room/1/player").content("Second Player"))
-                .andExpect(content().string("2"));
+                .andExpect(jsonPath("$.playerId").value("2"));
 
         // Second player places a bet
         mockMvc.perform(post("/api/bet/2").content("5"))

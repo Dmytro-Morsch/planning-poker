@@ -25,11 +25,13 @@ public class PokerController {
     @PostMapping("/api/room/{roomId}/player")
     private ResponseEntity<?> addPlayerToRoom(@PathVariable Long roomId,
                                               @RequestBody String playerName) {
-        if (!pokerRepository.roomExists(roomId)) {
+        Boolean shown = pokerRepository.areCardsShown(roomId);
+        if (shown == null) {
             return new ResponseEntity<>("Room not found!", HttpStatus.NOT_FOUND);
         }
         Long playerId = pokerRepository.addPlayer(playerName, roomId);
-        return ResponseEntity.ok(playerId);
+        Map<String, Integer> bets = getBets(roomId, shown);
+        return ResponseEntity.ok(Map.of("playerId", playerId, "bets", bets));
     }
 
     @PostMapping("/api/bet/{playerId}")
@@ -48,6 +50,11 @@ public class PokerController {
             return new ResponseEntity<>("Room not found!", HttpStatus.NOT_FOUND);
         }
 
+        Map<String, Integer> bets = getBets(roomId, shown);
+        return ResponseEntity.ok(bets);
+    }
+
+    private Map<String, Integer> getBets(Long roomId, Boolean shown) {
         Map<String, Integer> bets = pokerRepository.getBets(roomId);
         if (!shown) {
             for (String player : bets.keySet()) {
@@ -56,7 +63,7 @@ public class PokerController {
                 }
             }
         }
-        return ResponseEntity.ok(bets);
+        return bets;
     }
 
     @GetMapping("/api/room/{roomId}/players")
