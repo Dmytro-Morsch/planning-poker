@@ -1,10 +1,22 @@
+import {useCallback, useState} from "react";
+
 function EnterOneFieldPopup(props) {
-    const {onClick, inputValue, onChange} = props;
+    const {onClick} = props;
+
+    const [inputValue, setInputValue] = useState();
+
+    const onSubmit = useCallback((e) => {
+        e.preventDefault();
+        if (inputValue) {
+            onClick(inputValue);
+        }
+    }, [inputValue, onClick]);
+
     return (
-        <>
-            <input type="text" value={inputValue} onChange={onChange}/>
-            <button onClick={onClick}>Enter</button>
-        </>
+        <form onSubmit={onSubmit}>
+            <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
+            <button type="submit">Enter</button>
+        </form>
     );
 }
 

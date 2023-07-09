@@ -7,32 +7,29 @@ import api from "../../api.js";
 
 function Room() {
     const [userExist, setUserExist] = useState(false);
-    const [playerName, setPlayerName] = useState();
     const {bets, loadBets, deleteEstimate, showEstimate} = useUserVote();
-
-    const changePlayerName = useCallback(event => setPlayerName(event.target.value), []);
 
     const params = useParams();
 
     const addNewPlayer = useCallback((roomId, playerName) => {
         api.addPlayerToRoom(roomId, playerName).then(result => {
-            localStorage.setItem("playerId", result);
+            const player = {playerId: result, playerName: playerName};
+            localStorage.setItem("player", JSON.stringify(player));
             setUserExist(true);
+            loadBets(params.roomId);
         });
-    }, []);
+    }, [loadBets, params.roomId]);
 
     useEffect(() => {
-        const playerId = localStorage.getItem("playerId");
-        api.getRoomPlayers(params.roomId).then(result => {
-            const found = result.find(element => element == playerId);
-            if (found) {
-                setUserExist(true);
-                console.log("User found");
-            } else {
-                setUserExist(false);
-                console.log("User not found");
-            }
-        });
+        const roomId = localStorage.getItem("roomId");
+        const player = JSON.parse(localStorage.getItem("player") || null);
+        if (roomId !== params.roomId || !player) {
+            localStorage.removeItem("player");
+            setUserExist(false);
+        } else {
+            setUserExist(true);
+        }
+        localStorage.setItem("roomId", params.roomId);
     }, [params.roomId]);
 
     useEffect(() => {
@@ -71,8 +68,7 @@ function Room() {
             {!userExist &&
                 <div>
                     <label>Display name:</label>
-                    <EnterOneFieldPopup inputValue={playerName} onChange={changePlayerName}
-                                        onClick={() => addNewPlayer(params.roomId, playerName)}/>
+                    <EnterOneFieldPopup onClick={(playerName) => addNewPlayer(params.roomId, playerName)}/>
                 </div>
             }
         </>

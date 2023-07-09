@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import api from "../../api.js";
 
@@ -8,26 +8,26 @@ function Home() {
     const [roomId, setRoomId] = useState();
     const [loading, setLoading] = useState(false);
 
-    const onCreateRoom = (event) => {
+    const onCreateRoom = useCallback((event) => {
         event.preventDefault();
         setLoading(true)
         if (playerName) {
             api.createRoom(playerName).then(response => {
                 setLoading(false)
-                const room = {roomId: response.roomId, playerId: response.playerId, playerName}
-                localStorage.setItem(response.roomId, JSON.stringify(room));
+                const player = {playerId: response.playerId, playerName: playerName};
+                localStorage.setItem("player", JSON.stringify(player));
+                localStorage.setItem("roomId", response.roomId);
                 navigate(`/room/${response.roomId}`);
             });
         }
-    }
+    }, [navigate, playerName]);
 
-    const onEnterRoom = (event) => {
+    const onEnterRoom = useCallback((event) => {
         event.preventDefault();
-        setLoading(true)
         if (roomId) {
-            setLoading(false)
+            navigate(`/room/${roomId}`);
         }
-    }
+    }, [navigate, roomId]);
 
     return (
         <div>
