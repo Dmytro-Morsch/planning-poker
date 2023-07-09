@@ -1,52 +1,55 @@
-import {useCallback, useState} from "react";
+import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-
-import {EnterOneFieldPopup} from "../";
 import api from "../../api.js";
 
 function Home() {
-    const [roomId, setRoomId] = useState();
-    const [playerName, setPlayerName] = useState();
-    const [isCreateRoomPopupVisible, setIsCreateRoomPopupVisible] = useState(false);
-    const [isEnterRoomPopupVisible, setIsEnterRoomPopupVisible] = useState(false);
-
     const navigate = useNavigate();
+    const [playerName, setPlayerName] = useState();
+    const [roomId, setRoomId] = useState();
+    const [loading, setLoading] = useState(false);
 
-    const changeRoomId = useCallback(event => setRoomId(event.target.value), []);
-    const changePlayerName = useCallback(event => setPlayerName(event.target.value), []);
+    const onCreateRoom = (event) => {
+        event.preventDefault();
+        setLoading(true)
+        if (playerName) {
+            api.createRoom(playerName).then(response => {
+                setLoading(false)
+                const room = {roomId: response.roomId, playerId: response.playerId, playerName}
+                localStorage.setItem(response.roomId, JSON.stringify(room));
+                navigate(`/room/${response.roomId}`);
+            });
+        }
+    }
 
-    const enterToRoom = useCallback(() => navigate(`room/${roomId}`), [navigate, roomId]);
-    const createRoom = useCallback(() => {
-        console.log("Create room")
-        api.createRoom(playerName).then(result => {
-            console.log(result);
-            localStorage.setItem("playerId", result.playerId);
-            navigate(`/room/${result.roomId}`);
-        });
-    }, [navigate, playerName]);
+    const onEnterRoom = (event) => {
+        event.preventDefault();
+        setLoading(true)
+        if (roomId) {
+            setLoading(false)
+        }
+    }
 
     return (
-        <>
+        <div>
             <h1>Welcome</h1>
-            <div className="buttons">
-                <button onClick={() => setIsCreateRoomPopupVisible(true)}>Create new room</button>
-                <button onClick={() => setIsEnterRoomPopupVisible(true)}>Enter room</button>
+
+            <div style={{display: 'flex'}}>
+                <div style={{flex: '50%', height: "100px"}}>
+                    <h3>Create new room</h3>
+                    <form onSubmit={onCreateRoom}>
+                        <input type="text" placeholder="Your name" onChange={e => setPlayerName(e.target.value)}/>
+                        <button type="submit" disabled={!playerName || loading}>Create</button>
+                    </form>
+                </div>
+                <div style={{flex: '50%', height: "100px"}}>
+                    <h3>Enter existing room</h3>
+                    <form onSubmit={onEnterRoom}>
+                        <input type="text" placeholder="Room ID" onChange={e => setRoomId(e.target.value)}/>
+                        <button type="submit" disabled={!roomId || loading}>Enter</button>
+                    </form>
+                </div>
             </div>
-
-            {isCreateRoomPopupVisible &&
-                <div>
-                    <label>Display name:</label>
-                    <EnterOneFieldPopup inputValue={playerName} onChange={changePlayerName} onClick={createRoom}/>
-                </div>
-            }
-
-            {isEnterRoomPopupVisible &&
-                <div>
-                    <label>Room:</label>
-                    <EnterOneFieldPopup inputValue={roomId} onChange={changeRoomId} onClick={enterToRoom}/>
-                </div>
-            }
-        </>
+        </div>
     );
 }
 
