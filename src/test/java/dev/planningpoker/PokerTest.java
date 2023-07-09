@@ -111,7 +111,7 @@ public class PokerTest {
 
         // Someone opens all cards
         mockMvc.perform(post("/api/room/1/show"))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isOk());
 
         // Get the room state
         mockMvc.perform(get("/api/room/1"))

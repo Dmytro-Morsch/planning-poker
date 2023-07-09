@@ -62,18 +62,6 @@ public class PokerController {
         return ResponseEntity.ok(votes);
     }
 
-    private Map<String, Integer> getVotes(Long roomId, Boolean shown) {
-        Map<String, Integer> votes = pokerRepository.getVotes(roomId);
-        if (!shown) {
-            for (String player : votes.keySet()) {
-                if (votes.get(player) != null) {
-                    votes.put(player, -1);
-                }
-            }
-        }
-        return votes;
-    }
-
     @GetMapping("/api/room/{roomId}/players")
     private ResponseEntity<?> getPlayers(@PathVariable Long roomId) {
         if (!pokerRepository.roomExists(roomId)) {
@@ -99,6 +87,19 @@ public class PokerController {
             return new ResponseEntity<>("Room not found!", HttpStatus.NOT_FOUND);
         }
         pokerRepository.showVotes(roomId);
-        return ResponseEntity.noContent().build();
+        var votes = getVotes(roomId, false);
+        return ResponseEntity.ok(votes);
+    }
+
+    private Map<String, Integer> getVotes(Long roomId, boolean shown) {
+        Map<String, Integer> votes = pokerRepository.getVotes(roomId);
+        if (!shown) {
+            for (String player : votes.keySet()) {
+                if (votes.get(player) != null) {
+                    votes.put(player, -1);
+                }
+            }
+        }
+        return votes;
     }
 }
