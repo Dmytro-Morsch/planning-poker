@@ -23,6 +23,12 @@ function Room() {
         });
     }, [setVotes, params.roomId]);
 
+    function deletePlayer(playerId) {
+        if (confirm("Sure?")) {
+            api.deletePlayer(playerId).then(setVotes);
+        }
+    }
+
     useEffect(() => {
         const roomId = localStorage.getItem("roomId");
         const player = JSON.parse(localStorage.getItem("player") || null);
@@ -62,6 +68,7 @@ function Room() {
                         <tr key={`vote-${vote.playerId}`}>
                             <td>{vote.playerName}</td>
                             <td>{vote.value}</td>
+                            <td><button onClick={() => deletePlayer(vote.playerId)}>delete</button></td>
                         </tr>
                     ))}
                     </tbody>

@@ -19,6 +19,12 @@ const api = {
         });
         return await response.json();
     },
+    deletePlayer: async  (playerId) => {
+        const response = await fetch('/api/player/' + playerId + '/delete', {
+            method: 'POST'
+        });
+        return await response.json();
+    },
     vote: async (playerId, value) => {
         const response = await fetch('/api/vote/' + playerId, {
             method: 'POST',
