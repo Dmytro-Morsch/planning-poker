@@ -7,6 +7,7 @@ import api from "../../api.js";
 
 function Room() {
     const [userExist, setUserExist] = useState(false);
+    const [player, setPlayer] = useState(JSON.parse(localStorage.getItem("player") || null));
     const {bets, setBets, loadBets, deleteEstimate, showEstimate} = useUserVote();
 
     const params = useParams();
@@ -17,6 +18,7 @@ function Room() {
             setBets(result.bets);
             const player = {playerId: playerId, playerName: playerName};
             localStorage.setItem("player", JSON.stringify(player));
+            setPlayer(player);
             setUserExist(true);
         });
     }, [setBets]);
@@ -39,7 +41,7 @@ function Room() {
 
     return (
         <>
-            <h1>Room {params.roomId}</h1>
+            <h1>Room {params.roomId} {player?.playerName}</h1>
 
             <Cards/>
 
