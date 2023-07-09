@@ -3,6 +3,7 @@ import api from "../api.js";
 
 export const UserVoteContext = createContext({
     bets: {},
+    setBets: () => console.log("setBets"),
     loadBets: () => console.log("loadBets"),
     updateBets: () => console.log("updateBets"),
     deleteEstimate: () => console.log("deleteEstimate"),
@@ -38,11 +39,12 @@ export function UserVoteProvider({children}) {
 
     const value = useMemo(() => ({
         bets,
+        setBets,
         loadBets,
         updateBets,
         deleteEstimate,
         showEstimate
-    }), [bets, deleteEstimate, loadBets, showEstimate, updateBets]);
+    }), [bets, setBets, deleteEstimate, loadBets, showEstimate, updateBets]);
 
     return <UserVoteContext.Provider value={value}>{children}</UserVoteContext.Provider>
 }

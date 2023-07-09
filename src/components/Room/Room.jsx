@@ -7,18 +7,19 @@ import api from "../../api.js";
 
 function Room() {
     const [userExist, setUserExist] = useState(false);
-    const {bets, loadBets, deleteEstimate, showEstimate} = useUserVote();
+    const {bets, setBets, loadBets, deleteEstimate, showEstimate} = useUserVote();
 
     const params = useParams();
 
     const addNewPlayer = useCallback((roomId, playerName) => {
         api.addPlayerToRoom(roomId, playerName).then(result => {
-            const player = {playerId: result, playerName: playerName};
+            const playerId = result.playerId;
+            setBets(result.bets);
+            const player = {playerId: playerId, playerName: playerName};
             localStorage.setItem("player", JSON.stringify(player));
             setUserExist(true);
-            loadBets(params.roomId);
         });
-    }, [loadBets, params.roomId]);
+    }, [setBets]);
 
     useEffect(() => {
         const roomId = localStorage.getItem("roomId");
