@@ -76,6 +76,7 @@ public class PokerController {
         if (!pokerRepository.roomExists(roomId)) {
             return new ResponseEntity<>("Room not found!", HttpStatus.NOT_FOUND);
         }
+        pokerRepository.hideVotes(roomId);
         pokerRepository.clearVotes(roomId);
         var votes = getVotes(roomId, false);
         return ResponseEntity.ok(votes);
@@ -87,7 +88,7 @@ public class PokerController {
             return new ResponseEntity<>("Room not found!", HttpStatus.NOT_FOUND);
         }
         pokerRepository.showVotes(roomId);
-        var votes = getVotes(roomId, false);
+        var votes = getVotes(roomId, true);
         return ResponseEntity.ok(votes);
     }
 

@@ -79,7 +79,15 @@ public class PokerRepository {
     public void showVotes(Long roomId) {
         jdbcTemplate.update("""
                 update room
-                set cards_shown=not cards_shown
+                set cards_shown=true
+                where id=:roomId
+                """, Map.of("roomId", roomId));
+    }
+
+    public void hideVotes(Long roomId) {
+        jdbcTemplate.update("""
+                update room
+                set cards_shown=false
                 where id=:roomId
                 """, Map.of("roomId", roomId));
     }
