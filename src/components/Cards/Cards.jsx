@@ -1,30 +1,21 @@
-import {useCallback} from "react";
-import {useUserVote} from "../../context/UserVote.context.jsx";
-
+import {useState} from "react";
 import {CardVote} from '../'
 
 import './Cards.css';
 
-function Cards() {
-    const {vote} = useUserVote();
+function Cards({onCardSelected}) {
+    const [selectedCard, setSelectedCard] = useState()
 
-    const onCardClick = useCallback(async (value) => {
-        const playerId = JSON.parse(localStorage.getItem("player" || null)).playerId;
-        vote(playerId, value);
-    }, [vote]);
+    function onClick(value){
+        setSelectedCard(value);
+        onCardSelected(value)
+    }
 
     return (
         <div className="card-block">
-            <CardVote onClick={onCardClick} value={0}/>
-            <CardVote onClick={onCardClick} value={1}/>
-            <CardVote onClick={onCardClick} value={2}/>
-            <CardVote onClick={onCardClick} value={3}/>
-            <CardVote onClick={onCardClick} value={5}/>
-            <CardVote onClick={onCardClick} value={8}/>
-            <CardVote onClick={onCardClick} value={13}/>
-            <CardVote onClick={onCardClick} value={20}/>
-            <CardVote onClick={onCardClick} value={40}/>
-            <CardVote onClick={onCardClick} value={100}/>
+            {[0, 1, 2, 3, 5, 8, 13, 20, 40, 100].map((value) => (
+                <CardVote onClick={onClick} value={value} selected={value === selectedCard}/>
+            ))}
         </div>
     );
 }

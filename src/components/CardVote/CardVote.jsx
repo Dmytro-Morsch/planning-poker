@@ -1,12 +1,10 @@
 import './CardVote.css';
 
-function CardVote(props) {
-    const {onClick, value} = props;
-
+function CardVote({onClick, value, selected}) {
     return (
         <div className="card">
             <button className="button vote" onClick={() => onClick(value)}>
-                <span>{value}</span>
+                <span>{value}{selected && '*' }</span>
             </button>
         </div>
     );

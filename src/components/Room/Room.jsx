@@ -8,7 +8,7 @@ import api from "../../api.js";
 function Room() {
     const [userExist, setUserExist] = useState(false);
     const [player, setPlayer] = useState(JSON.parse(localStorage.getItem("player") || null));
-    const {votes, setVotes, loadVotes, clearVotes, showVotes} = useUserVote();
+    const {votes, setVotes, loadVotes, clearVotes, showVotes, vote} = useUserVote();
 
     const params = useParams();
 
@@ -43,7 +43,7 @@ function Room() {
         <>
             <h1>Room {params.roomId} {player?.playerName}</h1>
 
-            {userExist && <Cards/>}
+            {userExist && <Cards onCardSelected={(value) => vote(player.playerId, value)}/>}
 
             <div>
                 <div>
