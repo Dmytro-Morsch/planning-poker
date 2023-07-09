@@ -25,15 +25,15 @@ public class PokerRepository {
         return (long) keyHolder.getKeys().get("id");
     }
 
-    public Map<String, Integer> getBets(Long roomId) {
+    public Map<String, Integer> getVotes(Long roomId) {
         Map<String, Integer> result = new HashMap<>();
 
         jdbcTemplate.query("""
                 select * from player where room_id=:roomId
                 """, Map.of("roomId", roomId), rs -> {
             String playerName = rs.getString("name");
-            Integer bet = rs.getObject("bet", Integer.class);
-            result.put(playerName, bet);
+            Integer vote = rs.getObject("vote", Integer.class);
+            result.put(playerName, vote);
         });
         return result;
     }
@@ -51,12 +51,12 @@ public class PokerRepository {
         return (long) keyHolder.getKeys().get("id");
     }
 
-    public boolean placeBet(Long playerId, Integer bet) {
+    public boolean vote(Long playerId, Integer vote) {
         int update = jdbcTemplate.update("""
                 update player
-                set bet=:bet
+                set vote=:vote
                 where id=:playerId
-                """, Map.of("bet", bet, "playerId", playerId));
+                """, Map.of("vote", vote, "playerId", playerId));
         return update > 0;
     }
 
@@ -68,15 +68,15 @@ public class PokerRepository {
         return DataAccessUtils.singleResult(list);
     }
 
-    public void clearBets(Long roomId) {
+    public void clearVotes(Long roomId) {
         jdbcTemplate.update("""
                 update player
-                set bet=null
+                set vote=null
                 where room_id=:roomId
                 """, Map.of("roomId", roomId));
     }
 
-    public void showBets(Long roomId) {
+    public void showVotes(Long roomId) {
         jdbcTemplate.update("""
                 update room
                 set cards_shown=not cards_shown

@@ -64,18 +64,18 @@ public class PokerTest {
     }
 
     @Test
-    public void testPlaceBet() throws Exception {
+    public void testVote() throws Exception {
         // A player creates a room
         mockMvc.perform(post("/api/room").content("First Player"))
                 .andExpect(jsonPath("$.roomId").value("1"));
 
-        // The player places a bet
-        mockMvc.perform(post("/api/bet/1").content("5"))
+        // The player votes
+        mockMvc.perform(post("/api/vote/1").content("5"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testGetRoomWithHiddenBets() throws Exception {
+    public void testGetRoomWithHiddenVotes() throws Exception {
         // First player creates a room
         mockMvc.perform(post("/api/room").content("First Player"))
                 .andExpect(jsonPath("$.roomId").value("1"));
@@ -84,8 +84,8 @@ public class PokerTest {
         mockMvc.perform(post("/api/room/1/player").content("Second Player"))
                 .andExpect(jsonPath("$.playerId").value("2"));
 
-        // Second player places a bet
-        mockMvc.perform(post("/api/bet/2").content("5"))
+        // Second player votes
+        mockMvc.perform(post("/api/vote/2").content("5"))
                 .andExpect(status().isOk());
 
         // Get the room state
@@ -96,7 +96,7 @@ public class PokerTest {
     }
 
     @Test
-    public void testGetRoomWithShownBets() throws Exception {
+    public void testGetRoomWithShownVotes() throws Exception {
         // First player creates a room
         mockMvc.perform(post("/api/room").content("First Player"))
                 .andExpect(jsonPath("$.roomId").value("1"));
@@ -105,8 +105,8 @@ public class PokerTest {
         mockMvc.perform(post("/api/room/1/player").content("Second Player"))
                 .andExpect(jsonPath("$.playerId").value("2"));
 
-        // Second player places a bet
-        mockMvc.perform(post("/api/bet/2").content("5"))
+        // Second player votes
+        mockMvc.perform(post("/api/vote/2").content("5"))
                 .andExpect(status().isOk());
 
         // Someone opens all cards
