@@ -4,17 +4,14 @@ import {useUserVote} from "../../context/UserVote.context.jsx";
 import {CardVote} from '../'
 
 import './Cards.css';
-import {useParams} from "react-router-dom";
 
 function Cards() {
     const {updateBets} = useUserVote();
 
-    const params = useParams();
-
     const makeVote = useCallback(async (bet) => {
         let playerId = JSON.parse(localStorage.getItem("player" || null)).playerId;
-        updateBets(playerId, bet, params.roomId);
-    }, [updateBets, params.roomId]);
+        updateBets(playerId, bet);
+    }, [updateBets]);
 
     return (
         <div className="card-block">

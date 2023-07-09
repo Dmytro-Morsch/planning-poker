@@ -19,11 +19,11 @@ export function UserVoteProvider({children}) {
         });
     }, []);
 
-    const updateBets = useCallback((playerId, bet, roomId) => {
-        api.placeBet(playerId, bet).then(() => {
-            loadBets(roomId);
+    const updateBets = useCallback((playerId, bet) => {
+        api.placeBet(playerId, bet).then((bets) => {
+            setBets(bets);
         });
-    }, [loadBets]);
+    }, []);
 
     const deleteEstimate = useCallback((roomId) => {
         api.clearEstimate(roomId).then((bets) => {

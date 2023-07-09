@@ -19,17 +19,12 @@ const api = {
         });
         return await response.json();
     },
-    getRoomPlayers: async (roomId) => {
-        const response = await fetch('/api/room/' + roomId + '/players', {
-            method: 'GET'
-        });
-        return await response.json();
-    },
     placeBet: async (playerId, bet) => {
-        await fetch('/api/bet/' + playerId, {
+        const response = await fetch('/api/bet/' + playerId, {
             method: 'POST',
             body: bet
         });
+        return await response.json();
     },
     clearEstimate: async (roomId) => {
         const response = await fetch('/api/room/' + roomId + '/clear', {
