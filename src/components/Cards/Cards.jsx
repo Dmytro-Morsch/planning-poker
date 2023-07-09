@@ -13,8 +13,8 @@ function Cards({onCardSelected}) {
 
     return (
         <div className="card-block">
-            {[0, 1, 2, 3, 5, 8, 13, 20, 40, 100].map((value) => (
-                <CardVote key={value} onClick={onClick} value={value} selected={value === selectedCard}/>
+            {['0', '1', '2', '3', '5', '8', '13', '20', '50', '∞', '?', '☕'].map((value, index) => (
+                <CardVote key={index} onClick={onClick} value={value} selected={value === selectedCard}/>
             ))}
         </div>
     );
