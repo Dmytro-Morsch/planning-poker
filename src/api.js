@@ -32,9 +32,10 @@ const api = {
         });
     },
     clearEstimate: async (roomId) => {
-        await fetch('/api/room/' + roomId + '/clear', {
+        const response = await fetch('/api/room/' + roomId + '/clear', {
             method: 'POST'
         });
+        return await response.json();
     },
     showEstimate: async (roomId) => {
         await fetch('/api/room/' + roomId + '/show', {

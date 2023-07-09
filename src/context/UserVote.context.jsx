@@ -26,10 +26,10 @@ export function UserVoteProvider({children}) {
     }, [loadBets]);
 
     const deleteEstimate = useCallback((roomId) => {
-        api.clearEstimate(roomId).then(() => {
-            loadBets(roomId);
+        api.clearEstimate(roomId).then((bets) => {
+            setBets(bets);
         });
-    }, [loadBets]);
+    }, []);
 
     const showEstimate = useCallback((roomId) => {
         api.showEstimate(roomId).then(() => {

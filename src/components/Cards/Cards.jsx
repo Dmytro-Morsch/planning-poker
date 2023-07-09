@@ -12,7 +12,7 @@ function Cards() {
     const params = useParams();
 
     const makeVote = useCallback(async (bet) => {
-        let playerId = localStorage.getItem("playerId");
+        let playerId = JSON.parse(localStorage.getItem("player" || null)).playerId;
         updateBets(playerId, bet, params.roomId);
     }, [updateBets, params.roomId]);
 
