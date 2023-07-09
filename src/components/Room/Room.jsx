@@ -2,7 +2,7 @@ import {useCallback, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {useUserVote} from "../../context/UserVote.context.jsx";
 
-import {Cards, EnterOneFieldPopup} from "../";
+import {Cards, JoinGamePopup} from "../";
 import api from "../../api.js";
 
 function Room() {
@@ -12,8 +12,8 @@ function Room() {
 
     const params = useParams();
 
-    const addNewPlayer = useCallback((roomId, playerName) => {
-        api.addPlayerToRoom(roomId, playerName).then(result => {
+    const addNewPlayer = useCallback((playerName) => {
+        api.addPlayerToRoom(params.roomId, playerName).then(result => {
             const playerId = result.playerId;
             setBets(result.bets);
             const player = {playerId: playerId, playerName: playerName};
@@ -21,7 +21,7 @@ function Room() {
             setPlayer(player);
             setUserExist(true);
         });
-    }, [setBets]);
+    }, [setBets, params.roomId]);
 
     useEffect(() => {
         const roomId = localStorage.getItem("roomId");
@@ -68,12 +68,7 @@ function Room() {
                 </table>
             </div>
 
-            {!userExist &&
-                <div>
-                    <label>Display name:</label>
-                    <EnterOneFieldPopup onClick={(playerName) => addNewPlayer(params.roomId, playerName)}/>
-                </div>
-            }
+            {!userExist && <JoinGamePopup onClick={addNewPlayer}/>}
         </>
     );
 }
