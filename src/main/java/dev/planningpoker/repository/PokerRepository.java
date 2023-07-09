@@ -29,7 +29,9 @@ public class PokerRepository {
 
     public List<Vote> getVotes(Long roomId) {
         return jdbcTemplate.query("""
-                select * from player where room_id=:roomId
+                select * from player 
+                where room_id=:roomId
+                order by id
                 """, Map.of("roomId", roomId), this::mapVote);
     }
 
