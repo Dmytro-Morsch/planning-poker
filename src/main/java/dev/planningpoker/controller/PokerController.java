@@ -63,15 +63,6 @@ public class PokerController {
         return ResponseEntity.ok(votes);
     }
 
-    @GetMapping("/api/room/{roomId}/players")
-    private ResponseEntity<?> getPlayers(@PathVariable Long roomId) {
-        if (!pokerRepository.roomExists(roomId)) {
-            return new ResponseEntity<>("Room not found!", HttpStatus.NOT_FOUND);
-        }
-        List<Long> playersId = pokerRepository.getPlayersId(roomId);
-        return ResponseEntity.ok(playersId);
-    }
-
     @PostMapping("/api/room/{roomId}/clear")
     private ResponseEntity<?> clearVotes(@PathVariable Long roomId) {
         if (!pokerRepository.roomExists(roomId)) {

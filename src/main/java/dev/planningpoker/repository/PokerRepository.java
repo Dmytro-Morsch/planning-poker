@@ -89,7 +89,6 @@ public class PokerRepository {
                 """, Map.of("roomId", roomId));
     }
 
-    @SuppressWarnings("DataFlowIssue")
     public boolean roomExists(Long roomId) {
         return jdbcTemplate.queryForObject("""
                 select exists(select 1 from room where id=:roomId)
@@ -101,12 +100,6 @@ public class PokerRepository {
                 select cards_shown from room where id=:roomId
                 """, Map.of("roomId", roomId), Boolean.class);
         return DataAccessUtils.singleResult(list);
-    }
-
-    public List<Long> getPlayersId(Long roomId) {
-        return jdbcTemplate.queryForList("""
-                select id from player where room_id=:roomId
-                """, Map.of("roomId", roomId), Long.class);
     }
 
     private Vote mapVote(ResultSet rs, int rowNum) throws SQLException {
