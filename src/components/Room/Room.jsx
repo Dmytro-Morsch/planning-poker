@@ -43,7 +43,7 @@ function Room() {
         <>
             <h1>Room {params.roomId} {player?.playerName}</h1>
 
-            <Cards/>
+            {userExist && <Cards/>}
 
             <div>
                 <div>
