@@ -60,6 +60,14 @@ public class PokerRepository {
         return update > 0;
     }
 
+    public Long getRoomIdByPlayerId(Long playerId) {
+        List<Long> list = jdbcTemplate.queryForList("""
+                select room_id from player
+                where id=:playerId
+                """, Map.of("playerId", playerId), Long.class);
+        return DataAccessUtils.singleResult(list);
+    }
+
     public void clearBets(Long roomId) {
         jdbcTemplate.update("""
                 update player

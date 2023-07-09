@@ -71,7 +71,7 @@ public class PokerTest {
 
         // The player places a bet
         mockMvc.perform(post("/api/bet/1").content("5"))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -86,7 +86,7 @@ public class PokerTest {
 
         // Second player places a bet
         mockMvc.perform(post("/api/bet/2").content("5"))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isOk());
 
         // Get the room state
         mockMvc.perform(get("/api/room/1"))
@@ -107,7 +107,7 @@ public class PokerTest {
 
         // Second player places a bet
         mockMvc.perform(post("/api/bet/2").content("5"))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isOk());
 
         // Someone opens all cards
         mockMvc.perform(post("/api/room/1/show"))

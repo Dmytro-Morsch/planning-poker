@@ -40,7 +40,15 @@ public class PokerController {
         if (!pokerRepository.placeBet(playerId, Integer.parseInt(bet))) {
             return new ResponseEntity<>("Player not found!", HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.noContent().build();
+
+        Long roomId = pokerRepository.getRoomIdByPlayerId(playerId);
+        Boolean shown = pokerRepository.areCardsShown(roomId);
+        if (shown == null) {
+            return new ResponseEntity<>("Room not found!", HttpStatus.NOT_FOUND);
+        }
+
+        Map<String, Integer> bets = getBets(roomId, shown);
+        return ResponseEntity.ok(bets);
     }
 
     @GetMapping("/api/room/{roomId}")
