@@ -43,7 +43,11 @@ function Room() {
 
     useEffect(() => {
         loadVotes(params.roomId);
-    }, [loadVotes, params.roomId]);
+        const interval = setInterval(() => {
+            loadVotes(params.roomId);
+        }, 2000);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <>
