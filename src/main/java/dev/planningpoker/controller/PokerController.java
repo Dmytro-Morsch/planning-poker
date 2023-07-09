@@ -81,7 +81,8 @@ public class PokerController {
             return new ResponseEntity<>("Room not found!", HttpStatus.NOT_FOUND);
         }
         pokerRepository.clearBets(roomId);
-        return ResponseEntity.noContent().build();
+        Map<String, Integer> bets = getBets(roomId, false);
+        return ResponseEntity.ok(bets);
     }
 
     @PostMapping("/api/room/{roomId}/show")
