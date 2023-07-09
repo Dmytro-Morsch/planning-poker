@@ -1,6 +1,6 @@
 package dev.planningpoker.repository;
 
-import dev.planningpoker.Vote;
+import dev.planningpoker.model.Vote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -48,7 +48,7 @@ public class PokerRepository {
         return (long) keyHolder.getKeys().get("id");
     }
 
-    public boolean vote(Long playerId, Integer vote) {
+    public boolean vote(Long playerId, String vote) {
         int update = jdbcTemplate.update("""
                 update player
                 set vote=:vote
@@ -114,7 +114,7 @@ public class PokerRepository {
         Vote vote = new Vote();
         vote.playerId = rs.getLong("id");
         vote.playerName = rs.getString("name");
-        vote.value = rs.getObject("vote", Integer.class);
+        vote.value = rs.getString("vote");
         return vote;
     }
 }

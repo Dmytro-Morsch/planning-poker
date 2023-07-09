@@ -8,6 +8,6 @@ create table player
 (
     id      bigint primary key generated always as identity,
     name    varchar(100) not null,
-    vote    int,
+    vote    varchar(5),
     room_id bigint       not null references room (id)
 );

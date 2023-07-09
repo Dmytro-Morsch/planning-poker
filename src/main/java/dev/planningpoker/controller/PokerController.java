@@ -1,6 +1,6 @@
 package dev.planningpoker.controller;
 
-import dev.planningpoker.Vote;
+import dev.planningpoker.model.Vote;
 import dev.planningpoker.repository.PokerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +38,7 @@ public class PokerController {
     @PostMapping("/api/vote/{playerId}")
     private ResponseEntity<?> vote(@PathVariable Long playerId,
                                    @RequestBody String value) {
-        if (!pokerRepository.vote(playerId, Integer.parseInt(value))) {
+        if (!pokerRepository.vote(playerId, value)) {
             return new ResponseEntity<>("Player not found!", HttpStatus.NOT_FOUND);
         }
 
@@ -100,7 +100,7 @@ public class PokerController {
         if (!shown) {
             for (Vote vote : votes) {
                 if (vote.value != null) {
-                    vote.value = -1;
+                    vote.value = "☑";
                 }
             }
         }
