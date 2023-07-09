@@ -8,20 +8,20 @@ import api from "../../api.js";
 function Room() {
     const [userExist, setUserExist] = useState(false);
     const [player, setPlayer] = useState(JSON.parse(localStorage.getItem("player") || null));
-    const {bets, setBets, loadBets, deleteEstimate, showEstimate} = useUserVote();
+    const {votes, setVotes, loadVotes, clearVotes, showVotes} = useUserVote();
 
     const params = useParams();
 
     const addNewPlayer = useCallback((playerName) => {
         api.addPlayerToRoom(params.roomId, playerName).then(result => {
             const playerId = result.playerId;
-            setBets(result.bets);
-            const player = {playerId: playerId, playerName: playerName};
+            setVotes(result.votes);
+            const player = {playerId, playerName};
             localStorage.setItem("player", JSON.stringify(player));
             setPlayer(player);
             setUserExist(true);
         });
-    }, [setBets, params.roomId]);
+    }, [setVotes, params.roomId]);
 
     useEffect(() => {
         const roomId = localStorage.getItem("roomId");
@@ -36,8 +36,8 @@ function Room() {
     }, [params.roomId]);
 
     useEffect(() => {
-        loadBets(params.roomId);
-    }, [loadBets, params.roomId]);
+        loadVotes(params.roomId);
+    }, [loadVotes, params.roomId]);
 
     return (
         <>
@@ -47,8 +47,8 @@ function Room() {
 
             <div>
                 <div>
-                    <button onClick={() => deleteEstimate(params.roomId)}>Delete Estimate</button>
-                    <button onClick={() => showEstimate(params.roomId)}>Show</button>
+                    <button onClick={() => clearVotes(params.roomId)}>Clear</button>
+                    <button onClick={() => showVotes(params.roomId)}>Show</button>
                 </div>
                 <table>
                     <thead>
@@ -58,9 +58,9 @@ function Room() {
                     </tr>
                     </thead>
                     <tbody>
-                    {Object.entries(bets).map(([key, value]) => (
-                        <tr key={`bets-${key}`}>
-                            <td>{key}</td>
+                    {Object.entries(votes).map(([player, value]) => (
+                        <tr key={`vote-${player}`}>
+                            <td>{player}</td>
                             <td>{value}</td>
                         </tr>
                     ))}

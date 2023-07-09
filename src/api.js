@@ -6,7 +6,7 @@ const api = {
         });
         return await response.json();
     },
-    getBets: async (roomId) => {
+    getVotes: async (roomId) => {
         const response = await fetch('/api/room/' + roomId, {
             method: 'GET',
         });
@@ -19,20 +19,20 @@ const api = {
         });
         return await response.json();
     },
-    placeBet: async (playerId, bet) => {
-        const response = await fetch('/api/bet/' + playerId, {
+    vote: async (playerId, value) => {
+        const response = await fetch('/api/vote/' + playerId, {
             method: 'POST',
-            body: bet
+            body: value
         });
         return await response.json();
     },
-    clearEstimate: async (roomId) => {
+    clearVotes: async (roomId) => {
         const response = await fetch('/api/room/' + roomId + '/clear', {
             method: 'POST'
         });
         return await response.json();
     },
-    showEstimate: async (roomId) => {
+    showVotes: async (roomId) => {
         await fetch('/api/room/' + roomId + '/show', {
             method: 'POST'
         });

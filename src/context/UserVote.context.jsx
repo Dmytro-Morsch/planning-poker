@@ -2,49 +2,49 @@ import {createContext, useCallback, useContext, useMemo, useState} from "react";
 import api from "../api.js";
 
 export const UserVoteContext = createContext({
-    bets: {},
-    setBets: () => console.log("setBets"),
-    loadBets: () => console.log("loadBets"),
-    updateBets: () => console.log("updateBets"),
-    deleteEstimate: () => console.log("deleteEstimate"),
-    showEstimate: () => console.log("showEstimate"),
+    votes: {},
+    setVotes: () => console.log("setVotes"),
+    loadVotes: () => console.log("loadVotes"),
+    vote: () => console.log("vote"),
+    clearVotes: () => console.log("clearVotes"),
+    showVotes: () => console.log("showVotes"),
 });
 
 export function UserVoteProvider({children}) {
-    const [bets, setBets] = useState({});
+    const [votes, setVotes] = useState({});
 
-    const loadBets = useCallback(async (roomId) => {
-        api.getBets(roomId).then(result => {
-            setBets(result);
+    const loadVotes = useCallback(async (roomId) => {
+        api.getVotes(roomId).then(result => {
+            setVotes(result);
         });
     }, []);
 
-    const updateBets = useCallback((playerId, bet) => {
-        api.placeBet(playerId, bet).then((bets) => {
-            setBets(bets);
+    const vote = useCallback((playerId, vote) => {
+        api.vote(playerId, vote).then((votes) => {
+            setVotes(votes);
         });
     }, []);
 
-    const deleteEstimate = useCallback((roomId) => {
-        api.clearEstimate(roomId).then((bets) => {
-            setBets(bets);
+    const clearVotes = useCallback((roomId) => {
+        api.clearVotes(roomId).then((votes) => {
+            setVotes(votes);
         });
     }, []);
 
-    const showEstimate = useCallback((roomId) => {
-        api.showEstimate(roomId).then(() => {
-            loadBets(roomId);
+    const showVotes = useCallback((roomId) => {
+        api.showVotes(roomId).then(() => {
+            loadVotes(roomId);
         });
-    }, [loadBets]);
+    }, [loadVotes]);
 
     const value = useMemo(() => ({
-        bets,
-        setBets,
-        loadBets,
-        updateBets,
-        deleteEstimate,
-        showEstimate
-    }), [bets, setBets, deleteEstimate, loadBets, showEstimate, updateBets]);
+        votes,
+        setVotes,
+        loadVotes,
+        vote,
+        clearVotes,
+        showVotes
+    }), [votes, setVotes, clearVotes, loadVotes, showVotes, vote]);
 
     return <UserVoteContext.Provider value={value}>{children}</UserVoteContext.Provider>
 }
