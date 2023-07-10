@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {useGame} from "../../context/Game.context.jsx";
 
@@ -12,25 +12,25 @@ function Room() {
 
     const params = useParams();
 
-    const loadVotes = useCallback(async (roomId) => {
+    function loadVotes(roomId) {
         api.getVotes(roomId).then(setVotes);
-    }, [setVotes]);
+    }
 
-    const vote = useCallback((playerId, vote) => {
+    function vote(playerId, vote) {
         api.vote(playerId, vote).then(setVotes);
-    }, [setVotes]);
+    }
 
-    const clearVotes = useCallback((roomId) => {
+    function clearVotes(roomId) {
         api.clearVotes(roomId).then(setVotes);
-    }, [setVotes]);
+    }
 
-    const showVotes = useCallback((roomId) => {
+    function showVotes(roomId) {
         api.showVotes(roomId).then(setVotes);
-    }, [setVotes]);
+    }
 
-    const deletePlayer = useCallback((playerId) => {
+    function deletePlayer(playerId) {
         api.deletePlayer(playerId).then(setVotes);
-    }, [setVotes]);
+    }
 
     function handleJoinGame(playerName) {
         api.addPlayerToRoom(params.roomId, playerName).then(result => {
