@@ -56,10 +56,12 @@ function Room() {
             {userExist && <Cards onCardSelected={(value) => vote(player.playerId, value)}/>}
 
             <div>
-                <div>
-                    <button onClick={() => clearVotes(params.roomId)}>Clear</button>
-                    <button onClick={() => showVotes(params.roomId)}>Show</button>
-                </div>
+                {player?.playerId && (
+                    <div>
+                        <button onClick={() => clearVotes(params.roomId)}>Clear</button>
+                        <button onClick={() => showVotes(params.roomId)}>Show</button>
+                    </div>
+                )}
                 <table>
                     <thead>
                     <tr>
@@ -72,7 +74,11 @@ function Room() {
                         <tr key={`vote-${vote.playerId}`}>
                             <td>{vote.playerName}</td>
                             <td>{vote.value}</td>
-                            <td><button onClick={() => deletePlayer(vote.playerId)}>delete</button></td>
+                            <td>
+                                {player?.playerId && (
+                                    <button onClick={() => deletePlayer(vote.playerId)}>delete</button>
+                                )}
+                            </td>
                         </tr>
                     ))}
                     </tbody>
