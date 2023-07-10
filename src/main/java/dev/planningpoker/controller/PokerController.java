@@ -35,7 +35,7 @@ public class PokerController {
         return ResponseEntity.ok(Map.of("playerId", playerId, "votes", votes));
     }
 
-    @PostMapping("/api/vote/{playerId}")
+    @PostMapping("/api/player/{playerId}/vote")
     private ResponseEntity<?> vote(@PathVariable Long playerId,
                                    @RequestBody String value) {
         if (!pokerRepository.vote(playerId, value)) {
