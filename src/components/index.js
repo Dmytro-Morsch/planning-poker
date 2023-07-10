@@ -6,6 +6,7 @@ import CardVote from "./CardVote/CardVote.jsx";
 import Header from "./Header/Header.jsx";
 import ShareLinkPopup from "./ShareLinkPopup/ShareLinkPopup.jsx";
 import MainLayout from "./MainLayout/MainLayout.jsx";
+import PageNotFound from "./PageNotFound/PageNotFound.jsx";
 
 export {
     Home,
@@ -15,5 +16,6 @@ export {
     CardVote,
     Header,
     MainLayout,
-    ShareLinkPopup
+    ShareLinkPopup,
+    PageNotFound
 };
