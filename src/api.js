@@ -26,7 +26,7 @@ const api = {
         return await response.json();
     },
     vote: async (playerId, value) => {
-        const response = await fetch('/api/vote/' + playerId, {
+        const response = await fetch('/api/player/' + playerId + '/vote', {
             method: 'POST',
             body: value
         });
