@@ -1,4 +1,3 @@
-import {useState} from "react";
 import {NavLink, useParams} from "react-router-dom";
 import useComponentVisible from "../../useCompontentVisible.js";
 
@@ -7,9 +6,10 @@ import {ShareLinkPopup} from '../';
 import './Header.css';
 
 import share from '../../assets/share.svg'
+import {useUserVote} from "../../context/UserVote.context.jsx";
 
 function Header() {
-    const [player] = useState(JSON.parse(localStorage.getItem("player") || null));
+    const {player} = useUserVote();
 
     const {
         ref: refShareLinkPopup,
@@ -45,7 +45,7 @@ function Header() {
             <div className="menu" ref={refMenuPopup}>
                 {(player && params.roomId) &&
                     <span className="user">
-                        {player.playerName.trim()}
+                        {player.playerName}
                     </span>
                 }
                 <button className="button dropdown" onClick={() => setIsMenuPopupVisible(!isMenuPopupVisible)}>
@@ -53,6 +53,7 @@ function Header() {
                     <span className="nav-line"></span>
                     <span className="nav-line"></span>
                 </button>
+
                 {isMenuPopupVisible &&
                     <div className="dropdown-content">
                         <div className="links">

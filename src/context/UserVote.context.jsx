@@ -3,6 +3,8 @@ import api from "../api.js";
 
 export const UserVoteContext = createContext({
     votes: {},
+    player: {},
+    setPlayer: () => console.log("setPlayer"),
     setVotes: () => console.log("setVotes"),
     loadVotes: () => console.log("loadVotes"),
     vote: () => console.log("vote"),
@@ -13,6 +15,7 @@ export const UserVoteContext = createContext({
 
 export function UserVoteProvider({children}) {
     const [votes, setVotes] = useState([]);
+    const [player, setPlayer] = useState(JSON.parse(localStorage.getItem("player") || null));
 
     const loadVotes = useCallback(async (roomId) => {
         api.getVotes(roomId).then(setVotes);
@@ -37,12 +40,14 @@ export function UserVoteProvider({children}) {
     const value = useMemo(() => ({
         votes,
         setVotes,
+        player,
+        setPlayer,
         loadVotes,
         vote,
         clearVotes,
         showVotes,
         deletePlayer
-    }), [votes, setVotes, clearVotes, loadVotes, showVotes, vote, deletePlayer]);
+    }), [votes, setVotes, player, setPlayer, clearVotes, loadVotes, showVotes, vote, deletePlayer]);
 
     return <UserVoteContext.Provider value={value}>{children}</UserVoteContext.Provider>
 }

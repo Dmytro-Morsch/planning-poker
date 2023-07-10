@@ -7,8 +7,7 @@ import api from "../../api.js";
 
 function Room() {
     const [userExist, setUserExist] = useState(false);
-    const [player, setPlayer] = useState(JSON.parse(localStorage.getItem("player") || null));
-    const {votes, setVotes, loadVotes, clearVotes, showVotes, vote, deletePlayer} = useUserVote();
+    const {votes, player, setPlayer, setVotes, loadVotes, clearVotes, showVotes, vote, deletePlayer} = useUserVote();
 
     const params = useParams();
 
@@ -31,7 +30,6 @@ function Room() {
 
     useEffect(() => {
         const roomId = localStorage.getItem("roomId");
-        const player = JSON.parse(localStorage.getItem("player") || null);
         if (roomId !== params.roomId || !player) {
             localStorage.removeItem("player");
             setUserExist(false);
@@ -51,8 +49,6 @@ function Room() {
 
     return (
         <>
-            <h1>Room {params.roomId} {player?.playerName}</h1>
-
             {userExist && <Cards onCardSelected={(value) => vote(player.playerId, value)}/>}
 
             <div>
