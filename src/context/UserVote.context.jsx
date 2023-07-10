@@ -15,33 +15,23 @@ export function UserVoteProvider({children}) {
     const [votes, setVotes] = useState([]);
 
     const loadVotes = useCallback(async (roomId) => {
-        api.getVotes(roomId).then(result => {
-            setVotes(result);
-        });
+        api.getVotes(roomId).then(setVotes);
     }, []);
 
     const vote = useCallback((playerId, vote) => {
-        api.vote(playerId, vote).then((votes) => {
-            setVotes(votes);
-        });
+        api.vote(playerId, vote).then(setVotes);
     }, []);
 
     const clearVotes = useCallback((roomId) => {
-        api.clearVotes(roomId).then((votes) => {
-            setVotes(votes);
-        });
+        api.clearVotes(roomId).then(setVotes);
     }, []);
 
     const showVotes = useCallback((roomId) => {
-        api.showVotes(roomId).then((votes) => {
-            setVotes(votes);
-        });
+        api.showVotes(roomId).then(setVotes);
     }, [loadVotes]);
 
     const deletePlayer = useCallback((playerId) => {
-        api.deletePlayer(playerId).then((votes) => {
-            setVotes(votes);
-        });
+        api.deletePlayer(playerId).then(setVotes);
     }, []);
 
     const value = useMemo(() => ({
