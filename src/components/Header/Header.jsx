@@ -1,3 +1,4 @@
+import {useState} from "react";
 import {NavLink, useParams} from "react-router-dom";
 import useComponentVisible from "../../useCompontentVisible.js";
 
@@ -8,11 +9,18 @@ import './Header.css';
 import share from '../../assets/share.svg'
 
 function Header() {
+    const [player] = useState(JSON.parse(localStorage.getItem("player") || null));
 
     const {
         ref: refShareLinkPopup,
         isComponentVisible: isShareLinkPopupVisible,
         setIsComponentVisible: setIsShareLinkPopupVisible
+    } = useComponentVisible(false);
+
+    const {
+        ref: refMenuPopup,
+        isComponentVisible: isMenuPopupVisible,
+        setIsComponentVisible: setIsMenuPopupVisible
     } = useComponentVisible(false);
 
     const params = useParams();
@@ -34,8 +42,33 @@ function Header() {
                 </div>
             }
 
-            <div className="burger">
-                <p>Burger</p>
+            <div className="menu" ref={refMenuPopup}>
+                {(player && params.roomId) &&
+                    <span className="user">
+                        {player.playerName.trim()}
+                    </span>
+                }
+                <button className="button dropdown" onClick={() => setIsMenuPopupVisible(!isMenuPopupVisible)}>
+                    <span className="nav-line"></span>
+                    <span className="nav-line"></span>
+                    <span className="nav-line"></span>
+                </button>
+                {isMenuPopupVisible &&
+                    <div className="dropdown-content">
+                        <div className="links">
+                            <NavLink className="link" to="/about"
+                                     onClick={() => setIsMenuPopupVisible(false)}>About</NavLink>
+                            {params.roomId &&
+                                <>
+                                    <NavLink className="link" to="/setting"
+                                             onClick={() => setIsMenuPopupVisible(false)}>Settings</NavLink>
+                                    <NavLink className="link" to="/"
+                                             onClick={() => setIsMenuPopupVisible(false)}>Logout</NavLink>
+                                </>
+                            }
+                        </div>
+                    </div>
+                }
             </div>
 
             {isShareLinkPopupVisible &&
