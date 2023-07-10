@@ -8,7 +8,7 @@ import api from "../../api.js";
 function Room() {
     const [userExist, setUserExist] = useState(false);
     const [player, setPlayer] = useState(JSON.parse(localStorage.getItem("player") || null));
-    const {votes, setVotes, loadVotes, clearVotes, showVotes, vote} = useUserVote();
+    const {votes, setVotes, loadVotes, clearVotes, showVotes, vote, deletePlayer} = useUserVote();
 
     const params = useParams();
 
@@ -23,9 +23,9 @@ function Room() {
         });
     }, [setVotes, params.roomId]);
 
-    function deletePlayer(playerId) {
+    function onDeletePlayer(playerId) {
         if (confirm("Sure?")) {
-            api.deletePlayer(playerId).then(setVotes);
+            deletePlayer(playerId);
         }
     }
 
@@ -76,7 +76,7 @@ function Room() {
                             <td>{vote.value}</td>
                             <td>
                                 {player?.playerId && (
-                                    <button onClick={() => deletePlayer(vote.playerId)}>delete</button>
+                                    <button onClick={() => onDeletePlayer(vote.playerId)}>delete</button>
                                 )}
                             </td>
                         </tr>

@@ -8,6 +8,7 @@ export const UserVoteContext = createContext({
     vote: () => console.log("vote"),
     clearVotes: () => console.log("clearVotes"),
     showVotes: () => console.log("showVotes"),
+    deletePlayer: () => console.log("deletePlayer"),
 });
 
 export function UserVoteProvider({children}) {
@@ -37,14 +38,21 @@ export function UserVoteProvider({children}) {
         });
     }, [loadVotes]);
 
+    const deletePlayer = useCallback((playerId) => {
+        api.deletePlayer(playerId).then((votes) => {
+            setVotes(votes);
+        });
+    }, []);
+
     const value = useMemo(() => ({
         votes,
         setVotes,
         loadVotes,
         vote,
         clearVotes,
-        showVotes
-    }), [votes, setVotes, clearVotes, loadVotes, showVotes, vote]);
+        showVotes,
+        deletePlayer
+    }), [votes, setVotes, clearVotes, loadVotes, showVotes, vote, deletePlayer]);
 
     return <UserVoteContext.Provider value={value}>{children}</UserVoteContext.Provider>
 }
