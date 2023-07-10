@@ -1,22 +1,20 @@
 import {useCallback, useState} from "react";
 
-function JoinGamePopup(props) {
-    const {onClick} = props;
-
+function JoinGamePopup({onJoin}) {
     const [inputValue, setInputValue] = useState();
 
-    const onSubmit = useCallback((e) => {
+    const handleSubmit = useCallback((e) => {
         e.preventDefault();
         if (inputValue) {
-            onClick(inputValue);
+            onJoin(inputValue);
         }
-    }, [inputValue, onClick]);
+    }, [inputValue, onJoin]);
 
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleSubmit}>
             <label>Display name:</label>
             <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
-            <button type="submit">Join </button>
+            <button type="submit">Join</button>
         </form>
     );
 }

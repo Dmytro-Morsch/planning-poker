@@ -8,7 +8,7 @@ function Home() {
     const [roomId, setRoomId] = useState();
     const [loading, setLoading] = useState(false);
 
-    const onCreateRoom = useCallback((event) => {
+    const handleCreateRoom = useCallback((event) => {
         event.preventDefault();
         setLoading(true)
         if (playerName) {
@@ -22,7 +22,7 @@ function Home() {
         }
     }, [navigate, playerName]);
 
-    const onEnterRoom = useCallback((event) => {
+    const handleEnterRoom = useCallback((event) => {
         event.preventDefault();
         if (roomId) {
             navigate(`/room/${roomId}`);
@@ -36,14 +36,14 @@ function Home() {
             <div style={{display: 'flex'}}>
                 <div style={{flex: '50%', height: "100px"}}>
                     <h3>Create new room</h3>
-                    <form onSubmit={onCreateRoom}>
+                    <form onSubmit={handleCreateRoom}>
                         <input type="text" placeholder="Your name" onChange={e => setPlayerName(e.target.value)}/>
                         <button type="submit" disabled={!playerName || loading}>Create</button>
                     </form>
                 </div>
                 <div style={{flex: '50%', height: "100px"}}>
                     <h3>Enter existing room</h3>
-                    <form onSubmit={onEnterRoom}>
+                    <form onSubmit={handleEnterRoom}>
                         <input type="text" placeholder="Room ID" onChange={e => setRoomId(e.target.value)}/>
                         <button type="submit" disabled={!roomId || loading}>Enter</button>
                     </form>

@@ -12,7 +12,7 @@ function Room() {
 
     const params = useParams();
 
-    const addNewPlayer = useCallback((playerName) => {
+    const handleJoinGame = useCallback((playerName) => {
         api.addPlayerToRoom(params.roomId, playerName).then(result => {
             const playerId = result.playerId;
             setVotes(result.votes);
@@ -23,7 +23,7 @@ function Room() {
         });
     }, [setVotes, params.roomId]);
 
-    function onDeletePlayer(playerId) {
+    function handleDeletePlayer(playerId) {
         if (confirm("Sure?")) {
             deletePlayer(playerId);
         }
@@ -76,7 +76,7 @@ function Room() {
                             <td>{vote.value}</td>
                             <td>
                                 {userExist && (
-                                    <button onClick={() => onDeletePlayer(vote.playerId)}>delete</button>
+                                    <button onClick={() => handleDeletePlayer(vote.playerId)}>delete</button>
                                 )}
                             </td>
                         </tr>
@@ -85,7 +85,7 @@ function Room() {
                 </table>
             </div>
 
-            {!userExist && <JoinGamePopup onClick={addNewPlayer}/>}
+            {!userExist && <JoinGamePopup onJoin={handleJoinGame}/>}
         </>
     );
 }
