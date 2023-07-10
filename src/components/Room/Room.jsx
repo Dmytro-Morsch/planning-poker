@@ -56,7 +56,7 @@ function Room() {
             {userExist && <Cards onCardSelected={(value) => vote(player.playerId, value)}/>}
 
             <div>
-                {player?.playerId && (
+                {userExist && (
                     <div>
                         <button onClick={() => clearVotes(params.roomId)}>Clear</button>
                         <button onClick={() => showVotes(params.roomId)}>Show</button>
@@ -75,7 +75,7 @@ function Room() {
                             <td>{vote.playerName}</td>
                             <td>{vote.value}</td>
                             <td>
-                                {player?.playerId && (
+                                {userExist && (
                                     <button onClick={() => onDeletePlayer(vote.playerId)}>delete</button>
                                 )}
                             </td>
