@@ -32,8 +32,8 @@ export function UserVoteProvider({children}) {
     }, []);
 
     const showVotes = useCallback((roomId) => {
-        api.showVotes(roomId).then(() => {
-            loadVotes(roomId);
+        api.showVotes(roomId).then((votes) => {
+            setVotes(votes);
         });
     }, [loadVotes]);
 

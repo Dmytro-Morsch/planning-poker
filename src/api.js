@@ -55,6 +55,7 @@ const api = {
             method: 'POST'
         });
         chekResponse(response);
+        return await response.json();
     }
 };
 
