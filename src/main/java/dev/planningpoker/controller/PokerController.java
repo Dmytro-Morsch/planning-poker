@@ -100,7 +100,7 @@ public class PokerController {
         if (!shown) {
             for (Vote vote : votes) {
                 if (vote.value != null) {
-                    vote.value = "☑";
+                    vote.value = "*";
                 }
             }
         }

@@ -70,7 +70,7 @@ public class PokerTest {
                 .andExpect(jsonPath("$.roomId").value("1"));
 
         // The player votes
-        mockMvc.perform(post("/api/vote/1").content("5"))
+        mockMvc.perform(post("/api/player/1/vote").content("5"))
                 .andExpect(status().isOk());
     }
 
@@ -85,7 +85,7 @@ public class PokerTest {
                 .andExpect(jsonPath("$.playerId").value("2"));
 
         // Second player votes
-        mockMvc.perform(post("/api/vote/2").content("5"))
+        mockMvc.perform(post("/api/player/2/vote").content("5"))
                 .andExpect(status().isOk());
 
         // Get the room state
@@ -94,7 +94,7 @@ public class PokerTest {
                 .andExpect(jsonPath("$[0].playerId").value(1))
                 .andExpect(jsonPath("$[0].value").value(nullValue()))
                 .andExpect(jsonPath("$[1].playerId").value(2))
-                .andExpect(jsonPath("$[1].value").value(-1));
+                .andExpect(jsonPath("$[1].value").value("*"));
     }
 
     @Test
@@ -108,7 +108,7 @@ public class PokerTest {
                 .andExpect(jsonPath("$.playerId").value("2"));
 
         // Second player votes
-        mockMvc.perform(post("/api/vote/2").content("5"))
+        mockMvc.perform(post("/api/player/2/vote").content("5"))
                 .andExpect(status().isOk());
 
         // Someone opens all cards
