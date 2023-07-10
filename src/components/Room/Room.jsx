@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {useUserVote} from "../../context/UserVote.context.jsx";
 
@@ -12,7 +12,7 @@ function Room() {
 
     const params = useParams();
 
-    const handleJoinGame = useCallback((playerName) => {
+    function handleJoinGame(playerName) {
         api.addPlayerToRoom(params.roomId, playerName).then(result => {
             const playerId = result.playerId;
             setVotes(result.votes);
@@ -21,7 +21,7 @@ function Room() {
             setPlayer(player);
             setUserExist(true);
         });
-    }, [setVotes, params.roomId]);
+    }
 
     function handleDeletePlayer(playerId) {
         if (confirm("Sure?")) {

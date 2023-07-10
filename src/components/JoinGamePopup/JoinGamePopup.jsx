@@ -1,14 +1,14 @@
-import {useCallback, useState} from "react";
+import {useState} from "react";
 
 function JoinGamePopup({onJoin}) {
     const [inputValue, setInputValue] = useState();
 
-    const handleSubmit = useCallback((e) => {
+    function handleSubmit(e) {
         e.preventDefault();
         if (inputValue) {
             onJoin(inputValue);
         }
-    }, [inputValue, onJoin]);
+    }
 
     return (
         <form onSubmit={handleSubmit}>

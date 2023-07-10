@@ -1,4 +1,4 @@
-import {useCallback, useState} from "react";
+import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import api from "../../api.js";
 
@@ -8,7 +8,7 @@ function Home() {
     const [roomId, setRoomId] = useState();
     const [loading, setLoading] = useState(false);
 
-    const handleCreateRoom = useCallback((event) => {
+    function handleCreateRoom (event) {
         event.preventDefault();
         setLoading(true)
         if (playerName) {
@@ -20,14 +20,14 @@ function Home() {
                 navigate(`/room/${response.roomId}`);
             });
         }
-    }, [navigate, playerName]);
+    }
 
-    const handleEnterRoom = useCallback((event) => {
+    function handleEnterRoom (event){
         event.preventDefault();
         if (roomId) {
             navigate(`/room/${roomId}`);
         }
-    }, [navigate, roomId]);
+    }
 
     return (
         <div>
