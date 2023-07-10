@@ -1,15 +1,36 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {useUserVote} from "../../context/UserVote.context.jsx";
+import {useGame} from "../../context/Game.context.jsx";
 
 import {Cards, JoinGamePopup} from "../";
 import api from "../../api.js";
 
 function Room() {
+    const [votes, setVotes] = useState([]);
     const [userExist, setUserExist] = useState(false);
-    const {votes, player, setPlayer, setVotes, loadVotes, clearVotes, showVotes, vote, deletePlayer} = useUserVote();
+    const {player, setPlayer} = useGame();
 
     const params = useParams();
+
+    const loadVotes = useCallback(async (roomId) => {
+        api.getVotes(roomId).then(setVotes);
+    }, [setVotes]);
+
+    const vote = useCallback((playerId, vote) => {
+        api.vote(playerId, vote).then(setVotes);
+    }, [setVotes]);
+
+    const clearVotes = useCallback((roomId) => {
+        api.clearVotes(roomId).then(setVotes);
+    }, [setVotes]);
+
+    const showVotes = useCallback((roomId) => {
+        api.showVotes(roomId).then(setVotes);
+    }, [setVotes]);
+
+    const deletePlayer = useCallback((playerId) => {
+        api.deletePlayer(playerId).then(setVotes);
+    }, [setVotes]);
 
     function handleJoinGame(playerName) {
         api.addPlayerToRoom(params.roomId, playerName).then(result => {

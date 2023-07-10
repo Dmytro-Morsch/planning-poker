@@ -6,10 +6,10 @@ import {ShareLinkPopup} from '../';
 import './Header.css';
 
 import share from '../../assets/share.svg'
-import {useUserVote} from "../../context/UserVote.context.jsx";
+import {useGame} from "../../context/Game.context.jsx";
 
 function Header() {
-    const {player} = useUserVote();
+    const {player} = useGame();
 
     const {
         ref: refShareLinkPopup,
