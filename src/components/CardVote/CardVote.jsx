@@ -1,10 +1,10 @@
 import './CardVote.css';
 
-function CardVote({onClick, value, selected}) {
+function CardVote({value, isSelected, onSelect}) {
     return (
         <div className="card">
-            <button className="button vote" onClick={() => onClick(value)}>
-                <span>{value}{selected && '*' }</span>
+            <button className="button vote" onClick={() => onSelect(value)}>
+                <span>{value}{isSelected && '*' }</span>
             </button>
         </div>
     );
