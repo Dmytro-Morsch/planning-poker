@@ -32,18 +32,18 @@ function Home() {
 
     return (
         <div>
-            <h1>Welcome</h1>
+            <h1 className="h1">Welcome</h1>
 
             <div className="home-block-container">
                 <div className="home-block">
-                    <h3>Start new game</h3>
+                    <h3 className="h3">Start new game</h3>
                     <form onSubmit={handleStartGame}>
                         <input type="text" placeholder="Your name" onChange={e => setPlayerName(e.target.value)}/>
                         <button type="submit" disabled={!playerName || loading}>Start</button>
                     </form>
                 </div>
                 <div className="home-block">
-                    <h3>Join existing game</h3>
+                    <h3 className="h3">Join existing game</h3>
                     <form onSubmit={handleJoinGame}>
                         <input type="text" placeholder="Game ID" onChange={e => setGameId(e.target.value)}/>
                         <button type="submit" disabled={!gameId || loading}>Join</button>
