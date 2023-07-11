@@ -5,8 +5,7 @@ import './ShareLinkPopup.css';
 import copy from '../../assets/copy.svg';
 import QRCode from "react-qr-code";
 
-function ShareLinkPopup(props) {
-    const {gameId, myref, closePopup} = props;
+function ShareLinkPopup({gameId, myref, onClose}) {
 
     useEffect(() => {
         document.querySelector('.share-link').classList.add('is-active');
@@ -30,7 +29,7 @@ function ShareLinkPopup(props) {
 
                 <QRCode value={window.location.href} />
 
-                <button className="button ok" type="button" onClick={closePopup}>GOT IT!</button>
+                <button className="button ok" type="button" onClick={onClose}>GOT IT!</button>
             </div>
         </div>
     );

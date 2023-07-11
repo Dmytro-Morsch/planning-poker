@@ -74,7 +74,7 @@ function Header() {
 
             {isShareLinkPopupVisible &&
                 <ShareLinkPopup gameId={params.gameId} myref={refShareLinkPopup}
-                                closePopup={() => setIsShareLinkPopupVisible(false)}/>}
+                                onClose={() => setIsShareLinkPopupVisible(false)}/>}
         </nav>
     );
 }
