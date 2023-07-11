@@ -5,8 +5,11 @@ import {useGame} from "../../context/Game.context.jsx";
 import {Cards, JoinGamePopup} from "../";
 import api from "../../api.js";
 
+import './Game.css';
+
 function Game() {
     const [votes, setVotes] = useState([]);
+    const [selectedCard, setIsSelectedCard] = useState();
     const [userExist, setUserExist] = useState(false);
     const {player, setPlayer} = useGame();
 
@@ -70,13 +73,18 @@ function Game() {
 
     return (
         <>
-            {userExist && <Cards onCardSelected={(value) => vote(player.playerId, value)}/>}
+            {userExist &&
+                <Cards selectedCard={selectedCard} onSelect={(value) => {
+                    setIsSelectedCard(value);
+                    vote(player.playerId, value);
+                }}/>
+            }
 
-            <div>
+            <div className="estimate-block">
                 {userExist && (
-                    <div>
-                        <button onClick={() => clearVotes(params.gameId)}>Clear</button>
-                        <button onClick={() => showVotes(params.gameId)}>Show</button>
+                    <div className="buttons">
+                        <button className="button clear" onClick={() => clearVotes(params.gameId)}>Clear</button>
+                        <button className="button show" onClick={() => showVotes(params.gameId)}>Show</button>
                     </div>
                 )}
                 <table>
@@ -84,6 +92,7 @@ function Game() {
                     <tr>
                         <th>Name</th>
                         <th>Story Points</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
