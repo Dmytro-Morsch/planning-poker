@@ -1,4 +1,4 @@
-create table room
+create table game
 (
     id          bigint primary key generated always as identity,
     cards_shown boolean not null
@@ -9,5 +9,5 @@ create table player
     id      bigint primary key generated always as identity,
     name    varchar(100) not null,
     vote    varchar(5),
-    room_id bigint       not null references room (id)
+    game_id bigint       not null references game (id)
 );

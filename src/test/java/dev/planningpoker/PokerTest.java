@@ -29,45 +29,45 @@ public class PokerTest {
     @BeforeEach
     void beforeEach() {
         jdbcTemplate.update("DELETE FROM player");
-        jdbcTemplate.update("DELETE FROM room");
+        jdbcTemplate.update("DELETE FROM game");
         jdbcTemplate.update("ALTER SEQUENCE player_id_seq RESTART WITH 1");
-        jdbcTemplate.update("ALTER SEQUENCE room_id_seq RESTART WITH 1");
+        jdbcTemplate.update("ALTER SEQUENCE game_id_seq RESTART WITH 1");
     }
 
     @Test
-    public void testCreateRoom() throws Exception {
-        // When a player creates a room it gets back roomId and playerId
-        mockMvc.perform(post("/api/room").content("First Player"))
+    public void testCreateGame() throws Exception {
+        // When a player creates a game it gets back gameId and playerId
+        mockMvc.perform(post("/api/game").content("First Player"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.roomId").value("1"))
+                .andExpect(jsonPath("$.gameId").value("1"))
                 .andExpect(jsonPath("$.playerId").value("1"));
     }
 
     @Test
     public void testAddPlayer() throws Exception {
-        // One player creates a room
-        mockMvc.perform(post("/api/room").content("First Player"))
-                .andExpect(jsonPath("$.roomId").value("1"));
+        // One player creates a game
+        mockMvc.perform(post("/api/game").content("First Player"))
+                .andExpect(jsonPath("$.gameId").value("1"));
 
-        // Another player joins the room and gets incremented id
+        // Another player joins the game and gets incremented id
         mockMvc.perform(
-                        post("/api/room/1/player").content("Second Player"))
+                        post("/api/game/1/player").content("Second Player"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.playerId").value("2"));
     }
 
     @Test
-    public void testAddPlayerToNonExistingRoom() throws Exception {
-        // A new player joins a room with non-existing id 42
-        mockMvc.perform(post("/api/room/42/player").content("Second Player"))
+    public void testAddPlayerToNonExistingGame() throws Exception {
+        // A new player joins a game with non-existing id 42
+        mockMvc.perform(post("/api/game/42/player").content("Second Player"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void testVote() throws Exception {
-        // A player creates a room
-        mockMvc.perform(post("/api/room").content("First Player"))
-                .andExpect(jsonPath("$.roomId").value("1"));
+        // A player creates a game
+        mockMvc.perform(post("/api/game").content("First Player"))
+                .andExpect(jsonPath("$.gameId").value("1"));
 
         // The player votes
         mockMvc.perform(post("/api/player/1/vote").content("5"))
@@ -75,21 +75,21 @@ public class PokerTest {
     }
 
     @Test
-    public void testGetRoomWithHiddenVotes() throws Exception {
-        // First player creates a room
-        mockMvc.perform(post("/api/room").content("First Player"))
-                .andExpect(jsonPath("$.roomId").value("1"));
+    public void testGetGameWithHiddenVotes() throws Exception {
+        // First player creates a game
+        mockMvc.perform(post("/api/game").content("First Player"))
+                .andExpect(jsonPath("$.gameId").value("1"));
 
-        // Second player joins the room
-        mockMvc.perform(post("/api/room/1/player").content("Second Player"))
+        // Second player joins the game
+        mockMvc.perform(post("/api/game/1/player").content("Second Player"))
                 .andExpect(jsonPath("$.playerId").value("2"));
 
         // Second player votes
         mockMvc.perform(post("/api/player/2/vote").content("5"))
                 .andExpect(status().isOk());
 
-        // Get the room state
-        mockMvc.perform(get("/api/room/1"))
+        // Get the game state
+        mockMvc.perform(get("/api/game/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].playerId").value(1))
                 .andExpect(jsonPath("$[0].value").value(nullValue()))
@@ -98,13 +98,13 @@ public class PokerTest {
     }
 
     @Test
-    public void testGetRoomWithShownVotes() throws Exception {
-        // First player creates a room
-        mockMvc.perform(post("/api/room").content("First Player"))
-                .andExpect(jsonPath("$.roomId").value("1"));
+    public void testGetGameWithShownVotes() throws Exception {
+        // First player creates a game
+        mockMvc.perform(post("/api/game").content("First Player"))
+                .andExpect(jsonPath("$.gameId").value("1"));
 
-        // Second player joins the room
-        mockMvc.perform(post("/api/room/1/player").content("Second Player"))
+        // Second player joins the game
+        mockMvc.perform(post("/api/game/1/player").content("Second Player"))
                 .andExpect(jsonPath("$.playerId").value("2"));
 
         // Second player votes
@@ -112,11 +112,11 @@ public class PokerTest {
                 .andExpect(status().isOk());
 
         // Someone opens all cards
-        mockMvc.perform(post("/api/room/1/show"))
+        mockMvc.perform(post("/api/game/1/show"))
                 .andExpect(status().isOk());
 
-        // Get the room state
-        mockMvc.perform(get("/api/room/1"))
+        // Get the game state
+        mockMvc.perform(get("/api/game/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].playerId").value(1))
                 .andExpect(jsonPath("$[0].value").value(nullValue()))

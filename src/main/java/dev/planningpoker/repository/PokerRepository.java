@@ -13,37 +13,39 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import static org.springframework.dao.support.DataAccessUtils.singleResult;
+
 @Repository
 public class PokerRepository {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-    public Long createRoom() {
+    public Long createGame() {
         var keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update("""
-                insert into room (cards_shown)
+                insert into game (cards_shown)
                 values (false)
                 """, new MapSqlParameterSource(), keyHolder);
         return (long) keyHolder.getKeys().get("id");
     }
 
-    public List<Vote> getVotes(Long roomId) {
+    public List<Vote> getVotes(Long gameId) {
         return jdbcTemplate.query("""
                 select * from player 
-                where room_id=:roomId
+                where game_id=:gameId
                 order by id
-                """, Map.of("roomId", roomId), this::mapVote);
+                """, Map.of("gameId", gameId), this::mapVote);
     }
 
-    public Long addPlayer(String playerName, Long roomId) {
+    public Long addPlayer(String playerName, Long gameId) {
         var keyHolder = new GeneratedKeyHolder();
         var params = new MapSqlParameterSource()
                 .addValue("name", playerName)
-                .addValue("roomId", roomId);
+                .addValue("gameId", gameId);
 
         jdbcTemplate.update("""
-                insert into player (name, room_id)
-                values (:name, :roomId)
+                insert into player (name, game_id)
+                values (:name, :gameId)
                 """, params, keyHolder);
         return (long) keyHolder.getKeys().get("id");
     }
@@ -65,49 +67,49 @@ public class PokerRepository {
         return update > 0;
     }
 
-    public Long getRoomIdByPlayerId(Long playerId) {
+    public Long getGameIdByPlayerId(Long playerId) {
         List<Long> list = jdbcTemplate.queryForList("""
-                select room_id from player
+                select game_id from player
                 where id=:playerId
                 """, Map.of("playerId", playerId), Long.class);
-        return DataAccessUtils.singleResult(list);
+        return singleResult(list);
     }
 
-    public void clearVotes(Long roomId) {
+    public void clearVotes(Long gameId) {
         jdbcTemplate.update("""
                 update player
                 set vote=null
-                where room_id=:roomId
-                """, Map.of("roomId", roomId));
+                where game_id=:gameId
+                """, Map.of("gameId", gameId));
     }
 
-    public void showVotes(Long roomId) {
+    public void showVotes(Long gameId) {
         jdbcTemplate.update("""
-                update room
+                update game
                 set cards_shown=true
-                where id=:roomId
-                """, Map.of("roomId", roomId));
+                where id=:gameId
+                """, Map.of("gameId", gameId));
     }
 
-    public void hideVotes(Long roomId) {
+    public void hideVotes(Long gameId) {
         jdbcTemplate.update("""
-                update room
+                update game
                 set cards_shown=false
-                where id=:roomId
-                """, Map.of("roomId", roomId));
+                where id=:gameId
+                """, Map.of("gameId", gameId));
     }
 
-    public boolean roomExists(Long roomId) {
+    public boolean gameExists(Long gameId) {
         return jdbcTemplate.queryForObject("""
-                select exists(select 1 from room where id=:roomId)
-                """, Map.of("roomId", roomId), Boolean.class);
+                select exists(select 1 from game where id=:gameId)
+                """, Map.of("gameId", gameId), Boolean.class);
     }
 
-    public Boolean areCardsShown(Long roomId) {
+    public Boolean areCardsShown(Long gameId) {
         List<Boolean> list = jdbcTemplate.queryForList("""
-                select cards_shown from room where id=:roomId
-                """, Map.of("roomId", roomId), Boolean.class);
-        return DataAccessUtils.singleResult(list);
+                select cards_shown from game where id=:gameId
+                """, Map.of("gameId", gameId), Boolean.class);
+        return singleResult(list);
     }
 
     private Vote mapVote(ResultSet rs, int rowNum) throws SQLException {
