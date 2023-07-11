@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import api from "../../api.js";
+import './Home.css';
 
 function Home() {
     const navigate = useNavigate();
@@ -33,15 +34,15 @@ function Home() {
         <div>
             <h1>Welcome</h1>
 
-            <div style={{display: 'flex'}}>
-                <div style={{flex: '50%', height: "100px"}}>
+            <div className="home-block-container">
+                <div className="home-block">
                     <h3>Start new game</h3>
                     <form onSubmit={handleStartGame}>
                         <input type="text" placeholder="Your name" onChange={e => setPlayerName(e.target.value)}/>
                         <button type="submit" disabled={!playerName || loading}>Start</button>
                     </form>
                 </div>
-                <div style={{flex: '50%', height: "100px"}}>
+                <div className="home-block">
                     <h3>Join existing game</h3>
                     <form onSubmit={handleJoinGame}>
                         <input type="text" placeholder="Game ID" onChange={e => setGameId(e.target.value)}/>
