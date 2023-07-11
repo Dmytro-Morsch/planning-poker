@@ -5,23 +5,23 @@ function chekResponse(response) {
 }
 
 const api = {
-    createRoom: async (playerName) => {
-        const response = await fetch('/api/room', {
+    createGame: async (playerName) => {
+        const response = await fetch('/api/game', {
             method: 'POST',
             body: playerName,
         });
         chekResponse(response);
         return await response.json();
     },
-    getVotes: async (roomId) => {
-        const response = await fetch('/api/room/' + roomId, {
+    getVotes: async (gameId) => {
+        const response = await fetch('/api/game/' + gameId, {
             method: 'GET',
         });
         chekResponse(response);
         return await response.json();
     },
-    addPlayerToRoom: async (roomId, playerName) => {
-        const response = await fetch('/api/room/' + roomId + '/player', {
+    addPlayerToGame: async (gameId, playerName) => {
+        const response = await fetch('/api/game/' + gameId + '/player', {
             method: 'POST',
             body: playerName,
         });
@@ -43,15 +43,15 @@ const api = {
         chekResponse(response);
         return await response.json();
     },
-    clearVotes: async (roomId) => {
-        const response = await fetch('/api/room/' + roomId + '/clear', {
+    clearVotes: async (gameId) => {
+        const response = await fetch('/api/game/' + gameId + '/clear', {
             method: 'POST'
         });
         chekResponse(response);
         return await response.json();
     },
-    showVotes: async (roomId) => {
-        const response = await fetch('/api/room/' + roomId + '/show', {
+    showVotes: async (gameId) => {
+        const response = await fetch('/api/game/' + gameId + '/show', {
             method: 'POST'
         });
         chekResponse(response);

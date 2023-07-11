@@ -6,7 +6,7 @@ import copy from '../../assets/copy.svg';
 import QRCode from "react-qr-code";
 
 function ShareLinkPopup(props) {
-    const {roomId, myref, closePopup} = props;
+    const {gameId, myref, closePopup} = props;
 
     useEffect(() => {
         document.querySelector('.share-link').classList.add('is-active');
@@ -17,7 +17,7 @@ function ShareLinkPopup(props) {
             <div className="overlay"></div>
 
             <div className="popup-block" ref={myref}>
-                <h2 className="h2">Room {roomId}</h2>
+                <h2 className="h2">Game {gameId}</h2>
 
                 <div className="copy-block">
                     <input className="url" value={window.location.href} readOnly="readOnly"/>

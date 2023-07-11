@@ -1,7 +1,7 @@
 import {Route, Routes} from "react-router-dom";
 import {PlayerProvider} from "./context/Game.context.jsx";
 
-import {Home, MainLayout, PageNotFound, Room} from './components';
+import {Home, MainLayout, PageNotFound, Game} from './components';
 
 import './App.css';
 
@@ -10,7 +10,7 @@ function App() {
         <Routes>
             <Route path="/" element={<MainLayout/>}>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/room/:roomId" element={<PlayerProvider><Room/></PlayerProvider>}/>
+                <Route path="/game/:gameId" element={<PlayerProvider><Game/></PlayerProvider>}/>
             </Route>
             <Route path="*" element={<PageNotFound/>}/>
         </Routes>

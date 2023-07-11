@@ -5,27 +5,27 @@ import {useGame} from "../../context/Game.context.jsx";
 import {Cards, JoinGamePopup} from "../";
 import api from "../../api.js";
 
-function Room() {
+function Game() {
     const [votes, setVotes] = useState([]);
     const [userExist, setUserExist] = useState(false);
     const {player, setPlayer} = useGame();
 
     const params = useParams();
 
-    function loadVotes(roomId) {
-        api.getVotes(roomId).then(setVotes);
+    function loadVotes(gameId) {
+        api.getVotes(gameId).then(setVotes);
     }
 
     function vote(playerId, vote) {
         api.vote(playerId, vote).then(setVotes);
     }
 
-    function clearVotes(roomId) {
-        api.clearVotes(roomId).then(setVotes);
+    function clearVotes(gameId) {
+        api.clearVotes(gameId).then(setVotes);
     }
 
-    function showVotes(roomId) {
-        api.showVotes(roomId).then(setVotes);
+    function showVotes(gameId) {
+        api.showVotes(gameId).then(setVotes);
     }
 
     function deletePlayer(playerId) {
@@ -33,7 +33,7 @@ function Room() {
     }
 
     function handleJoinGame(playerName) {
-        api.addPlayerToRoom(params.roomId, playerName).then(result => {
+        api.addPlayerToGame(params.gameId, playerName).then(result => {
             const playerId = result.playerId;
             setVotes(result.votes);
             const player = {playerId, playerName};
@@ -50,20 +50,20 @@ function Room() {
     }
 
     useEffect(() => {
-        const roomId = localStorage.getItem("roomId");
-        if (roomId !== params.roomId || !player) {
+        const gameId = localStorage.getItem("gameId");
+        if (gameId !== params.gameId || !player) {
             localStorage.removeItem("player");
             setUserExist(false);
         } else {
             setUserExist(true);
         }
-        localStorage.setItem("roomId", params.roomId);
-    }, [params.roomId]);
+        localStorage.setItem("gameId", params.gameId);
+    }, [params.gameId]);
 
     useEffect(() => {
-        loadVotes(params.roomId);
+        loadVotes(params.gameId);
         const interval = setInterval(() => {
-            loadVotes(params.roomId);
+            loadVotes(params.gameId);
         }, 2000);
         return () => clearInterval(interval);
     }, []);
@@ -75,8 +75,8 @@ function Room() {
             <div>
                 {userExist && (
                     <div>
-                        <button onClick={() => clearVotes(params.roomId)}>Clear</button>
-                        <button onClick={() => showVotes(params.roomId)}>Show</button>
+                        <button onClick={() => clearVotes(params.gameId)}>Clear</button>
+                        <button onClick={() => showVotes(params.gameId)}>Show</button>
                     </div>
                 )}
                 <table>
@@ -107,4 +107,4 @@ function Room() {
     );
 }
 
-export default Room;
+export default Game;

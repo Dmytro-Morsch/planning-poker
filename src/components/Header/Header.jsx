@@ -31,11 +31,11 @@ function Header() {
                 <NavLink className="link" to="/">Planning-poker</NavLink>
             </div>
 
-            {params.roomId &&
+            {params.gameId &&
                 <div className="share-button">
                     <div className="block">
                         <button className="button share" type="button" onClick={() => setIsShareLinkPopupVisible(true)}>
-                            Room {params.roomId}
+                            Game {params.gameId}
                             <img src={share} alt=""/>
                         </button>
                     </div>
@@ -43,7 +43,7 @@ function Header() {
             }
 
             <div className="menu" ref={refMenuPopup}>
-                {(player && params.roomId) &&
+                {(player && params.gameId) &&
                     <span className="user">
                         {player.playerName}
                     </span>
@@ -59,7 +59,7 @@ function Header() {
                         <div className="links">
                             <NavLink className="link" to="/about"
                                      onClick={() => setIsMenuPopupVisible(false)}>About</NavLink>
-                            {params.roomId &&
+                            {params.gameId &&
                                 <>
                                     <NavLink className="link" to="/setting"
                                              onClick={() => setIsMenuPopupVisible(false)}>Settings</NavLink>
@@ -73,7 +73,7 @@ function Header() {
             </div>
 
             {isShareLinkPopupVisible &&
-                <ShareLinkPopup roomId={params.roomId} myref={refShareLinkPopup}
+                <ShareLinkPopup gameId={params.gameId} myref={refShareLinkPopup}
                                 closePopup={() => setIsShareLinkPopupVisible(false)}/>}
         </nav>
     );

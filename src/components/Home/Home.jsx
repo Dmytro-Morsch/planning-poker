@@ -5,27 +5,27 @@ import api from "../../api.js";
 function Home() {
     const navigate = useNavigate();
     const [playerName, setPlayerName] = useState();
-    const [roomId, setRoomId] = useState();
+    const [gameId, setGameId] = useState();
     const [loading, setLoading] = useState(false);
 
-    function handleCreateRoom (event) {
+    function handleStartGame (event) {
         event.preventDefault();
         setLoading(true)
         if (playerName) {
-            api.createRoom(playerName).then(response => {
+            api.createGame(playerName).then(response => {
                 setLoading(false)
                 const player = {playerId: response.playerId, playerName: playerName};
                 localStorage.setItem("player", JSON.stringify(player));
-                localStorage.setItem("roomId", response.roomId);
-                navigate(`/room/${response.roomId}`);
+                localStorage.setItem("gameId", response.gameId);
+                navigate(`/game/${response.gameId}`);
             });
         }
     }
 
-    function handleEnterRoom (event){
+    function handleJoinGame (event){
         event.preventDefault();
-        if (roomId) {
-            navigate(`/room/${roomId}`);
+        if (gameId) {
+            navigate(`/game/${gameId}`);
         }
     }
 
@@ -35,17 +35,17 @@ function Home() {
 
             <div style={{display: 'flex'}}>
                 <div style={{flex: '50%', height: "100px"}}>
-                    <h3>Create new room</h3>
-                    <form onSubmit={handleCreateRoom}>
+                    <h3>Start new game</h3>
+                    <form onSubmit={handleStartGame}>
                         <input type="text" placeholder="Your name" onChange={e => setPlayerName(e.target.value)}/>
-                        <button type="submit" disabled={!playerName || loading}>Create</button>
+                        <button type="submit" disabled={!playerName || loading}>Start</button>
                     </form>
                 </div>
                 <div style={{flex: '50%', height: "100px"}}>
-                    <h3>Enter existing room</h3>
-                    <form onSubmit={handleEnterRoom}>
-                        <input type="text" placeholder="Room ID" onChange={e => setRoomId(e.target.value)}/>
-                        <button type="submit" disabled={!roomId || loading}>Enter</button>
+                    <h3>Join existing game</h3>
+                    <form onSubmit={handleJoinGame}>
+                        <input type="text" placeholder="Game ID" onChange={e => setGameId(e.target.value)}/>
+                        <button type="submit" disabled={!gameId || loading}>Join</button>
                     </form>
                 </div>
             </div>

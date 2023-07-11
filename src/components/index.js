@@ -1,5 +1,5 @@
 import Home from "./Home/Home.jsx";
-import Room from "./Room/Room.jsx";
+import Game from "./Game/Game.jsx";
 import JoinGamePopup from "./JoinGamePopup/JoinGamePopup.jsx";
 import Cards from "./Cards/Cards.jsx";
 import CardVote from "./CardVote/CardVote.jsx";
@@ -10,7 +10,7 @@ import PageNotFound from "./PageNotFound/PageNotFound.jsx";
 
 export {
     Home,
-    Room,
+    Game,
     JoinGamePopup,
     Cards,
     CardVote,
