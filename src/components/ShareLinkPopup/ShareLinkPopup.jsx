@@ -1,9 +1,9 @@
 import {useEffect} from "react";
+import QRCode from "react-qr-code";
 
 import './ShareLinkPopup.css';
 
 import copy from '../../assets/copy.svg';
-import QRCode from "react-qr-code";
 
 function ShareLinkPopup({gameId, myref, onClose}) {
 
@@ -16,6 +16,7 @@ function ShareLinkPopup({gameId, myref, onClose}) {
             <div className="overlay"></div>
 
             <div className="popup-block" ref={myref}>
+                <span className="title">How can people join the game?</span>
                 <h2 className="h2">Game {gameId}</h2>
 
                 <div className="copy-block">
@@ -27,7 +28,10 @@ function ShareLinkPopup({gameId, myref, onClose}) {
                     </button>
                 </div>
 
-                <QRCode value={window.location.href} />
+                <span className="scan">Scan the QR code</span>
+                <div className="qr-code">
+                    <QRCode value={window.location.href}/>
+                </div>
 
                 <button className="button ok" type="button" onClick={onClose}>GOT IT!</button>
             </div>
