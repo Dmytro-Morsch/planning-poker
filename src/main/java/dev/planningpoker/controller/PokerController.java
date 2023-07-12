@@ -76,10 +76,10 @@ public class PokerController {
 
     @PostMapping("/api/game/{gameId}/clear")
     private ResponseEntity<?> clearVotes(@PathVariable Long gameId) {
-        if (!pokerRepository.gameExists(gameId)) {
+        boolean updated = pokerRepository.hideVotes(gameId);
+        if (!updated) {
             return new ResponseEntity<>("Game not found!", HttpStatus.NOT_FOUND);
         }
-        pokerRepository.hideVotes(gameId);
         pokerRepository.clearVotes(gameId);
         var votes = getVotes(gameId, false);
         return ResponseEntity.ok(votes);
@@ -87,10 +87,10 @@ public class PokerController {
 
     @PostMapping("/api/game/{gameId}/show")
     private ResponseEntity<?> showVotes(@PathVariable Long gameId) {
-        if (!pokerRepository.gameExists(gameId)) {
+        boolean updated = pokerRepository.showVotes(gameId);
+        if (!updated) {
             return new ResponseEntity<>("Game not found!", HttpStatus.NOT_FOUND);
         }
-        pokerRepository.showVotes(gameId);
         var votes = getVotes(gameId, true);
         return ResponseEntity.ok(votes);
     }

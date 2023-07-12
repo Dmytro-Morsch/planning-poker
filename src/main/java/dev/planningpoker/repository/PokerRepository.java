@@ -2,7 +2,6 @@ package dev.planningpoker.repository;
 
 import dev.planningpoker.model.Vote;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -51,20 +50,20 @@ public class PokerRepository {
     }
 
     public boolean vote(Long playerId, String vote) {
-        int update = jdbcTemplate.update("""
+        int updated = jdbcTemplate.update("""
                 update player
                 set vote=:vote
                 where id=:playerId
                 """, Map.of("vote", vote, "playerId", playerId));
-        return update > 0;
+        return updated > 0;
     }
 
     public boolean deletePlayer(Long playerId) {
-        int update = jdbcTemplate.update("""
+        int updated = jdbcTemplate.update("""
                 delete from player
                 where id=:playerId
                 """, Map.of("playerId", playerId));
-        return update > 0;
+        return updated > 0;
     }
 
     public Long getGameIdByPlayerId(Long playerId) {
@@ -75,34 +74,31 @@ public class PokerRepository {
         return singleResult(list);
     }
 
-    public void clearVotes(Long gameId) {
-        jdbcTemplate.update("""
+    public boolean clearVotes(Long gameId) {
+        int updated = jdbcTemplate.update("""
                 update player
                 set vote=null
                 where game_id=:gameId
                 """, Map.of("gameId", gameId));
+        return updated > 0;
     }
 
-    public void showVotes(Long gameId) {
-        jdbcTemplate.update("""
+    public boolean showVotes(Long gameId) {
+        int updated = jdbcTemplate.update("""
                 update game
                 set cards_shown=true
                 where id=:gameId
                 """, Map.of("gameId", gameId));
+        return updated > 0;
     }
 
-    public void hideVotes(Long gameId) {
-        jdbcTemplate.update("""
+    public boolean hideVotes(Long gameId) {
+        int updated = jdbcTemplate.update("""
                 update game
                 set cards_shown=false
                 where id=:gameId
                 """, Map.of("gameId", gameId));
-    }
-
-    public boolean gameExists(Long gameId) {
-        return jdbcTemplate.queryForObject("""
-                select exists(select 1 from game where id=:gameId)
-                """, Map.of("gameId", gameId), Boolean.class);
+        return updated > 0;
     }
 
     public Boolean areCardsShown(Long gameId) {
