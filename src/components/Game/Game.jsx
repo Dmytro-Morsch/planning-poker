@@ -111,7 +111,7 @@ function Game() {
                 </table>
             </div>
 
-            {!userExist && <JoinGamePopup onJoin={handleJoinGame}/>}
+            {!userExist && <JoinGamePopup votes={votes} onJoin={handleJoinGame}/>}
         </>
     );
 }
