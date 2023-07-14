@@ -3,6 +3,10 @@
     height: 120px;
 }
 
+.card .selected:after {
+    content: "*";
+}
+
 .card .button.vote {
     width: 90px;
     height: 120px;

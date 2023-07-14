@@ -4,7 +4,7 @@ function CardVote({value, isSelected, onSelect}) {
     return (
         <div className="card">
             <button className="button vote" onClick={() => onSelect(value)}>
-                <span>{value}{isSelected && '*' }</span>
+                <span className={isSelected ? 'selected' : ''}>{value}</span>
             </button>
         </div>
     );
