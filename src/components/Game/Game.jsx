@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {useGame} from "../../context/Game.context.jsx";
 
-import {Cards, JoinGamePopup} from "../";
+import {Cards, JoinGame} from "../";
 import api from "../../api.js";
 
 import './Game.css';
@@ -73,45 +73,46 @@ function Game() {
 
     return (
         <>
-            {userExist &&
-                <Cards selectedCard={selectedCard} onSelect={(value) => {
-                    setIsSelectedCard(value);
-                    vote(player.playerId, value);
-                }}/>
-            }
-
-            <div className="estimate-block">
-                {userExist && (
-                    <div className="buttons">
-                        <button className="button clear" onClick={() => clearVotes(params.gameId)}>Clear</button>
-                        <button className="button show" onClick={() => showVotes(params.gameId)}>Show</button>
+            {userExist && (
+                <>
+                    <Cards selectedCard={selectedCard} onSelect={(value) => {
+                        setIsSelectedCard(value);
+                        vote(player.playerId, value);
+                    }}/>
+                    <div className="estimate-block">
+                        <div className="buttons">
+                            <button className="button clear" onClick={() => clearVotes(params.gameId)}>Clear</button>
+                            <button className="button show" onClick={() => showVotes(params.gameId)}>Show</button>
+                        </div>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Story Points</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {votes.map((vote) => (
+                                <tr key={`vote-${vote.playerId}`}>
+                                    <td>{vote.playerName}</td>
+                                    <td>{vote.value}</td>
+                                    <td>
+                                        {userExist && (
+                                            <button onClick={() => handleDeletePlayer(vote.playerId)}>delete</button>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
                     </div>
-                )}
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Story Points</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {votes.map((vote) => (
-                        <tr key={`vote-${vote.playerId}`}>
-                            <td>{vote.playerName}</td>
-                            <td>{vote.value}</td>
-                            <td>
-                                {userExist && (
-                                    <button onClick={() => handleDeletePlayer(vote.playerId)}>delete</button>
-                                )}
-                            </td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
-            </div>
+                </>
+            )}
 
-            {!userExist && <JoinGamePopup votes={votes} onJoin={handleJoinGame}/>}
+            {!userExist && (
+                <JoinGame votes={votes} onJoin={handleJoinGame}/>
+            )}
         </>
     );
 }
