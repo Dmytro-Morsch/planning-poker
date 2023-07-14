@@ -123,4 +123,15 @@ public class PokerTest {
                 .andExpect(jsonPath("$[1].playerId").value(2))
                 .andExpect(jsonPath("$[1].value").value(5));
     }
+
+    @Test
+    public void testDuplicatePlayerName() throws Exception {
+        // First player creates a game
+        mockMvc.perform(post("/api/game").content("The Player"))
+                .andExpect(jsonPath("$.gameId").value("1"));
+
+        // Another player is trying to join with the same name
+        mockMvc.perform(post("/api/game/1/player").content("The Player"))
+                .andExpect(status().isConflict());
+    }
 }

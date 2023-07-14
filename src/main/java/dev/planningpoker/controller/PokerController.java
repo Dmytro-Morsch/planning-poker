@@ -3,12 +3,15 @@ package dev.planningpoker.controller;
 import dev.planningpoker.model.Vote;
 import dev.planningpoker.repository.PokerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+
+import static jakarta.servlet.http.HttpServletResponse.SC_CONFLICT;
 
 @RestController
 public class PokerController {
@@ -30,9 +33,13 @@ public class PokerController {
         if (shown == null) {
             return new ResponseEntity<>("Game not found!", HttpStatus.NOT_FOUND);
         }
-        Long playerId = pokerRepository.addPlayer(playerName, gameId);
-        var votes = getVotes(gameId, shown);
-        return ResponseEntity.ok(Map.of("playerId", playerId, "votes", votes));
+        try {
+            Long playerId = pokerRepository.addPlayer(playerName, gameId);
+            var votes = getVotes(gameId, shown);
+            return ResponseEntity.ok(Map.of("playerId", playerId, "votes", votes));
+        } catch (DuplicateKeyException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Player with the same name has already joined the game");
+        }
     }
 
     @PostMapping("/api/player/{playerId}/vote")
