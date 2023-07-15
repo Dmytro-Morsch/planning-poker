@@ -44,7 +44,7 @@ public class PokerController {
 
     @PostMapping("/api/player/{playerId}/vote")
     private ResponseEntity<?> vote(@PathVariable Long playerId,
-                                   @RequestBody String value) {
+                                   @RequestBody(required = false) String value) {
         if (!pokerRepository.vote(playerId, value)) {
             return new ResponseEntity<>("Player not found!", HttpStatus.NOT_FOUND);
         }

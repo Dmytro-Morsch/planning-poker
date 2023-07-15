@@ -54,7 +54,7 @@ public class PokerRepository {
                 update player
                 set vote=:vote
                 where id=:playerId
-                """, Map.of("vote", vote, "playerId", playerId));
+                """, new MapSqlParameterSource("playerId", playerId).addValue("vote", vote));
         return updated > 0;
     }
 
