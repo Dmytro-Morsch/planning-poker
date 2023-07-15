@@ -25,7 +25,7 @@
     flex-direction: column;
     row-gap: 1rem;
     z-index: 1;
-    padding: 2rem;
+    padding: 3rem;
     top: 8%;
     left: 30%;
     width: 600px;
@@ -38,28 +38,28 @@
 }
 
 .share-link .popup-block .title {
-    font-size: 1.2rem;
+    font-size: 2rem;
     text-align: left;
 }
 
 .share-link .popup-block .h2 {
     letter-spacing: 2px;
-    margin: 0.8rem 0;
+    margin: 1rem 0;
 }
 
 .share-link .popup-block .scan {
-    font-size: 1.2rem;
+    font-size: 2rem;
     font-weight: 500;
 }
 
 .share-link .popup-block .copy-block .url {
     width: 60%;
-    font-size: 1rem;
+    font-size: 1.7rem;
     background-image: url("../../assets/chain.svg");
     background-repeat: no-repeat;
     background-position-x: 5px;
-    background-position-y: 7px;
-    padding: 0.5rem 1rem 0.5rem 1.8rem;
+    background-position-y: 10px;
+    padding: 1rem 2rem 1rem 2.8rem;
     border: 1px solid grey;
     border-radius: 5px;
     margin-bottom: 0.5rem;
@@ -69,8 +69,8 @@
     display: flex;
     align-items: center;
     margin: 0 auto;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
+    padding: 1rem 1.5rem;
+    font-size: 1.7rem;
     border-radius: 5px;
 }
 
@@ -81,15 +81,15 @@
 .share-link .copy-block .button.copy img {
     max-width: 20px;
     max-height: 20px;
-    margin-right: 0.5rem;
+    margin-right: 1rem;
 }
 
 .share-link .button.ok {
-    font-size: 1.2rem;
-    padding: 0.3rem 0.6rem;
+    font-size: 1.7rem;
+    padding: 0.8rem 1.2rem;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 1rem;
+    margin-top: 1.7rem;
     width: 100px;
     border-radius: 5px;
     color: white;

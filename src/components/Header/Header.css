@@ -7,7 +7,7 @@
 }
 
 .navbar .logo .link {
-    font-size: 1.2rem;
+    font-size: 2.2rem;
     font-family: 'Caprasimo', cursive;
     text-decoration: none;
     color: black;
@@ -22,7 +22,7 @@
     background-color: white;
     padding: 0.5rem 1rem;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 1.7rem;
 }
 
 .navbar .share-button > .block .button.share:hover {
@@ -42,7 +42,7 @@
 }
 
 .navbar .menu .user {
-    font-size: 1rem;
+    font-size: 1.7rem;
 }
 
 .navbar .menu .button.dropdown {
@@ -80,9 +80,9 @@
 
 .navbar .menu .dropdown-content .links .link {
     text-decoration: none;
-    padding: 0.3rem;
+    padding: 0.8rem;
     border-radius: 2px;
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: black;
 }
 

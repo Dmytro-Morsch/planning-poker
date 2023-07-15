@@ -1,5 +1,5 @@
 .estimate-block {
-    margin: 2rem auto;
+    margin: 2.5rem auto;
     width: 700px;
 }
 
@@ -9,9 +9,9 @@
 }
 
 .estimate-block .buttons .button {
-    font-size: 1rem;
+    font-size: 1.6rem;
     font-weight: 400;
-    padding: 0.5rem 1.5rem;
+    padding: 1rem 2rem;
     border-radius: 3px;
     box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
 }
@@ -32,7 +32,7 @@
 }
 
 .estimate-block table {
-    margin: 2rem 0;
+    margin: 2.5rem 0;
     width: 100%;
     box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;
     border-radius: 5px;
@@ -42,7 +42,7 @@
 .estimate-block table td {
     font-weight: 400;
     border-bottom: 1px solid #ddd;
-    padding: 1rem 2rem;
+    padding: 1rem 2.5rem;
 }
 
 .estimate-block table th:nth-child(1),
@@ -64,11 +64,11 @@
 }
 
 .estimate-block table th {
-    font-size: 1.2rem;
+    font-size: 1.7rem;
     letter-spacing: 2px;
 }
 
 .estimate-block table td {
-    font-size: 1rem;
+    font-size: 1.5rem;
 }
 
