@@ -6,6 +6,7 @@ import {Cards, JoinGame} from "../";
 import api from "../../api.js";
 
 import './Game.css';
+import VoteTable from "../VoteTable/VoteTable";
 
 function Game() {
     const [votes, setVotes] = useState([]);
@@ -84,28 +85,7 @@ function Game() {
                             <button className="button clear" onClick={() => clearVotes(params.gameId)}>Clear</button>
                             <button className="button show" onClick={() => showVotes(params.gameId)}>Show</button>
                         </div>
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Story Points</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {votes.map((vote) => (
-                                <tr key={`vote-${vote.playerId}`}>
-                                    <td>{vote.playerName}</td>
-                                    <td>{vote.value}</td>
-                                    <td>
-                                        {userExist && (
-                                            <button onClick={() => handleDeletePlayer(vote.playerId)}>delete</button>
-                                        )}
-                                    </td>
-                                </tr>
-                            ))}
-                            </tbody>
-                        </table>
+                        <VoteTable votes={votes} onDeletePlayer={handleDeletePlayer}/>
                     </div>
                 </>
             )}
