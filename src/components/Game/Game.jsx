@@ -7,6 +7,7 @@ import api from "../../api.js";
 
 import './Game.css';
 import VoteTable from "../VoteTable/VoteTable";
+import useInterval from "../../useInterval.js";
 
 function Game() {
     const [votes, setVotes] = useState([]);
@@ -15,10 +16,6 @@ function Game() {
     const {player, setPlayer} = useGame();
 
     const params = useParams();
-
-    function loadVotes(gameId) {
-        api.getVotes(gameId).then(setVotes);
-    }
 
     function vote(playerId, vote) {
         api.vote(playerId, vote).then(setVotes);
@@ -64,13 +61,9 @@ function Game() {
         localStorage.setItem("gameId", params.gameId);
     }, [params.gameId]);
 
-    useEffect(() => {
-        loadVotes(params.gameId);
-        const interval = setInterval(() => {
-            loadVotes(params.gameId);
-        }, 2000);
-        return () => clearInterval(interval);
-    }, []);
+    useInterval(() => {
+        api.getVotes(params.gameId).then(setVotes);
+    }, 2000);
 
     return (
         <>
