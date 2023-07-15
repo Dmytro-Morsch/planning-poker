@@ -1,5 +1,10 @@
 .card-block {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
+    flex-direction: row;
+    row-gap: 2rem;
+    column-gap: 2rem;
+    width: 65%;
+    margin: 0 auto;
 }

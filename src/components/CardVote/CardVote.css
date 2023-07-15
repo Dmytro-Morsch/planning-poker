@@ -14,10 +14,15 @@
     border-radius: 3px;
 }
 
-.card .selected:after {
-    content: "*";
+.card.selected {
+    background-color: #d37700;
+    color: white;
 }
 
 .card:hover {
     background-color: #FAFAFA;
+}
+
+.card.selected:hover {
+    background-color: #d37700;
 }
