@@ -11,7 +11,7 @@ import useInterval from "../../useInterval.js";
 
 function Game() {
     const [votes, setVotes] = useState([]);
-    const [selectedCard, setIsSelectedCard] = useState();
+    const [selectedCard, setSelectedCard] = useState();
     const [userExist, setUserExist] = useState(false);
     const {player, setPlayer} = useGame();
     const {gameId} = useParams();
@@ -65,7 +65,8 @@ function Game() {
             {userExist && (
                 <>
                     <Cards selectedCard={selectedCard} onSelect={(value) => {
-                        setIsSelectedCard(value);
+                        if (value === selectedCard) value = null;
+                        setSelectedCard(value);
                         vote(player.playerId, value);
                     }}/>
                     <div className="estimate-block">
