@@ -14,27 +14,22 @@ function Game() {
     const [selectedCard, setIsSelectedCard] = useState();
     const [userExist, setUserExist] = useState(false);
     const {player, setPlayer} = useGame();
-
-    const params = useParams();
+    const {gameId} = useParams();
 
     function vote(playerId, vote) {
         api.vote(playerId, vote).then(setVotes);
     }
 
-    function clearVotes(gameId) {
+    function clearVotes() {
         api.clearVotes(gameId).then(setVotes);
     }
 
-    function showVotes(gameId) {
+    function showVotes() {
         api.showVotes(gameId).then(setVotes);
     }
 
-    function deletePlayer(playerId) {
-        api.deletePlayer(playerId).then(setVotes);
-    }
-
     function handleJoinGame(playerName) {
-        api.addPlayerToGame(params.gameId, playerName).then(result => {
+        api.addPlayerToGame(gameId, playerName).then(result => {
             const playerId = result.playerId;
             setVotes(result.votes);
             const player = {playerId, playerName};
@@ -46,23 +41,23 @@ function Game() {
 
     function handleDeletePlayer(playerId) {
         if (confirm("Sure?")) {
-            deletePlayer(playerId);
+            api.deletePlayer(playerId).then(setVotes);
         }
     }
 
     useEffect(() => {
-        const gameId = localStorage.getItem("gameId");
-        if (gameId !== params.gameId || !player) {
+        const oldGameId = localStorage.getItem("gameId");
+        if (oldGameId !== gameId || !player) {
             localStorage.removeItem("player");
             setUserExist(false);
         } else {
             setUserExist(true);
         }
-        localStorage.setItem("gameId", params.gameId);
-    }, [params.gameId]);
+        localStorage.setItem("gameId", gameId);
+    }, [gameId]);
 
     useInterval(() => {
-        api.getVotes(params.gameId).then(setVotes);
+        api.getVotes(gameId).then(setVotes);
     }, 2000);
 
     return (
@@ -75,8 +70,8 @@ function Game() {
                     }}/>
                     <div className="estimate-block">
                         <div className="buttons">
-                            <button className="button clear" onClick={() => clearVotes(params.gameId)}>Clear</button>
-                            <button className="button show" onClick={() => showVotes(params.gameId)}>Show</button>
+                            <button className="button clear" onClick={clearVotes}>Clear</button>
+                            <button className="button show" onClick={showVotes}>Show</button>
                         </div>
                         <VoteTable votes={votes} onDeletePlayer={handleDeletePlayer}/>
                     </div>
