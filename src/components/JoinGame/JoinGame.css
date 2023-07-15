@@ -1,0 +1,94 @@
+.join-game {
+    margin-top: 5rem;
+    text-align: center;
+}
+
+.join-game .h1 {
+    color: #894b00;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+}
+
+.join-game .custom-field {
+    position: relative;
+    font-size: 1.4rem;
+    border-top: 20px solid transparent;
+}
+
+.join-game .custom-field input {
+    margin: 2rem 0;
+    appearance: none;
+    padding: 1.2rem;
+    border-radius: 3px;
+    width: 350px;
+    font-size: 1.4rem;
+    z-index: 99;
+}
+
+.join-game .custom-field .placeholder {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666666;
+    cursor: text;
+    transition: top 0.3s ease,
+    font-size 0.3s ease,
+    color 0.3s ease;
+}
+
+.join-game .custom-field input:focus {
+    border: 2px solid #db7902;
+    outline: none;
+}
+
+.join-game .custom-field input:focus + .placeholder {
+    top: -13px;
+    background-color: white;
+    font-size: 1.2rem;
+    color: #db7902;
+    padding: 0.2rem;
+    border-radius: 3px;
+}
+
+.join-game .button.join {
+    display: block;
+    margin-bottom: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 2rem;
+    font-weight: 600;
+    width: 300px;
+    padding: 1rem 1.5rem;
+    border-radius: 3px;
+    background-color: #d37700;
+    color: white;
+}
+
+.join-game .button.join:hover {
+    background-color: #c46b00;
+    transition: background-color 0.3s ease;
+
+}
+
+.join-game .h3 {
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+}
+
+.join-game .players {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: 300px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.join-game .players .player {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    width: 100px;
+}
