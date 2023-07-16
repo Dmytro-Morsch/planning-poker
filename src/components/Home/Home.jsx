@@ -9,7 +9,7 @@ function Home() {
     const [gameId, setGameId] = useState();
     const [loading, setLoading] = useState(false);
 
-    function handleStartGame (event) {
+    function handleStartGame(event) {
         event.preventDefault();
         setLoading(true)
         if (playerName) {
@@ -23,7 +23,7 @@ function Home() {
         }
     }
 
-    function handleJoinGame (event){
+    function handleJoinGame(event) {
         event.preventDefault();
         if (gameId) {
             navigate(`/game/${gameId}`);
@@ -38,15 +38,23 @@ function Home() {
                 <div className="home-block">
                     <h3 className="h3">Start new game</h3>
                     <form onSubmit={handleStartGame}>
-                        <input type="text" placeholder="Your name" onChange={e => setPlayerName(e.target.value)}/>
-                        <button type="submit" disabled={!playerName || loading}>Start</button>
+                        <label className="custom-field">
+                            <input className={playerName ? 'not-empty' : ''} type="text"
+                                   onChange={e => setPlayerName(e.target.value)}/>
+                            <span className="placeholder">Your name</span>
+                        </label>
+                        <button className="button start" type="submit" disabled={!playerName || loading}>Start</button>
                     </form>
                 </div>
                 <div className="home-block">
                     <h3 className="h3">Join existing game</h3>
                     <form onSubmit={handleJoinGame}>
-                        <input type="text" placeholder="Game ID" onChange={e => setGameId(e.target.value)}/>
-                        <button type="submit" disabled={!gameId || loading}>Join</button>
+                        <label className="custom-field">
+                            <input className={gameId ? 'not-empty' : ''} type="text"
+                                   onChange={e => setGameId(e.target.value)}/>
+                            <span className="placeholder">Game ID</span>
+                        </label>
+                        <button className="button join" type="submit" disabled={!gameId || loading}>Join</button>
                     </form>
                 </div>
             </div>
