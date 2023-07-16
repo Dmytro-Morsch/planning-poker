@@ -37,16 +37,11 @@
     color 0.3s ease;
 }
 
-.join-game .custom-field input:focus {
-    border: 2px solid #db7902;
-    outline: none;
-}
-
-.join-game .custom-field input:focus + .placeholder {
+.join-game .custom-field input:focus + .placeholder,
+.join-game .custom-field .not-empty + .placeholder {
     top: -13px;
     background-color: white;
     font-size: 1.2rem;
-    color: #db7902;
     padding: 0.2rem;
     border-radius: 3px;
 }

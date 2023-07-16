@@ -24,7 +24,8 @@ function JoinGame({votes, onJoin}) {
             <h1 className="h1">Enter Game</h1>
             <form onSubmit={handleSubmit}>
                 <label className="custom-field">
-                    <input type="text" value={playerName} onChange={handleChange}/>
+                    <input className={playerName ? 'not-empty' : ''} type="text" value={playerName}
+                           onChange={handleChange}/>
                     <span className="placeholder">Display name *</span>
                 </label>
                 <button className="button join" type="submit" disabled={isNameTaken || !playerName}>Join</button>
