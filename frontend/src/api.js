@@ -43,8 +43,8 @@ const api = {
         chekResponse(response);
         return await response.json();
     },
-    clearVotes: async (gameId) => {
-        const response = await fetch('/api/game/' + gameId + '/clear', {
+    resetGame: async (gameId) => {
+        const response = await fetch('/api/game/' + gameId + '/reset', {
             method: 'POST'
         });
         chekResponse(response);

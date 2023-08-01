@@ -86,7 +86,7 @@ public class PokerRepository {
         return singleResult(list);
     }
 
-    public boolean clearVotes(Long gameId) {
+    public boolean resetGame(Long gameId) {
         int updated = jdbcTemplate.update("""
                 update player
                 set vote=null

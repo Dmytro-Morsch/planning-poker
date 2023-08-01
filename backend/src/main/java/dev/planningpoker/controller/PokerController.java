@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-import static jakarta.servlet.http.HttpServletResponse.SC_CONFLICT;
-
 @RestController
 public class PokerController {
 
@@ -81,13 +79,13 @@ public class PokerController {
         return ResponseEntity.ok(votes);
     }
 
-    @PostMapping("/api/game/{gameId}/clear")
-    private ResponseEntity<?> clearVotes(@PathVariable Long gameId) {
+    @PostMapping("/api/game/{gameId}/reset")
+    private ResponseEntity<?> resetGame(@PathVariable Long gameId) {
         boolean updated = pokerRepository.hideVotes(gameId);
         if (!updated) {
             return new ResponseEntity<>("Game not found!", HttpStatus.NOT_FOUND);
         }
-        pokerRepository.clearVotes(gameId);
+        pokerRepository.resetGame(gameId);
         var votes = getVotes(gameId, false);
         return ResponseEntity.ok(votes);
     }

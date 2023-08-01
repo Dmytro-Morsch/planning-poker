@@ -20,8 +20,8 @@ function Game() {
         api.vote(playerId, vote).then(setVotes);
     }
 
-    function clearVotes() {
-        api.clearVotes(gameId).then(setVotes);
+    function resetGame() {
+        api.resetGame(gameId).then(setVotes);
     }
 
     function showVotes() {
@@ -71,7 +71,7 @@ function Game() {
                     }}/>
                     <div className="estimate-block">
                         <div className="buttons">
-                            <button className="button clear" onClick={clearVotes}>Clear</button>
+                            <button className="button reset" onClick={resetGame}>Reset</button>
                             <button className="button show" onClick={showVotes}>Show</button>
                         </div>
                         <VoteTable votes={votes} onDeletePlayer={handleDeletePlayer}/>
