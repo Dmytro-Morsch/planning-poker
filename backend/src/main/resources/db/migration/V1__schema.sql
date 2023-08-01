@@ -1,5 +1,5 @@
-create sequence game_id_seq cycle maxvalue 9223372036854775807; -- Long.MAX_VALUE
-create sequence player_id_seq cycle maxvalue 9223372036854775807; -- Long.MAX_VALUE
+create sequence game_id_seq cycle maxvalue 805306367; -- Max value supported by GameIdObfuscator
+create sequence player_id_seq cycle maxvalue 9223372036854775807; -- Max value supported by PlayerIdObfuscator
 
 create table game
 (

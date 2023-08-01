@@ -1,6 +1,8 @@
 package dev.planningpoker.repository;
 
 import dev.planningpoker.model.Vote;
+import dev.planningpoker.obfuscator.GameIdObfuscator;
+import dev.planningpoker.obfuscator.PlayerIdObfuscator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -20,8 +22,14 @@ public class PokerRepository {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
+    private final GameIdObfuscator gameIdObfuscator = new GameIdObfuscator(2123801081, 811468089, 8);
+    private final PlayerIdObfuscator playerIdObfuscator = new PlayerIdObfuscator(2123740891, 968011489);
+
     public Long createGame() {
-        long gameId = jdbcTemplate.queryForObject("select nextval('game_id_seq')", emptyMap(), Long.class);
+        long nextval = jdbcTemplate.queryForObject("""
+                select nextval('game_id_seq')
+                """, emptyMap(), Long.class);
+        long gameId = gameIdObfuscator.encode(nextval);
         jdbcTemplate.update("""
                 insert into game (id, cards_shown)
                 values (:gameId, false)
@@ -38,12 +46,14 @@ public class PokerRepository {
     }
 
     public Long addPlayer(String playerName, Long gameId) {
-        long playerId = jdbcTemplate.queryForObject("select nextval('player_id_seq')", emptyMap(), Long.class);
+        long nextval = jdbcTemplate.queryForObject("""
+                select nextval('player_id_seq')
+                """, emptyMap(), Long.class);
+        long playerId = playerIdObfuscator.encode(nextval);
         var params = new MapSqlParameterSource()
                 .addValue("playerId", playerId)
                 .addValue("name", playerName)
                 .addValue("gameId", gameId);
-
         jdbcTemplate.update("""
                 insert into player (id, name, game_id)
                 values (:playerId, :name, :gameId)
