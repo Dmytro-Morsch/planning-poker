@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Collections.emptyMap;
 import static org.springframework.dao.support.DataAccessUtils.singleResult;
 
 @Repository
@@ -20,12 +21,12 @@ public class PokerRepository {
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     public Long createGame() {
-        var keyHolder = new GeneratedKeyHolder();
+        long gameId = jdbcTemplate.queryForObject("select nextval('game_id_seq')", emptyMap(), Long.class);
         jdbcTemplate.update("""
-                insert into game (cards_shown)
-                values (false)
-                """, new MapSqlParameterSource(), keyHolder);
-        return (long) keyHolder.getKeys().get("id");
+                insert into game (id, cards_shown)
+                values (:gameId, false)
+                """, Map.of("gameId", gameId));
+        return gameId;
     }
 
     public List<Vote> getVotes(Long gameId) {
@@ -37,16 +38,17 @@ public class PokerRepository {
     }
 
     public Long addPlayer(String playerName, Long gameId) {
-        var keyHolder = new GeneratedKeyHolder();
+        long playerId = jdbcTemplate.queryForObject("select nextval('player_id_seq')", emptyMap(), Long.class);
         var params = new MapSqlParameterSource()
+                .addValue("playerId", playerId)
                 .addValue("name", playerName)
                 .addValue("gameId", gameId);
 
         jdbcTemplate.update("""
-                insert into player (name, game_id)
-                values (:name, :gameId)
-                """, params, keyHolder);
-        return (long) keyHolder.getKeys().get("id");
+                insert into player (id, name, game_id)
+                values (:playerId, :name, :gameId)
+                """, params);
+        return playerId;
     }
 
     public boolean vote(Long playerId, String vote) {
