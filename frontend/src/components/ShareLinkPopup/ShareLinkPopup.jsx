@@ -16,24 +16,21 @@ function ShareLinkPopup({gameId, myref, onClose}) {
             <div className="overlay"></div>
 
             <div className="popup-block" ref={myref}>
-                <span className="title">How can people join the game?</span>
-                <h2 className="h2">Game {gameId}</h2>
+                <h2 className="h2">Game #{gameId}</h2>
 
                 <div className="copy-block">
                     <input className="url" value={window.location.href} readOnly="readOnly"/>
                     <button className="button copy" type="button"
                             onClick={() => navigator.clipboard.writeText(window.location.href)}>
-                        <img src={copy} alt=""/>
-                        Copy URL to clipboard
+                        <img src={copy} alt="Copy link to clipboard" title="Copy link to clipboard"/>
                     </button>
                 </div>
 
-                <span className="scan">Scan the QR code</span>
                 <div className="qr-code">
                     <QRCode value={window.location.href}/>
                 </div>
 
-                <button className="button ok" type="button" onClick={onClose}>GOT IT!</button>
+                <button className="button ok" type="button" onClick={onClose}>Сlose</button>
             </div>
         </div>
     );

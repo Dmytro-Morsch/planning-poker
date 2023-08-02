@@ -28,14 +28,14 @@ function Header() {
     return (
         <nav className="navbar">
             <div className="logo">
-                <NavLink className="link" to="/">Planning-poker</NavLink>
+                <NavLink className="link" to="/">Planning Poker</NavLink>
             </div>
 
             {params.gameId &&
                 <div className="share-button">
                     <div className="block">
                         <button className="button share" type="button" onClick={() => setIsShareLinkPopupVisible(true)}>
-                            Game {params.gameId}
+                            Game #{params.gameId}
                             <img src={share} alt=""/>
                         </button>
                     </div>

@@ -4,7 +4,7 @@ function VoteTable({votes, onDeletePlayer}) {
             <thead>
             <tr>
                 <th>Name</th>
-                <th>Story Points</th>
+                <th>Vote</th>
                 <th></th>
             </tr>
             </thead>
