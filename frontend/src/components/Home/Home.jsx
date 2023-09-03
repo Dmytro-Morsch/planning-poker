@@ -19,7 +19,7 @@ function Home() {
         if (playerName) {
             api.createGame(playerName).then(response => {
                 setLoading(false)
-                const player = {playerId: response.playerId, playerName: playerName};
+                const player = {playerId: response.playerId, playerName: playerName.trim()};
                 storePlayer(player);
                 storeGameId(response.gameId);
                 navigate(`/game/${response.gameId}`);
