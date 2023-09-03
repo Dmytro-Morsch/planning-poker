@@ -2,6 +2,7 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import api from "../../api.js";
 import './Home.css';
+import {Header} from "../index.js";
 import useLocalStorage from "../../hooks/useLocalStorage.js";
 
 function Home() {
@@ -33,7 +34,8 @@ function Home() {
     }
 
     return (
-        <div>
+        <>
+            <Header/>
             <h1 className="h1">Welcome</h1>
 
             <div className="home-block-container">
@@ -60,7 +62,7 @@ function Home() {
                     </form>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 

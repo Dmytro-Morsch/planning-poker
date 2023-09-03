@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 
 import {Deck, JoinGame} from "../";
+import {Header} from "../index.js";
 import api from "../../api.js";
 
 import './Game.css';
@@ -70,6 +71,7 @@ function Game() {
 
     return (
         <>
+            <Header/>
             {error && (
                 <div className="error-block">{error}</div>
             )}
