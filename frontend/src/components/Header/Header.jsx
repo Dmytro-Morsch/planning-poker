@@ -1,5 +1,5 @@
 import {NavLink, useParams} from "react-router-dom";
-import useComponentVisible from "../../useCompontentVisible.js";
+import useComponentVisible from "../../hooks/useCompontentVisible.js";
 
 import {ShareLinkPopup} from '../';
 

@@ -7,7 +7,7 @@ import api from "../../api.js";
 
 import './Game.css';
 import VoteTable from "../VoteTable/VoteTable";
-import useInterval from "../../useInterval.js";
+import useInterval from "../../hooks/useInterval.js";
 
 function Game() {
     const [votes, setVotes] = useState([]);
