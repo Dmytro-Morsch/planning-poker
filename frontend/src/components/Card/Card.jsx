@@ -1,6 +1,6 @@
-import './CardVote.css';
+import './Card.css';
 
-function CardVote({value, isSelected, onSelect}) {
+function Card({value, isSelected, onSelect}) {
     return (
         <div className={"card" + (isSelected ? ' selected' : '')} onClick={() => onSelect(value)}>
             <span>{value}</span>
@@ -8,4 +8,4 @@ function CardVote({value, isSelected, onSelect}) {
     );
 }
 
-export default CardVote;
+export default Card;

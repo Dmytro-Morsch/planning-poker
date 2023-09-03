@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {useGame} from "../../context/Game.context.jsx";
 
-import {Cards, JoinGame} from "../";
+import {Deck, JoinGame} from "../";
 import api from "../../api.js";
 
 import './Game.css';
@@ -73,7 +73,7 @@ function Game() {
             )}
             {userExist && (
                 <>
-                    <Cards selectedCard={selectedCard} onSelect={(value) => {
+                    <Deck selectedCard={selectedCard} onSelect={(value) => {
                         if (value === selectedCard) value = null;
                         setSelectedCard(value);
                         vote(player.playerId, value);
