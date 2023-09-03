@@ -1,3 +1,14 @@
+.error-block {
+    background-color: #ea0505;
+    color: yellow;
+    font-weight: bold;
+    font-size: 2em;
+    margin: auto;
+    padding: 1em;
+    width: 500px;
+    text-align: center;
+    min-height: 100px;
+}
 .estimate-block {
     margin: 2.5rem auto;
     width: 700px;

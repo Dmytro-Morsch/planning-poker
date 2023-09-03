@@ -12,20 +12,25 @@ import useInterval from "../../useInterval.js";
 function Game() {
     const [votes, setVotes] = useState([]);
     const [selectedCard, setSelectedCard] = useState();
+    const [error, setError] = useState();
     const [userExist, setUserExist] = useState(false);
     const {player, setPlayer} = useGame();
     const {gameId} = useParams();
 
+    function handleError(e) {
+        setError(e.message);
+    }
+
     function vote(playerId, vote) {
-        api.vote(playerId, vote).then(setVotes);
+        api.vote(playerId, vote).then(setVotes).catch(handleError);
     }
 
     function resetGame() {
-        api.resetGame(gameId).then(setVotes);
+        api.resetGame(gameId).then(setVotes).catch(handleError);
     }
 
     function showVotes() {
-        api.showVotes(gameId).then(setVotes);
+        api.showVotes(gameId).then(setVotes).catch(handleError);
     }
 
     function handleJoinGame(playerName) {
@@ -36,14 +41,15 @@ function Game() {
             localStorage.setItem("player", JSON.stringify(player));
             setPlayer(player);
             setUserExist(true);
-        });
+        }).catch(handleError);
     }
 
     function handleDeletePlayer(playerId) {
         if (confirm("Sure?")) {
-            api.deletePlayer(playerId).then(setVotes);
+            api.deletePlayer(playerId).then(setVotes).catch(handleError);
         }
     }
+
 
     useEffect(() => {
         const oldGameId = localStorage.getItem("gameId");
@@ -57,11 +63,14 @@ function Game() {
     }, [gameId]);
 
     useInterval(() => {
-        api.getVotes(gameId).then(setVotes);
+        api.getVotes(gameId).then(setVotes).catch(handleError);
     }, 2000);
 
     return (
         <>
+            {error && (
+                <div className="error-block">{error}</div>
+            )}
             {userExist && (
                 <>
                     <Cards selectedCard={selectedCard} onSelect={(value) => {

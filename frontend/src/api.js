@@ -1,6 +1,6 @@
 function checkResponse(response) {
     if (!response.ok) {
-        throw new Error(response.status)
+        throw new Error(response.statusText || response.status)
     }
 }
 
@@ -14,14 +14,14 @@ const api = {
         return await response.json();
     },
     getVotes: async (gameId) => {
-        const response = await fetch('/api/game/' + gameId, {
+        const response = await fetch('/api/game/' + encodeURIComponent(gameId), {
             method: 'GET',
         });
         checkResponse(response);
         return await response.json();
     },
     addPlayerToGame: async (gameId, playerName) => {
-        const response = await fetch('/api/game/' + gameId + '/player', {
+        const response = await fetch('/api/game/' + encodeURIComponent(gameId) + '/player', {
             method: 'POST',
             body: playerName,
         });
@@ -29,14 +29,14 @@ const api = {
         return await response.json();
     },
     deletePlayer: async  (playerId) => {
-        const response = await fetch('/api/player/' + playerId + '/delete', {
+        const response = await fetch('/api/player/' + encodeURIComponent(playerId) + '/delete', {
             method: 'POST'
         });
         checkResponse(response);
         return await response.json();
     },
     vote: async (playerId, value) => {
-        const response = await fetch('/api/player/' + playerId + '/vote', {
+        const response = await fetch('/api/player/' + encodeURIComponent(playerId) + '/vote', {
             method: 'POST',
             body: value
         });
@@ -44,14 +44,14 @@ const api = {
         return await response.json();
     },
     resetGame: async (gameId) => {
-        const response = await fetch('/api/game/' + gameId + '/reset', {
+        const response = await fetch('/api/game/' + encodeURIComponent(gameId) + '/reset', {
             method: 'POST'
         });
         checkResponse(response);
         return await response.json();
     },
     showVotes: async (gameId) => {
-        const response = await fetch('/api/game/' + gameId + '/show', {
+        const response = await fetch('/api/game/' + encodeURIComponent(gameId) + '/show', {
             method: 'POST'
         });
         checkResponse(response);
