@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg class="iconify iconify--logos" width="32" height="32" aria-hidden="true" role="img" version="1.1"
+     viewBox="0 0 255 255" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(7.2698 1.0836)">
+        <g fill="#f9f9f9" stroke="#000">
+            <rect transform="matrix(.98333 .18183 -.21497 .97662 0 0)" x="83.767" y="1.139" width="154.64"
+                  height="201.41" ry="12.334" stroke-width="8.5658"/>
+            <rect transform="matrix(.99533 .096517 -.11467 .9934 0 0)" x="50.522" y="7.7868" width="154.99"
+                  height="200.87" ry="12.302" stroke-width="8.564"/>
+            <rect x="14.434" y="13.5" width="155.13" height="200.66" ry="12.289" stroke-width="8.5633"/>
+        </g>
+        <text transform="scale(1.0097 .99043)" x="37.86068" y="157.80783" fill="#000000" font-size="123.56px"
+              stroke="#000000" stroke-linejoin="round" stroke-width="1.0297" xml:space="preserve"><tspan x="37.86068" y="157.80783" fill="#000000" font-family="'Ubuntu Condensed'" stroke-linejoin="round" stroke-width="1.0297">13</tspan></text>
+    </g>
+</svg>
