@@ -1,5 +1,4 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {PlayerProvider} from "./context/Game.context.jsx";
 
 import {Game, Home, MainLayout, PageNotFound} from './components';
 
@@ -12,7 +11,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<MainLayout/>}>
                     <Route path="/" element={<Home/>}/>
-                    <Route path="/game/:gameId" element={<PlayerProvider><Game/></PlayerProvider>}/>
+                    <Route path="/game/:gameId" element={<Game/>}/>
                 </Route>
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>

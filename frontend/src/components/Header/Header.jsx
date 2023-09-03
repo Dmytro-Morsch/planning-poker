@@ -6,10 +6,10 @@ import {ShareLinkPopup} from '../';
 import './Header.css';
 
 import share from '../../assets/share.svg'
-import {useGame} from "../../context/Game.context.jsx";
+import useLocalStorage from "../../hooks/useLocalStorage.js";
 
 function Header() {
-    const {player} = useGame();
+    const [player, setPlayer] = useLocalStorage("player");
 
     const {
         ref: refShareLinkPopup,

@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {useGame} from "../../context/Game.context.jsx";
 
 import {Deck, JoinGame} from "../";
 import api from "../../api.js";
@@ -8,14 +7,16 @@ import api from "../../api.js";
 import './Game.css';
 import VoteTable from "../VoteTable/VoteTable";
 import useInterval from "../../hooks/useInterval.js";
+import useLocalStorage from "../../hooks/useLocalStorage.js";
 
 function Game() {
+    const params = useParams();
     const [votes, setVotes] = useState([]);
     const [selectedCard, setSelectedCard] = useState();
     const [error, setError] = useState();
     const [userExist, setUserExist] = useState(false);
-    const {player, setPlayer} = useGame();
-    const {gameId} = useParams();
+    const [player, setPlayer] = useLocalStorage("player");
+    const [gameId, setGameId] = useLocalStorage("gameId");
 
     function handleError(e) {
         setError(e.message);
@@ -38,7 +39,7 @@ function Game() {
             const playerId = result.playerId;
             setVotes(result.votes);
             const player = {playerId, playerName};
-            localStorage.setItem("player", JSON.stringify(player));
+            setGameId(gameId);
             setPlayer(player);
             setUserExist(true);
         }).catch(handleError);
@@ -52,15 +53,15 @@ function Game() {
 
 
     useEffect(() => {
-        const oldGameId = localStorage.getItem("gameId");
-        if (oldGameId !== gameId || !player) {
-            localStorage.removeItem("player");
+        if (gameId !== params.gameId || !player) {
+            setPlayer(null);
+            setGameId(params.gameId);
             setUserExist(false);
         } else {
+            api.getVotes(gameId).then(setVotes).catch(handleError);
             setUserExist(true);
         }
-        localStorage.setItem("gameId", gameId);
-    }, [gameId]);
+    }, [gameId, params.gameId, player])
 
     useInterval(() => {
         api.getVotes(gameId).then(setVotes).catch(handleError);

@@ -2,12 +2,14 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import api from "../../api.js";
 import './Home.css';
+import useLocalStorage from "../../hooks/useLocalStorage.js";
 
 function Home() {
     const navigate = useNavigate();
     const [playerName, setPlayerName] = useState();
-    const [gameId, setGameId] = useState();
+    const [gameId, setGameId] = useLocalStorage("gameId");
     const [loading, setLoading] = useState(false);
+    const storePlayer = useLocalStorage("player")[1]
 
     function handleStartGame(event) {
         event.preventDefault();
@@ -16,8 +18,8 @@ function Home() {
             api.createGame(playerName).then(response => {
                 setLoading(false)
                 const player = {playerId: response.playerId, playerName: playerName};
-                localStorage.setItem("player", JSON.stringify(player));
-                localStorage.setItem("gameId", response.gameId);
+                storePlayer(player);
+                setGameId(response.gameId);
                 navigate(`/game/${response.gameId}`);
             });
         }
