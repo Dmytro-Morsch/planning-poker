@@ -51,7 +51,6 @@ function Game() {
         }
     }
 
-
     useEffect(() => {
         if (gameId !== params.gameId || !player) {
             setPlayer(null);
@@ -64,7 +63,9 @@ function Game() {
     }, [gameId, params.gameId, player])
 
     useInterval(() => {
-        api.getVotes(gameId).then(setVotes).catch(handleError);
+        if (gameId) {
+            api.getVotes(gameId).then(setVotes).catch(handleError);
+        }
     }, 2000);
 
     return (
