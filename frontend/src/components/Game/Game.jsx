@@ -102,7 +102,7 @@ function Game() {
                         vote(player.playerId, value);
                     }}/>
                     <div className="container w-75">
-                        <div>
+                        <div className="d-flex justify-content-center p-2">
                             <button className="btn btn-outline-primary" onClick={resetGame}>Reset</button>
                             <button className="btn btn-primary ms-2" onClick={revealVotes}>Reveal</button>
                         </div>
