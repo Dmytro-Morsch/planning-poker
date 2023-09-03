@@ -3,7 +3,6 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Game, Home, PageNotFound} from './components';
 
 import './App.css';
-import './reset.css';
 
 function App() {
     return (

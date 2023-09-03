@@ -2,7 +2,7 @@ import './Card.css';
 
 function Card({value, isSelected, onSelect}) {
     return (
-        <div className={"card" + (isSelected ? ' selected' : '')} onClick={() => onSelect(value)}>
+        <div className={"card shadow " + (isSelected ? 'bg-primary' : '')} onClick={() => onSelect(value)}>
             <span>{value}</span>
         </div>
     );

@@ -1,14 +1,13 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 
-import {Deck, JoinGame} from "../";
-import {Header} from "../index.js";
+import {Deck, JoinGame, ShareButton, ShareLinkPopup} from "../";
 import api from "../../api.js";
 
-import './Game.css';
 import VoteTable from "../VoteTable/VoteTable";
 import useInterval from "../../hooks/useInterval.js";
 import useLocalStorage from "../../hooks/useLocalStorage.js";
+import QRCode from "react-qr-code";
 
 function Game() {
     const params = useParams();
@@ -52,6 +51,10 @@ function Game() {
         }
     }
 
+    function handleShareClick() {
+
+    }
+
     useEffect(() => {
         if (gameId !== params.gameId || !player) {
             setPlayer(null);
@@ -70,32 +73,57 @@ function Game() {
     }, 2000);
 
     return (
-        <>
-            <Header/>
-            {error && (
-                <div className="error-block">{error}</div>
-            )}
-            {userExist && (
+        <div className="container">
+            <nav className="navbar bg-body-tertiary">
+                <div className="container-fluid">
+                    <a className="navbar-brand" href="/">
+                        <img src="/poker.svg" alt="Logo" width="48" height="48" className="align-middle"/>
+                        <span className="h3 ms-2 align-middle">Planning Poker</span>
+                    </a>
+                    <nav className="navbar-expand">
+                        <ul className="navbar-nav">
+                            <li className="nav-item">
+                                <ShareButton gameId={gameId}/>
+                            </li>
+                            {player &&
+                                <li className="nav-item">
+                                    <span className="nav-link">
+                                        {player.playerName}
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            </nav>
+
+            {error &&
+                <div className="alert alert-danger" role="alert">
+                    {error}
+                </div>
+            }
+
+            {userExist && !error &&
                 <>
                     <Deck selectedCard={selectedCard} onSelect={(value) => {
                         if (value === selectedCard) value = null;
                         setSelectedCard(value);
                         vote(player.playerId, value);
                     }}/>
-                    <div className="estimate-block">
-                        <div className="buttons">
-                            <button className="button reset" onClick={resetGame}>Reset</button>
-                            <button className="button show" onClick={showVotes}>Show</button>
+                    <div className="container w-75">
+                        <div>
+                            <button className="btn btn-outline-primary" onClick={resetGame}>Reset</button>
+                            <button className="btn btn-primary ms-2" onClick={showVotes}>Show</button>
                         </div>
                         <VoteTable votes={votes} onDeletePlayer={handleDeletePlayer}/>
                     </div>
                 </>
-            )}
+            }
 
-            {!userExist && (
+            {!userExist && !error && (
                 <JoinGame votes={votes} onJoin={handleJoinGame}/>
             )}
-        </>
+        </div>
     );
 }
 

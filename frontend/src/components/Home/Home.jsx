@@ -2,7 +2,6 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import api from "../../api.js";
 import './Home.css';
-import {Header} from "../index.js";
 import useLocalStorage from "../../hooks/useLocalStorage.js";
 
 function Home() {
@@ -35,35 +34,52 @@ function Home() {
     }
 
     return (
-        <>
-            <Header/>
-            <h1 className="h1">Welcome</h1>
-
-            <div className="home-block-container">
-                <div className="home-block">
-                    <h3 className="h3">Start new game</h3>
-                    <form onSubmit={handleStartGame}>
-                        <label className="custom-field">
-                            <input className={!playerName.trim() ? '' : 'not-empty'} type="text"
-                                   onChange={e => setPlayerName(e.target.value)}/>
-                            <span className="placeholder">Your name</span>
-                        </label>
-                        <button className="button start" type="submit" disabled={!playerName.trim() || loading}>Start</button>
-                    </form>
+        <div className="container">
+            <nav className="navbar bg-body-tertiary">
+                <div className="container-fluid">
+                    <a className="navbar-brand" href="#">
+                        <img src="/poker.svg" alt="Logo" width="48" height="48" className="align-middle"/>
+                        <span className="h3 ms-2 align-middle">Planning Poker</span>
+                    </a>
                 </div>
-                <div className="home-block">
-                    <h3 className="h3">Join existing game</h3>
-                    <form onSubmit={handleJoinGame}>
-                        <label className="custom-field">
-                            <input className={!gameId.trim() ? '' : 'not-empty'} type="text"
-                                   onChange={e => setGameId(e.target.value)}/>
-                            <span className="placeholder">Game ID</span>
-                        </label>
-                        <button className="button join" type="submit" disabled={!gameId.trim() || loading}>Join</button>
+            </nav>
+
+            <div className="text-center">
+                <h1 className="display-5 fw-bold p-lg-5">Welcome</h1>
+
+                <div className="row">
+                    <form className="col shadow h-100 p-lg-5 m-3" onSubmit={handleStartGame}>
+                        <h5 className="pb-3">Start new game</h5>
+                        <div className="input-group">
+                            <div className="form-floating">
+                                <input type="text" className="form-control" id="name-input"
+                                       aria-describedby="name-button"
+                                       placeholder="Your name" onChange={e => setPlayerName(e.target.value)}/>
+                                <label htmlFor="name-input">Your name</label>
+                            </div>
+                            <button className="btn btn-outline-primary" type="submit" id="name-button"
+                                    disabled={!playerName.trim() || loading}>Start
+                            </button>
+                        </div>
+                    </form>
+
+                    <form className="col shadow h-100 p-lg-5 m-3" onSubmit={handleJoinGame}>
+                        <h5 className="pb-3">Join existing game</h5>
+                        <div className="input-group">
+                            <div className="form-floating">
+                                <input type="text" className="form-control" id="game-input"
+                                       aria-describedby="game-button"
+                                       placeholder="Game ID" onChange={e => setGameId(e.target.value)}/>
+                                <label htmlFor="game-input">Game ID</label>
+                            </div>
+                            <button className="btn btn-outline-primary" type="submit" id="game-button"
+                                    disabled={!gameId.trim() || loading}>Join
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 

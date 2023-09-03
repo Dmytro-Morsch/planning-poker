@@ -1,6 +1,6 @@
 function VoteTable({votes, onDeletePlayer}) {
     return (
-        <table>
+        <table className="table table-striped">
             <thead>
             <tr>
                 <th>Name</th>
@@ -13,8 +13,8 @@ function VoteTable({votes, onDeletePlayer}) {
                 <tr key={`vote-${vote.playerId}`}>
                     <td>{vote.playerName}</td>
                     <td>{vote.value}</td>
-                    <td>
-                        <button onClick={() => onDeletePlayer(vote.playerId)}>delete</button>
+                    <td className="text-end">
+                        <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Delete" onClick={() => onDeletePlayer(vote.playerId)}></button>
                     </td>
                 </tr>
             ))}
