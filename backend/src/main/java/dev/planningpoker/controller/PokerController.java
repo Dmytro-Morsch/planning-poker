@@ -27,13 +27,13 @@ public class PokerController {
     @PostMapping("/api/game/{gameId}/player")
     private ResponseEntity<?> joinGame(@PathVariable Long gameId,
                                        @RequestBody String playerName) {
-        Boolean shown = pokerRepository.areCardsShown(gameId);
-        if (shown == null) {
+        Boolean revealed = pokerRepository.areCardsRevealed(gameId);
+        if (revealed == null) {
             return new ResponseEntity<>("Game not found!", HttpStatus.NOT_FOUND);
         }
         try {
             Long playerId = pokerRepository.addPlayer(playerName, gameId);
-            var votes = getVotes(gameId, shown);
+            var votes = getVotes(gameId, revealed);
             return ResponseEntity.ok(Map.of("playerId", playerId, "votes", votes));
         } catch (DuplicateKeyException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Player with the same name has already joined the game");
@@ -48,12 +48,12 @@ public class PokerController {
         }
 
         Long gameId = pokerRepository.getGameIdByPlayerId(playerId);
-        Boolean shown = pokerRepository.areCardsShown(gameId);
-        if (shown == null) {
+        Boolean revealed = pokerRepository.areCardsRevealed(gameId);
+        if (revealed == null) {
             return new ResponseEntity<>("Game not found!", HttpStatus.NOT_FOUND);
         }
 
-        var votes = getVotes(gameId, shown);
+        var votes = getVotes(gameId, revealed);
         return ResponseEntity.ok(votes);
     }
 
@@ -63,19 +63,19 @@ public class PokerController {
         if (!pokerRepository.deletePlayer(playerId)) {
             return new ResponseEntity<>("Player not found!", HttpStatus.NOT_FOUND);
         }
-        Boolean shown = pokerRepository.areCardsShown(gameId);
-        var votes = getVotes(gameId, shown);
+        Boolean revealed = pokerRepository.areCardsRevealed(gameId);
+        var votes = getVotes(gameId, revealed);
         return ResponseEntity.ok(votes);
     }
 
     @GetMapping("/api/game/{gameId}")
     private ResponseEntity<?> getVotes(@PathVariable Long gameId) {
-        Boolean shown = pokerRepository.areCardsShown(gameId);
-        if (shown == null) {
+        Boolean revealed = pokerRepository.areCardsRevealed(gameId);
+        if (revealed == null) {
             return new ResponseEntity<>("Game not found!", HttpStatus.NOT_FOUND);
         }
 
-        var votes = getVotes(gameId, shown);
+        var votes = getVotes(gameId, revealed);
         return ResponseEntity.ok(votes);
     }
 
@@ -90,9 +90,9 @@ public class PokerController {
         return ResponseEntity.ok(votes);
     }
 
-    @PostMapping("/api/game/{gameId}/show")
-    private ResponseEntity<?> showVotes(@PathVariable Long gameId) {
-        boolean updated = pokerRepository.showVotes(gameId);
+    @PostMapping("/api/game/{gameId}/reveal")
+    private ResponseEntity<?> revealVotes(@PathVariable Long gameId) {
+        boolean updated = pokerRepository.revealVotes(gameId);
         if (!updated) {
             return new ResponseEntity<>("Game not found!", HttpStatus.NOT_FOUND);
         }
@@ -100,9 +100,19 @@ public class PokerController {
         return ResponseEntity.ok(votes);
     }
 
-    private List<Vote> getVotes(Long gameId, boolean shown) {
+    @PostMapping("/api/game/{gameId}/hide")
+    private ResponseEntity<?> hideVotes(@PathVariable Long gameId) {
+        boolean updated = pokerRepository.revealVotes(gameId);
+        if (!updated) {
+            return new ResponseEntity<>("Game not found!", HttpStatus.NOT_FOUND);
+        }
+        var votes = getVotes(gameId, true);
+        return ResponseEntity.ok(votes);
+    }
+
+    private List<Vote> getVotes(Long gameId, boolean revealed) {
         var votes = pokerRepository.getVotes(gameId);
-        if (!shown) {
+        if (!revealed) {
             for (Vote vote : votes) {
                 if (vote.value != null) {
                     vote.value = "*";

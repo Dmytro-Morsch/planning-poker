@@ -50,8 +50,8 @@ const api = {
         checkResponse(response);
         return await response.json();
     },
-    showVotes: async (gameId) => {
-        const response = await fetch('/api/game/' + encodeURIComponent(gameId) + '/show', {
+    revealVotes: async (gameId) => {
+        const response = await fetch('/api/game/' + encodeURIComponent(gameId) + '/reveal', {
             method: 'POST'
         });
         checkResponse(response);

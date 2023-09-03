@@ -28,8 +28,8 @@ function Game() {
         api.resetGame(gameId).then(setVotes).catch(handleError);
     }
 
-    function showVotes() {
-        api.showVotes(gameId).then(setVotes).catch(handleError);
+    function revealVotes() {
+        api.revealVotes(gameId).then(setVotes).catch(handleError);
     }
 
     function handleJoinGame(playerName) {
@@ -104,7 +104,7 @@ function Game() {
                     <div className="container w-75">
                         <div>
                             <button className="btn btn-outline-primary" onClick={resetGame}>Reset</button>
-                            <button className="btn btn-primary ms-2" onClick={showVotes}>Show</button>
+                            <button className="btn btn-primary ms-2" onClick={revealVotes}>Reveal</button>
                         </div>
                         <VoteTable votes={votes} onDeletePlayer={handleDeletePlayer}/>
                     </div>

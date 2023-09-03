@@ -3,8 +3,8 @@ create sequence player_id_seq cycle maxvalue 9223372036854775807; -- Max value s
 
 create table game
 (
-    id          bigint  not null primary key,
-    cards_shown boolean not null
+    id       bigint  not null primary key,
+    revealed boolean not null
 );
 
 create table player

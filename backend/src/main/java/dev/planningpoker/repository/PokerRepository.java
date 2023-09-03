@@ -6,7 +6,6 @@ import dev.planningpoker.obfuscator.PlayerIdObfuscator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -31,7 +30,7 @@ public class PokerRepository {
                 """, emptyMap(), Long.class);
         long gameId = gameIdObfuscator.encode(nextval);
         jdbcTemplate.update("""
-                insert into game (id, cards_shown)
+                insert into game (id, revealed)
                 values (:gameId, false)
                 """, Map.of("gameId", gameId));
         return gameId;
@@ -95,10 +94,10 @@ public class PokerRepository {
         return updated > 0;
     }
 
-    public boolean showVotes(Long gameId) {
+    public boolean revealVotes(Long gameId) {
         int updated = jdbcTemplate.update("""
                 update game
-                set cards_shown=true
+                set revealed=true
                 where id=:gameId
                 """, Map.of("gameId", gameId));
         return updated > 0;
@@ -107,15 +106,15 @@ public class PokerRepository {
     public boolean hideVotes(Long gameId) {
         int updated = jdbcTemplate.update("""
                 update game
-                set cards_shown=false
+                set revealed=false
                 where id=:gameId
                 """, Map.of("gameId", gameId));
         return updated > 0;
     }
 
-    public Boolean areCardsShown(Long gameId) {
+    public Boolean areCardsRevealed(Long gameId) {
         List<Boolean> list = jdbcTemplate.queryForList("""
-                select cards_shown from game where id=:gameId
+                select revealed from game where id=:gameId
                 """, Map.of("gameId", gameId), Boolean.class);
         return singleResult(list);
     }

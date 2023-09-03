@@ -98,7 +98,7 @@ public class PokerTest {
     }
 
     @Test
-    public void testGetGameWithShownVotes() throws Exception {
+    public void testGetGameWithRevealedVotes() throws Exception {
         // First player creates a game
         mockMvc.perform(post("/api/game").content("First Player"))
                 .andExpect(jsonPath("$.gameId").value("1"));
@@ -112,7 +112,7 @@ public class PokerTest {
                 .andExpect(status().isOk());
 
         // Someone opens all cards
-        mockMvc.perform(post("/api/game/1/show"))
+        mockMvc.perform(post("/api/game/1/reveal"))
                 .andExpect(status().isOk());
 
         // Get the game state
