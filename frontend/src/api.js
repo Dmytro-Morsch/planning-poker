@@ -1,4 +1,4 @@
-function chekResponse(response) {
+function checkResponse(response) {
     if (!response.ok) {
         throw new Error(response.status)
     }
@@ -10,14 +10,14 @@ const api = {
             method: 'POST',
             body: playerName,
         });
-        chekResponse(response);
+        checkResponse(response);
         return await response.json();
     },
     getVotes: async (gameId) => {
         const response = await fetch('/api/game/' + gameId, {
             method: 'GET',
         });
-        chekResponse(response);
+        checkResponse(response);
         return await response.json();
     },
     addPlayerToGame: async (gameId, playerName) => {
@@ -25,14 +25,14 @@ const api = {
             method: 'POST',
             body: playerName,
         });
-        chekResponse(response);
+        checkResponse(response);
         return await response.json();
     },
     deletePlayer: async  (playerId) => {
         const response = await fetch('/api/player/' + playerId + '/delete', {
             method: 'POST'
         });
-        chekResponse(response);
+        checkResponse(response);
         return await response.json();
     },
     vote: async (playerId, value) => {
@@ -40,21 +40,21 @@ const api = {
             method: 'POST',
             body: value
         });
-        chekResponse(response);
+        checkResponse(response);
         return await response.json();
     },
     resetGame: async (gameId) => {
         const response = await fetch('/api/game/' + gameId + '/reset', {
             method: 'POST'
         });
-        chekResponse(response);
+        checkResponse(response);
         return await response.json();
     },
     showVotes: async (gameId) => {
         const response = await fetch('/api/game/' + gameId + '/show', {
             method: 'POST'
         });
-        chekResponse(response);
+        checkResponse(response);
         return await response.json();
     }
 };
