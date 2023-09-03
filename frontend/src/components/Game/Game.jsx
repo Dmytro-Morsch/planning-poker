@@ -1,20 +1,18 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 
-import {Deck, JoinGame, ShareButton, ShareLinkPopup} from "../";
+import {Deck, JoinGame, ShareButton} from "../";
 import api from "../../api.js";
 
 import VoteTable from "../VoteTable/VoteTable";
 import useInterval from "../../hooks/useInterval.js";
 import useLocalStorage from "../../hooks/useLocalStorage.js";
-import QRCode from "react-qr-code";
 
 function Game() {
     const params = useParams();
     const [votes, setVotes] = useState([]);
     const [selectedCard, setSelectedCard] = useState();
     const [error, setError] = useState();
-    const [userExist, setUserExist] = useState(false);
     const [player, setPlayer] = useLocalStorage("player");
     const [gameId, setGameId] = useLocalStorage("gameId");
 
@@ -41,7 +39,6 @@ function Game() {
             const player = {playerId, playerName};
             setGameId(gameId);
             setPlayer(player);
-            setUserExist(true);
         }).catch(handleError);
     }
 
@@ -51,18 +48,12 @@ function Game() {
         }
     }
 
-    function handleShareClick() {
-
-    }
-
     useEffect(() => {
-        if (gameId !== params.gameId || !player) {
+        if (String(gameId) !== params.gameId || !player) {
             setPlayer(null);
-            setGameId(params.gameId);
-            setUserExist(false);
+            setGameId(parseInt(params.gameId));
         } else {
             api.getVotes(gameId).then(setVotes).catch(handleError);
-            setUserExist(true);
         }
     }, [gameId, params.gameId, player])
 
@@ -103,7 +94,7 @@ function Game() {
                 </div>
             }
 
-            {userExist && !error &&
+            {gameId && player && !error &&
                 <>
                     <Deck selectedCard={selectedCard} onSelect={(value) => {
                         if (value === selectedCard) value = null;
@@ -120,7 +111,7 @@ function Game() {
                 </>
             }
 
-            {!userExist && !error && (
+            {gameId && !player && !error && (
                 <JoinGame votes={votes} onJoin={handleJoinGame}/>
             )}
         </div>
