@@ -14,27 +14,6 @@
     letter-spacing: 3px;
 }
 
-.navbar .share-button > .block .button.share {
-    display: flex;
-    align-items: center;
-    border: none;
-    border-radius: 5px;
-    background-color: white;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    font-size: 1.7rem;
-}
-
-.navbar .share-button > .block .button.share:hover {
-    background-color: #F0F0F0;
-}
-
-.navbar .share-button > .block .button.share img {
-    margin-left: 0.5rem;
-    max-width: 24px;
-    max-height: 24px;
-}
-
 .navbar .menu {
     display: flex;
     align-items: center;

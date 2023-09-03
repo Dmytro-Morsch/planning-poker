@@ -1,11 +1,9 @@
 import {NavLink, useParams} from "react-router-dom";
 import useComponentVisible from "../../hooks/useCompontentVisible.js";
 
-import {ShareLinkPopup} from '../';
+import {ShareButton, ShareLinkPopup} from '../';
 
 import './Header.css';
-
-import share from '../../assets/share.svg'
 import useLocalStorage from "../../hooks/useLocalStorage.js";
 
 function Header() {
@@ -32,14 +30,7 @@ function Header() {
             </div>
 
             {params.gameId &&
-                <div className="share-button">
-                    <div className="block">
-                        <button className="button share" type="button" onClick={() => setIsShareLinkPopupVisible(true)}>
-                            Game #{params.gameId}
-                            <img src={share} alt=""/>
-                        </button>
-                    </div>
-                </div>
+                <ShareButton gameId={params.gameId} onClick={() => setIsShareLinkPopupVisible(true)}/>
             }
 
             <div className="menu" ref={refMenuPopup}>
