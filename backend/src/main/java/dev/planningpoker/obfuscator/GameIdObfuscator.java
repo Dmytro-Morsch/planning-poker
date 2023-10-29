@@ -1,7 +1,11 @@
 package dev.planningpoker.obfuscator;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.math.BigInteger;
 
+@Component
 public class GameIdObfuscator {
     private static final long[] MAX_VALUES = {
             /*                 95 */ 0b1011111L,
@@ -49,7 +53,7 @@ public class GameIdObfuscator {
     private final long mask;
     private final long max;
 
-    public GameIdObfuscator(long prime, long xor, int length) {
+    public GameIdObfuscator(@Value("2123801081") long prime, @Value("811468089") long xor, @Value("8") int length) {
         this.mask = MASKS[length - 2];
         this.max = MAX_VALUES[length - 2];
         this.prime = prime;

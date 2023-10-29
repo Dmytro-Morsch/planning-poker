@@ -20,9 +20,10 @@ import static org.springframework.dao.support.DataAccessUtils.singleResult;
 public class PokerRepository {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
-
-    private final GameIdObfuscator gameIdObfuscator = new GameIdObfuscator(2123801081, 811468089, 8);
-    private final PlayerIdObfuscator playerIdObfuscator = new PlayerIdObfuscator(2123740891, 968011489);
+    @Autowired
+    private GameIdObfuscator gameIdObfuscator;
+    @Autowired
+    private PlayerIdObfuscator playerIdObfuscator;
 
     public Long createGame() {
         long nextval = jdbcTemplate.queryForObject("""
