@@ -45,6 +45,7 @@
     </dependencies>
 
     <build>
+        <finalName>planning-poker</finalName>
         <resources>
             <resource>
                 <directory>../frontend/dist</directory>
