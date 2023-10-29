@@ -11,7 +11,8 @@ public class PlayerIdObfuscator {
     private final long inversePrime;
     private final long xor;
 
-    public PlayerIdObfuscator(@Value("2123740891") long prime, @Value("968011489") long xor) {
+    public PlayerIdObfuscator(@Value("${player-id-obfuscator.prime}") long prime,
+                              @Value("${player-id-obfuscator.xor}") long xor) {
         this.prime = prime;
         this.inversePrime = BigInteger.valueOf(prime).modInverse(BigInteger.valueOf(Long.MAX_VALUE).add(BigInteger.ONE)).longValue();
         this.xor = xor;

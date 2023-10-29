@@ -53,7 +53,9 @@ public class GameIdObfuscator {
     private final long mask;
     private final long max;
 
-    public GameIdObfuscator(@Value("2123801081") long prime, @Value("811468089") long xor, @Value("8") int length) {
+    public GameIdObfuscator(@Value("${game-id-obfuscator.prime}") long prime,
+                            @Value("${game-id-obfuscator.xor}") long xor,
+                            @Value("${game-id-obfuscator.length:8}") int length) {
         this.mask = MASKS[length - 2];
         this.max = MAX_VALUES[length - 2];
         this.prime = prime;
