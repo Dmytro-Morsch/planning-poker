@@ -41,6 +41,9 @@ function Home() {
                         <img src="/poker.svg" alt="Logo" width="48" height="48" className="align-middle"/>
                         <span className="h3 ms-2 align-middle">Planning Poker</span>
                     </a>
+                    <a href="https://github.com/Dmytro-Morsch/planning-poker">
+                        <img src="/github-mark.svg" alt="GitHub Logo" width="36" height="36" className="align-middle"/>
+                    </a>
                 </div>
             </nav>
 
