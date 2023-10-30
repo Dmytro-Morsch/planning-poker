@@ -51,7 +51,7 @@ function Home() {
                 <h1 className="display-5 fw-bold p-lg-5">Welcome</h1>
 
                 <div className="row">
-                    <form className="col shadow h-100 p-lg-5 m-3" onSubmit={handleStartGame}>
+                    <form className="col-lg shadow h-100 p-5 m-lg-3" onSubmit={handleStartGame}>
                         <h5 className="pb-3">Start new game</h5>
                         <div className="input-group">
                             <div className="form-floating">
@@ -66,7 +66,7 @@ function Home() {
                         </div>
                     </form>
 
-                    <form className="col shadow h-100 p-lg-5 m-3" onSubmit={handleJoinGame}>
+                    <form className="col-lg shadow h-100 p-5 m-lg-3" onSubmit={handleJoinGame}>
                         <h5 className="pb-3">Join existing game</h5>
                         <div className="input-group">
                             <div className="form-floating">
@@ -82,9 +82,9 @@ function Home() {
                     </form>
                 </div>
 
-                <div className="row p-lg-5">
+                <div className="row mt-3 mt-lg-5">
                     <figure>
-                        <blockquote>
+                        <blockquote className="blockquote fs-6">
                             Planning poker, also called Scrum poker, is a consensus-based, gamified technique for
                             estimating, mostly used for timeboxing in Agile principles. In planning poker, members of
                             the group make estimates by playing numbered cards face-down to the table, instead of
@@ -92,7 +92,7 @@ function Home() {
                             the figures in this way, the group can avoid the cognitive bias of anchoring, where the
                             first number spoken aloud sets a precedent for subsequent estimates.
                         </blockquote>
-                        <figcaption>
+                        <figcaption className="blockquote-footer">
                             <cite><a href="https://en.wikipedia.org/wiki/Planning_poker">Wikipedia</a></cite>
                         </figcaption>
                     </figure>
