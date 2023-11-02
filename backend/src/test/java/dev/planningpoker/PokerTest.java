@@ -95,10 +95,11 @@ public class PokerTest {
         // Get the game state
         mockMvc.perform(get("/api/game/{gameId}", gameId(1)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].playerId").value(playerId(1)))
-                .andExpect(jsonPath("$[0].value").value(nullValue()))
-                .andExpect(jsonPath("$[1].playerId").value(playerId(2)))
-                .andExpect(jsonPath("$[1].value").value("*"));
+                .andExpect(jsonPath("$.revealed").value(false))
+                .andExpect(jsonPath("$.votes[0].playerId").value(playerId(1)))
+                .andExpect(jsonPath("$.votes[0].value").value(nullValue()))
+                .andExpect(jsonPath("$.votes[1].playerId").value(playerId(2)))
+                .andExpect(jsonPath("$.votes[1].value").value("*"));
     }
 
     @Test
@@ -122,10 +123,11 @@ public class PokerTest {
         // Get the game state
         mockMvc.perform(get("/api/game/{gameId}", gameId(1)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].playerId").value(playerId(1)))
-                .andExpect(jsonPath("$[0].value").value(nullValue()))
-                .andExpect(jsonPath("$[1].playerId").value(playerId(2)))
-                .andExpect(jsonPath("$[1].value").value(5));
+                .andExpect(jsonPath("$.revealed").value(true))
+                .andExpect(jsonPath("$.votes[0].playerId").value(playerId(1)))
+                .andExpect(jsonPath("$.votes[0].value").value(nullValue()))
+                .andExpect(jsonPath("$.votes[1].playerId").value(playerId(2)))
+                .andExpect(jsonPath("$.votes[1].value").value(5));
     }
 
     @Test

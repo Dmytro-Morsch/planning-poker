@@ -10,41 +10,47 @@ import useLocalStorage from "../../hooks/useLocalStorage.js";
 
 function Game() {
     const params = useParams();
+    const [revealed, setRevealed] = useState(false);
     const [votes, setVotes] = useState([]);
     const [selectedCard, setSelectedCard] = useState();
     const [error, setError] = useState();
     const [player, setPlayer] = useLocalStorage("player");
     const [gameId, setGameId] = useLocalStorage("gameId");
 
+    function setGameState(gameState) {
+        setRevealed(gameState.revealed)
+        setVotes(gameState.votes)
+    }
+
     function handleError(e) {
         setError(e.message);
     }
 
     function vote(playerId, vote) {
-        api.vote(playerId, vote).then(setVotes).catch(handleError);
+        api.vote(playerId, vote).then(setGameState).catch(handleError);
     }
 
     function resetGame() {
-        api.resetGame(gameId).then(setVotes).catch(handleError);
+        api.resetGame(gameId).then(setGameState).catch(handleError);
     }
 
     function revealVotes() {
-        api.revealVotes(gameId).then(setVotes).catch(handleError);
+        api.revealVotes(gameId).then(setGameState).catch(handleError);
     }
 
     function handleJoinGame(playerName) {
         api.addPlayerToGame(gameId, playerName).then(result => {
             const playerId = result.playerId;
-            setVotes(result.votes);
             const player = {playerId, playerName};
             setGameId(gameId);
             setPlayer(player);
+            setGameState(result);
         }).catch(handleError);
     }
 
     function handleDeletePlayer(playerId) {
         if (confirm("Sure?")) {
-            api.deletePlayer(playerId).then(setVotes).catch(handleError);
+            api.deletePlayer(playerId).then(setGameState).catch(handleError);
         }
     }
 
@@ -53,13 +59,13 @@ function Game() {
             setPlayer(null);
             setGameId(parseInt(params.gameId));
         } else {
-            api.getVotes(gameId).then(setVotes).catch(handleError);
+            api.getVotes(gameId).then(setGameState).catch(handleError);
         }
     }, [gameId, params.gameId, player])
 
     useInterval(() => {
         if (gameId) {
-            api.getVotes(gameId).then(setVotes).catch(handleError);
+            api.getVotes(gameId).then(setGameState).catch(handleError);
         }
     }, 2000);
 
@@ -104,7 +110,7 @@ function Game() {
                     <div className="container w-75">
                         <div className="d-flex justify-content-center p-2">
                             <button className="btn btn-outline-primary" onClick={resetGame}>Reset</button>
-                            <button className="btn btn-primary ms-2" onClick={revealVotes}>Reveal</button>
+                            <button className="btn btn-primary ms-2" onClick={revealVotes} disabled={revealed}>Reveal</button>
                         </div>
                         <VoteTable votes={votes} onDeletePlayer={handleDeletePlayer}/>
                     </div>
