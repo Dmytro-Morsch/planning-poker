@@ -59,10 +59,10 @@ public class RestApiController {
 
     @PostMapping("/api/player/{playerId}/delete")
     private ResponseEntity<?> deletePlayer(@PathVariable Long playerId) {
+        Long gameId = pokerRepository.getGameIdByPlayerId(playerId);
         if (!pokerRepository.deletePlayer(playerId)) {
             return new ResponseEntity<>("Player not found!", HttpStatus.NOT_FOUND);
         }
-        Long gameId = pokerRepository.getGameIdByPlayerId(playerId);
         Boolean revealed = pokerRepository.areCardsRevealed(gameId);
         var body = getGame(gameId, revealed);
         return ResponseEntity.ok(body);

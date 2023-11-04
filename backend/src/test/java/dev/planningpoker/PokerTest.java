@@ -2,6 +2,7 @@ package dev.planningpoker;
 
 import dev.planningpoker.obfuscator.GameIdObfuscator;
 import dev.planningpoker.obfuscator.PlayerIdObfuscator;
+import org.json.JSONArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -64,6 +66,29 @@ public class PokerTest {
     public void testAddPlayerToNonExistingGame() throws Exception {
         // A new player joins a game with non-existing id 42
         mockMvc.perform(post("/api/game/42/player").content("Second Player"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testDeletePlayer() throws Exception {
+        // A player creates a game
+        mockMvc.perform(post("/api/game").content("First Player"))
+                .andExpect(jsonPath("$.gameId").value(gameId(1)));
+
+        // Delete the player
+        mockMvc.perform(post("/api/player/{playerId}/delete", playerId(1)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.votes").isEmpty());
+    }
+
+    @Test
+    public void testDeleteNonExistingPlayer() throws Exception {
+        // A player creates a game
+        mockMvc.perform(post("/api/game").content("First Player"))
+                .andExpect(jsonPath("$.gameId").value(gameId(1)));
+
+        // Delete non-existing player
+        mockMvc.perform(post("/api/player/{playerId}/delete", 42))
                 .andExpect(status().isNotFound());
     }
 
