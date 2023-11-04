@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>dev.planningpoker</groupId>
-    <artifactId>planning-poker</artifactId>
+    <artifactId>backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
