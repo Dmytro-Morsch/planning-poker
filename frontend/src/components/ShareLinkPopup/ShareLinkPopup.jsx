@@ -1,7 +1,5 @@
 import QRCode from "react-qr-code";
 
-import './ShareLinkPopup.css';
-
 function ShareLinkPopup({id, gameId}) {
     return (
         <div className="modal fade" id={id} tabIndex="-1" aria-labelledby="exampleModalLabel"

@@ -2,8 +2,6 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 import {Game, Home, PageNotFound} from './components';
 
-import './App.css';
-
 function App() {
     return (
         <BrowserRouter>

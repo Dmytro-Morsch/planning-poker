@@ -1,7 +1,6 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import api from "../../api.js";
-import './Home.css';
 import useLocalStorage from "../../hooks/useLocalStorage.js";
 
 function Home() {

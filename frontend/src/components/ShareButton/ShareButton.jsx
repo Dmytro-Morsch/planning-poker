@@ -1,6 +1,4 @@
-import './ShareButton.css';
 import {ShareLinkPopup} from "../index.js";
-
 
 function ShareButton({gameId}) {
     return (
