@@ -9,7 +9,7 @@ sets a precedent for subsequent estimates.
 
 Project setup
 -------------
-Install Node.js, JDK 17, Maven, and Postgres.
+Install Node.js, JDK 24, Maven, and Postgres.
 
 Create app user and schema:
 ```sql
