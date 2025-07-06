@@ -16,6 +16,10 @@
 
     <properties>
         <java.version>24</java.version>
+        <flyway.url>jdbc:postgresql://localhost:5432/postgres</flyway.url>
+        <flyway.user>poker</flyway.user>
+        <flyway.password>poker</flyway.password>
+        <flyway.cleanDisabled>false</flyway.cleanDisabled>
     </properties>
 
     <dependencies>
@@ -63,9 +67,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <executable>true</executable>
-                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
