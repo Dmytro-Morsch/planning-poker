@@ -25,31 +25,38 @@ public class PokerRepository {
     @Autowired
     private PlayerIdObfuscator playerIdObfuscator;
 
-    public Long createGame() {
-        long nextval = jdbcTemplate.queryForObject("""
-                select nextval('game_id_seq')
-                """, emptyMap(), Long.class);
-        long gameId = gameIdObfuscator.encode(nextval);
+    public Long createGame(Long ownerId) {
+        Long gameId = nextGameId();
         jdbcTemplate.update("""
-                insert into game (id, revealed)
-                values (:gameId, false)
-                """, Map.of("gameId", gameId));
+                insert into game (id, owner_id, revealed)
+                values (:gameId, :ownerId, false)
+                """, Map.of("gameId", gameId, "ownerId", ownerId));
         return gameId;
+    }
+
+    public Long getOwnerId(Long gameId) {
+        List<Long> list = jdbcTemplate.queryForList("""
+                select owner_id from game
+                where id=:gameId
+                """, Map.of("gameId", gameId), Long.class);
+        return singleResult(list);
     }
 
     public List<Vote> getVotes(Long gameId) {
         return jdbcTemplate.query("""
-                select * from player 
+                select * from player
                 where game_id=:gameId
                 order by id
                 """, Map.of("gameId", gameId), this::mapVote);
     }
 
     public Long addPlayer(String playerName, Long gameId) {
-        long nextval = jdbcTemplate.queryForObject("""
-                select nextval('player_id_seq')
-                """, emptyMap(), Long.class);
-        long playerId = playerIdObfuscator.encode(nextval);
+        long playerId = nextPlayerId();
+        addPlayer(playerId, playerName, gameId);
+        return playerId;
+    }
+
+    public void addPlayer(Long playerId, String playerName, Long gameId) {
         var params = new MapSqlParameterSource()
                 .addValue("playerId", playerId)
                 .addValue("name", playerName)
@@ -58,7 +65,6 @@ public class PokerRepository {
                 insert into player (id, name, game_id)
                 values (:playerId, :name, :gameId)
                 """, params);
-        return playerId;
     }
 
     public boolean vote(Long playerId, String vote) {
@@ -118,6 +124,20 @@ public class PokerRepository {
                 select revealed from game where id=:gameId
                 """, Map.of("gameId", gameId), Boolean.class);
         return singleResult(list);
+    }
+
+    public long nextPlayerId() {
+        Long nextval = jdbcTemplate.queryForObject("""
+                select nextval('player_id_seq')
+                """, emptyMap(), Long.class);
+        return playerIdObfuscator.encode(nextval);
+    }
+
+    private long nextGameId() {
+        Long nextval = jdbcTemplate.queryForObject("""
+                select nextval('game_id_seq')
+                """, emptyMap(), Long.class);
+        return gameIdObfuscator.encode(nextval);
     }
 
     private Vote mapVote(ResultSet rs, int rowNum) throws SQLException {

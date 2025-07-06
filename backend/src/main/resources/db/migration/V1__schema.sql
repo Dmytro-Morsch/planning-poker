@@ -4,6 +4,7 @@ create sequence player_id_seq cycle maxvalue 9223372036854775807; -- Max value s
 create table game
 (
     id       bigint  not null primary key,
+    owner_id bigint,
     revealed boolean not null
 );
 

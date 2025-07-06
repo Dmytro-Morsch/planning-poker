@@ -20,9 +20,10 @@ public class RestApiController {
 
     @PostMapping("/api/game")
     private Map<String, Long> createGame(@RequestBody String playerName) {
-        Long gameId = pokerRepository.createGame();
-        Long playerId = pokerRepository.addPlayer(playerName, gameId);
-        return Map.of("gameId", gameId, "playerId", playerId);
+        Long ownerId = pokerRepository.nextPlayerId();
+        Long gameId = pokerRepository.createGame(ownerId);
+        pokerRepository.addPlayer(ownerId, playerName, gameId);
+        return Map.of("gameId", gameId, "playerId", ownerId);
     }
 
     @PostMapping("/api/game/{gameId}/player")
@@ -69,7 +70,7 @@ public class RestApiController {
     }
 
     @GetMapping("/api/game/{gameId}")
-    private ResponseEntity<?> getVotes(@PathVariable Long gameId) {
+    private ResponseEntity<?> getGame(@PathVariable Long gameId) {
         Boolean revealed = pokerRepository.areCardsRevealed(gameId);
         if (revealed == null) {
             return new ResponseEntity<>("Game not found!", HttpStatus.NOT_FOUND);
@@ -100,8 +101,10 @@ public class RestApiController {
     }
 
     private Map<String, Object> getGame(Long gameId, boolean revealed) {
+        var ownerId = pokerRepository.getOwnerId(gameId);
         var votes = getVotes(gameId, revealed);
         return Map.of(
+                "ownerId", ownerId,
                 "revealed", revealed,
                 "votes", votes);
     }

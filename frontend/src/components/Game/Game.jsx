@@ -16,8 +16,10 @@ function Game() {
     const [error, setError] = useState();
     const [player, setPlayer] = useLocalStorage("player");
     const [gameId, setGameId] = useLocalStorage("gameId");
+    const [ownerId, setOwnerId] = useState();
 
     function setGameState(gameState) {
+        setOwnerId(gameState.ownerId)
         setRevealed(gameState.revealed)
         setVotes(gameState.votes)
     }
@@ -112,7 +114,7 @@ function Game() {
                             <button className="btn btn-outline-primary" onClick={resetGame}>Reset</button>
                             <button className="btn btn-primary ms-2" onClick={revealVotes} disabled={revealed}>Reveal</button>
                         </div>
-                        <VoteTable votes={votes} onDeletePlayer={handleDeletePlayer}/>
+                        <VoteTable ownerId={ownerId} votes={votes} onDeletePlayer={handleDeletePlayer}/>
                     </div>
                 </>
             }
