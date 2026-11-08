@@ -19,11 +19,11 @@ public class RestApiController {
     private PokerRepository pokerRepository;
 
     @PostMapping("/api/game")
-    private Map<String, Long> createGame(@RequestBody String playerName) {
+    private Map<String, Object> createGame(@RequestBody String playerName) {
         Long ownerId = pokerRepository.nextPlayerId();
         Long gameId = pokerRepository.createGame(ownerId);
         pokerRepository.addPlayer(ownerId, playerName, gameId);
-        return Map.of("gameId", gameId, "playerId", ownerId);
+        return Map.of("gameId", gameId, "playerId", ownerId.toString());
     }
 
     @PostMapping("/api/game/{gameId}/player")
@@ -35,7 +35,7 @@ public class RestApiController {
         }
         var body = new HashMap<>(getGame(gameId, revealed));
         try {
-            body.put("playerId", pokerRepository.addPlayer(playerName, gameId));
+            body.put("playerId", pokerRepository.addPlayer(playerName, gameId).toString());
         } catch (DuplicateKeyException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Player with the same name has already joined the game");
         }
@@ -104,7 +104,7 @@ public class RestApiController {
         var ownerId = pokerRepository.getOwnerId(gameId);
         var votes = getVotes(gameId, revealed);
         return Map.of(
-                "ownerId", ownerId,
+                "ownerId", ownerId.toString(),
                 "revealed", revealed,
                 "votes", votes);
     }

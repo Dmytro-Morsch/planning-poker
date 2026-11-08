@@ -46,7 +46,7 @@ public class PokerTest {
         mockMvc.perform(post("/api/game").content("First Player"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.gameId").value(gameId(1)))
-                .andExpect(jsonPath("$.playerId").value(playerId(1)));
+                .andExpect(jsonPath("$.playerId").value(Long.toString(playerId(1))));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class PokerTest {
         mockMvc.perform(
                         post("/api/game/{gameId}/player", gameId(1)).content("Second Player"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.playerId").value(playerId(2)));
+                .andExpect(jsonPath("$.playerId").value(Long.toString(playerId(2))));
     }
 
     @Test
@@ -111,7 +111,7 @@ public class PokerTest {
 
         // Second player joins the game
         mockMvc.perform(post("/api/game/{gameId}/player", gameId(1)).content("Second Player"))
-                .andExpect(jsonPath("$.playerId").value(playerId(2)));
+                .andExpect(jsonPath("$.playerId").value(Long.toString(playerId(2))));
 
         // Second player votes
         mockMvc.perform(post("/api/player/{playerId}/vote", playerId(2)).content("5"))
@@ -121,9 +121,9 @@ public class PokerTest {
         mockMvc.perform(get("/api/game/{gameId}", gameId(1)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.revealed").value(false))
-                .andExpect(jsonPath("$.votes[0].playerId").value(playerId(1)))
+                .andExpect(jsonPath("$.votes[0].playerId").value(Long.toString(playerId(1))))
                 .andExpect(jsonPath("$.votes[0].value").value(nullValue()))
-                .andExpect(jsonPath("$.votes[1].playerId").value(playerId(2)))
+                .andExpect(jsonPath("$.votes[1].playerId").value(Long.toString(playerId(2))))
                 .andExpect(jsonPath("$.votes[1].value").value("*"));
     }
 
@@ -135,7 +135,7 @@ public class PokerTest {
 
         // Second player joins the game
         mockMvc.perform(post("/api/game/{gameId}/player", gameId(1)).content("Second Player"))
-                .andExpect(jsonPath("$.playerId").value(playerId(2)));
+                .andExpect(jsonPath("$.playerId").value(Long.toString(playerId(2))));
 
         // Second player votes
         mockMvc.perform(post("/api/player/{playerId}/vote", playerId(2)).content("5"))
@@ -149,9 +149,9 @@ public class PokerTest {
         mockMvc.perform(get("/api/game/{gameId}", gameId(1)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.revealed").value(true))
-                .andExpect(jsonPath("$.votes[0].playerId").value(playerId(1)))
+                .andExpect(jsonPath("$.votes[0].playerId").value(Long.toString(playerId(1))))
                 .andExpect(jsonPath("$.votes[0].value").value(nullValue()))
-                .andExpect(jsonPath("$.votes[1].playerId").value(playerId(2)))
+                .andExpect(jsonPath("$.votes[1].playerId").value(Long.toString(playerId(2))))
                 .andExpect(jsonPath("$.votes[1].value").value(5));
     }
 
