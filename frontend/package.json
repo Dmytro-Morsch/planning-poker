@@ -10,11 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "bootstrap": "^5.3.7",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-qr-code": "^2.0.17",
-    "react-router-dom": "^6.15.0"
+    "bootstrap": "^5.3.8",
+    "react": "^19.1.10",
+    "react-dom": "^19.1.10",
+    "react-qr-code": "^2.0.21",
+    "react-router-dom": "^6.30.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",

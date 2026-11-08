@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.3</version>
+        <version>3.5.16</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -15,7 +15,7 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
-        <java.version>24</java.version>
+        <java.version>25</java.version>
         <flyway.url>jdbc:postgresql://localhost:5432/postgres</flyway.url>
         <flyway.user>poker</flyway.user>
         <flyway.password>poker</flyway.password>
